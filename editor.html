@@ -174,6 +174,16 @@
             copyToClipboard(url, "URL copied to clipboard.", "Unable to copy URL to clipboard. Please copy the URL below manually: \n" + url);
         }
 
+        function getCookie()
+        {
+            alert(document.cookie);
+        }
+
+        function setCookie()
+        {
+            document.cookie = "username=John Doe; Secure; SameSite=Lax";
+        }
+
         function getURL()
         {
             alert(window.location.href);
@@ -602,9 +612,11 @@
             <button id="URLButton" type="button" onclick="generateURL();" style = "width:72px">URL</button>
             <button id="embedButton" type="button" onclick="generateEmbed();" style = "width:72px">Embed</button>
             <button id="fullscreenButton" type="button" onclick="openFullscreen();" style = "width:104px">🖥️ Fullscreen</button>
-            <button id="getURLButton" type="button" onclick="getURL();" style = "width:72px">⚡ GET</button>
+            <!-- <button id="getURLButton" type="button" onclick="getURL();" style = "width:72px">⚡ GET</button>
             <button id="setURLButton" type="button" onclick="setURL();" style = "width:72px">⚡ SET</button>
             <input id="setURLInput" type="text">
+            <button id="getCookieButton" type="button" onclick="getCookie();" style = "width:72px">🛑 GET</button>
+            <button id="setCookieButton" type="button" onclick="setCookie();" style = "width:72px">🛑 SET</button> -->
         </form>
         <div class="split" id="split">
             <div id ="leftpane"></div>
