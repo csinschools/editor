@@ -639,6 +639,8 @@
                     codeString = decodeFromUTF16(esc);
                     checkForPyangelo(codeString);
                     editor.setValue(codeString, -1);
+                    
+                    saveToLocalStorage();
                 }
                 else if (project != null && project.length > 0)
                 {
@@ -650,13 +652,17 @@
                             checkForPyangelo(project_src);
                             editor.setValue(project_src, -1);
                         }
+                        
+                        saveToLocalStorage();                    
                     };
-                    client.send();            
+                    client.send();                          
                 }  
                 else
                 {
                     editor.setValue("", -1);
-                }
+                    // clear local storage
+                    localStorage.removeItem(filename);
+                }                
             }
         }        
     </script>
@@ -773,9 +779,13 @@ print(RESET + "Bye now!")
             client.open("GET", "projects/" + project + ".py");
             client.onreadystatechange = function () {
                 if (client.readyState == 4) {
-                    project_src = client.responseText;
-                    checkForPyangelo(project_src);
-                    editor.setValue(project_src, -1);
+                
+                    if (localStorage.getItem(filename) === null) 
+                    {
+                        project_src = client.responseText;
+                        checkForPyangelo(project_src);
+                        editor.setValue(project_src, -1);
+                    }
                 }
             };
             client.send();
@@ -799,11 +809,18 @@ print(RESET + "Bye now!")
         }
 
         var filename = null;
-        // default file name (for saving)
-        filename = urlParams.get('name')
-        if (filename == null || filename.length == 0)
+        if (project != null && project.length > 0)
         {
-            filename = "my_code";                  
+            filename = project;   
+        }
+        else
+        {
+            // default file name (for saving)
+            filename = urlParams.get('name')
+            if (filename == null || filename.length == 0)
+            {
+                filename = "my_code";                  
+            }
         }
         loadFromLocalStorage(); 
 
