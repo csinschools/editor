@@ -221,7 +221,36 @@
             var code = ace.edit("editor").getValue();
             var file = new File([code], filename + ".py", {type: "text/plain;charset=utf-8"});
             saveAs(file);
+            saveToLocalStorage();   
         }
+        
+        function saveToLocalStorage()
+        {
+          try {
+            var code = ace.edit("editor").getValue();
+            localStorage.setItem(filename, code);
+          }
+          catch(e) {
+            console.log("Unable to save to local storage");
+          }
+        } 
+
+        function loadFromLocalStorage()
+        {
+          if (filename == null || filename.length == 0)
+          {
+            return;
+          }
+          try {
+            var src = localStorage.getItem(filename);
+            if (!(src === null || src == "")) {
+                editor.setValue(src, -1);
+            }      
+          }
+          catch (e) {
+            console.log("Unable to load from local storage");
+          }  
+        }        
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -309,6 +338,8 @@
 
             stepRun = stepMode;
             var code = ace.edit("editor").getValue();
+            
+            saveToLocalStorage();  
 
             code = pygmify(code);
 
@@ -596,6 +627,44 @@
                 if (el.style.length) return prefixes[i] + "calc";
             }
         }
+        
+        function resetEditor()
+        {
+            if (confirm("This will reset the code and you will lose your progress so far.\nIs this okay?"))
+            {
+                clearConsole();
+                resetConsole();
+                if (esc != null && esc.length > 0)
+                {            
+                    codeString = decodeFromUTF16(esc);
+                    checkForPyangelo(codeString);
+                    editor.setValue(codeString, -1);
+                    
+                    saveToLocalStorage();
+                }
+                else if (project != null && project.length > 0)
+                {
+                    var client = new XMLHttpRequest();
+                    client.open("GET", "projects/" + project + ".py");
+                    client.onreadystatechange = function () {
+                        if (client.readyState == 4) {
+                            project_src = client.responseText;
+                            checkForPyangelo(project_src);
+                            editor.setValue(project_src, -1);
+                        }
+                        
+                        saveToLocalStorage();                    
+                    };
+                    client.send();                          
+                }  
+                else
+                {
+                    editor.setValue("", -1);
+                    // clear local storage
+                    localStorage.removeItem(filename);
+                }                
+            }
+        }        
     </script>
 </head>
 
@@ -606,6 +675,7 @@
             <button id="stepButton" type="button" onclick="runSkulpt(true);" style = "width:72px">👣 Step</button>
             <button id="stopButton" type="button" onclick="stopEditor();" style = "width:148px">🛑 Stop</button>
             <button id="nextButton" type="button" style = "width:72px">⏭️ Next</button>
+            <button id="resetButton" type="button" onclick="resetEditor();" style = "width:78px">🔄 Reset</button>                 
             <button id="copyButton" type="button" onclick="copyCode();" style = "width:72px">📋 Copy</button>
             <button id="saveButton" type="button" onclick="saveCode(filename);" style = "width:72px">💾 Save</button>
             <button id="loadButton" type="button" onclick="document.getElementById('file-input').click(); return false;" style = "width:72px">📂 Open</button>
@@ -709,9 +779,13 @@ print(RESET + "Bye now!")
             client.open("GET", "projects/" + project + ".py");
             client.onreadystatechange = function () {
                 if (client.readyState == 4) {
-                    project_src = client.responseText;
-                    checkForPyangelo(project_src);
-                    editor.setValue(project_src, -1);
+                
+                    if (localStorage.getItem(filename) === null) 
+                    {
+                        project_src = client.responseText;
+                        checkForPyangelo(project_src);
+                        editor.setValue(project_src, -1);
+                    }
                 }
             };
             client.send();
@@ -735,12 +809,20 @@ print(RESET + "Bye now!")
         }
 
         var filename = null;
-        // default file name (for saving)
-        filename = urlParams.get('name')
-        if (filename == null || filename.length == 0)
+        if (project != null && project.length > 0)
         {
-            filename = "my_code";
+            filename = project;   
         }
+        else
+        {
+            // default file name (for saving)
+            filename = urlParams.get('name')
+            if (filename == null || filename.length == 0)
+            {
+                filename = "my_code";                  
+            }
+        }
+        loadFromLocalStorage(); 
 
         // disable step-run button
         nostep = urlParams.get('nostep')
