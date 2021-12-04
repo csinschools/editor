@@ -1,7 +1,7 @@
-feet = ________                       
+feet = ____                       
 #        ^^ type in the number of feet in length!
 
-metres = ________
+metres = ________________
 #        ^^ put your calculation here!
 
 print("Number of feet in length:")

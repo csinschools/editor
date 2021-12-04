@@ -8,7 +8,7 @@ print("That's a lovely name " + name + "!")
 if name.isupper() == True:
   print(Colour.blue + "It sure is LOUD though! :D" + Colour.reset)
 
-mood = input("How are you doing today?")
+mood = input("How are you doing today? ")
 if "good" in mood or "great" in mood or "fantastic" in mood:
   print("That's great to hear!")
 elif "okay" in mood or "meh" in mood or "alright" in mood:
@@ -18,7 +18,7 @@ elif "bad" in mood or "terrible" in mood or "sad" in mood:
 else:
   print("Ok, thanks for sharing. I'm feeling good.")
 
-your_age = input("Can I ask how old you are?")
+your_age = input("Can I ask how old you are? ")
 your_age = int(your_age)
 
 print("Cool! Can you guess my age?")
@@ -26,7 +26,7 @@ print("Cool! Can you guess my age?")
 keep_guessing = True
 
 while keep_guessing == True:
-  your_guess = input("What's your guess?")
+  your_guess = input("What's your guess? ")
   if your_guess == "14":
     print(Colour.green + "You got it!" + Colour.reset)
     keep_guessing = False
@@ -48,9 +48,9 @@ else:
   if difference > 10:
     print("You're OLD!")
 
-help = input(name + ", I need some advice. Do you think you can help me?")
+help = input(name + ", I need some advice. Do you think you can help me? ")
 if "yes" in help or "yup" in help or "of course" in help or "yep" in help:
-  pet = input("I'd like to get a pet, what animal do you think I should get?")
+  pet = input("I'd like to get a pet, what animal do you think I should get? ")
   print(Colour.orange + "That's nice! I've always wanted a " + pet + "!" + Colour.reset)
   advice = True
 else:
@@ -62,7 +62,7 @@ print("I gotta go now, but let's play one last game. I'm thinking of an animal, 
 keep_guessing = True
 
 while keep_guessing == True:
-  your_guess = input("What's your guess?")
+  your_guess = input("What's your guess? ")
   if your_guess == pet:
     print("You got it!")
     if advice == True:

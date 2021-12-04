@@ -9,7 +9,7 @@ print(r'''
 
 print("Behind 1 of them is a car... if you choose correctly, you win it!!")
 
-door = input("Enter your choice:")
+door = input("Enter your choice (upper case): ")
 
 if door == "A":
   print("Sorry, no car behind that one...")

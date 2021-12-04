@@ -37,7 +37,7 @@ while fighting_orc == True:
   print("Potions:" + str(potions) + Colour.reset)
   print("1. Fight")
   print("2. Drink potion")
-  action = input("What would you like to do [1/2]?")
+  action = input("What would you like to do [1/2]? ")
   if action == "1" or "fight" in action or "attack" in action:
     damage = randint(0, 10)
     print(name + " attacks the Orc...")
@@ -111,7 +111,7 @@ while fighting_ogre == True:
   print("Potions:" + str(potions))
   print("1. Fight")
   print("2. Drink potion")
-  action = input("What would you like to do [1/2]?")
+  action = input("What would you like to do [1/2]? ")
   if action == "1":
     damage = randint(0, 10)
     print(name + " attacks the Ogre...")

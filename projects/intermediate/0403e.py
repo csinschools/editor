@@ -1,15 +1,15 @@
-keep_going = ______
+keep_going = ____
 
-count = ___
+count = __
 
 print("Press [enter] to count down!")
 
-while _______ == _____:
-  answer = input ("Seconds to lift off:" + _______)
+while ________ == ____:
+  answer = input ("Seconds to lift off:" + ____)
 
   count = ________
 
-  if __________________
+  if ________________:
     ________________
 
 print(r'''
@@ -45,4 +45,4 @@ print(r'''
        .
        .
        .  
-  ''')
+''')

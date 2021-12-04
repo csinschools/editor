@@ -1,8 +1,6 @@
-# Required for .goto
-from csinsc import *
+from csinsc import * # Required for .label and .goto to work
 
-starting_dollars = ________
-
+starting_dollars = ____
 dollars = ________
 
 label ________
@@ -14,10 +12,11 @@ print("Enter [b] to buy a coffee for $5")
 
 choice = ________("Enter your choice: ")
 
-if choice == ________:
+if choice == __:
   print("Gobble gobble gobble!")
   dollars = ________
-if ________:
+
+if ________ == __:
   print("Gulp gulp gulp!")
   ________ = ________
   
@@ -26,4 +25,4 @@ if dollars <= 0:
   print("Game over.")
   
 if dollars > 0:
-  ________
+  ________________
