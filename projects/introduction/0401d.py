@@ -1,8 +1,8 @@
 # ask the user to provide their words
-colour = input("Enter a colour:")
-subject = input("Enter a school subject:")
-obj = input("Enter an object:")
-adj = input("Enter an adjective:")
+colour = input("Enter a colour: ")
+subject = input("Enter a school subject: ")
+obj = input("Enter an object: ")
+adj = input("Enter an adjective: ")
 
 # now insert them into our story!
 print("In " + subject + " class yesterday, our teacher")

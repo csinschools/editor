@@ -1,6 +1,6 @@
 from csinsc import *
 
-print(Colour.reset + Highlight.blue + Colour.grey)
+print(Colour.reset + Highlight.blue + Colour.white)
 print("          ▄▄  █▄ ▄█▄▄██  ▄█▄       ")
 print("    ▄  ▄█▄█" + Highlight.yellow + "▀██  ██ ▀█  █" + Highlight.blue + "▄" + Highlight.yellow + "▀ █" + Highlight.blue + "▄" + Highlight.yellow + "▀█" + Highlight.blue + "    ")
 print("▄   " + Highlight.blue + "██▄█" + Highlight.yellow + " ▀▀  ▀             ▀▀ █" + Highlight.blue + "    ")
