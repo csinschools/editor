@@ -5,7 +5,7 @@ from csinsc import *
 
 label _______
 
-answer = input("Type 'w' to win:")
+answer = input("Type 'w' to win: ")
 if answer ____ 'w':
   print("You win!")
   goto _______

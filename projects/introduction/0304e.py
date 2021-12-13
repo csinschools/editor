@@ -1,7 +1,7 @@
 from csinsc import *
 
 print(Highlight.magenta)
-print("                       " + Colour.grey + "_____                       ")
+print("                       " + Colour.black + "_____                       ")
 print("                    ▄████████▄▄                    ")
 print("                  ▄█████████████▄                  ")
 print("                 ████████████████▄                 ")

@@ -1,4 +1,3 @@
-# The code below has an error
-# Can you find it?
+# The code below has an error, can you find it?
 
 print(Hello, world!)
