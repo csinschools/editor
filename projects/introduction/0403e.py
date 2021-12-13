@@ -1,8 +1,11 @@
-# Write some code to ask the user their favourite:
-#   - Colour
-#   - Animal
-#   - Hobby
-#   - Celebrity
+# Write some code to ask the user to enter:
 #
-# Then, write a story using these inputs!
-# You will need at least 4 input statements to begin.
+#   - an animal
+#   - a colour
+#   - an item
+#   - a number
+#   - a celebrity
+#
+# Then, write a story using their answers!
+# You must use each answer at least once in your story.
+# You will need at least 5 input() statements to begin.

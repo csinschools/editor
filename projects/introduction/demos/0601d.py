@@ -2,7 +2,7 @@ from csinsc import *
 
 label .again
 
-pin = input("Please enter your 2 digit PIN:")
+pin = input("Please enter your 2 digit PIN: ")
 
 # Hint : if at first you don't succeed... try, try again!
 # Hint 2: ASCII codes

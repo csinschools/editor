@@ -1,8 +1,9 @@
 # Fill in the blanks below to make a virtual pet.
+#
 # When the user enters:
 #   "1" - the program displays "Munch.. munch.. munch!"
-#   "2" - the program dispalys "Pat.. pat.. pat!"
-#   "3" - the prgram quits
+#   "2" - the program displays "Pat.. pat.. pat!"
+#   "3" - the program quits
 
 from csinsc import *
 
@@ -12,7 +13,7 @@ print("What would you like to do?")
 
 # Create your menu here!
 
-choice = input( _____ )
+choice = input(_____)
 
 if _____ == "1":
   print("Munch.. munch.. munch!")
