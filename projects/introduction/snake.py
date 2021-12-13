@@ -15,7 +15,7 @@ drawText("Score: " + str(score), 18, 410, font, WHITE)
 
 # draw the border
 drawRect(18, 98, \
-         290, 372, 1, WHITE)    
+         290, 128, 1, WHITE)    
 
 if gameState == 'intro':
     if progress >= 0:
