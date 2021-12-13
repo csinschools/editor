@@ -342,6 +342,7 @@
             saveToLocalStorage();  
 
             code = pygmify(code);
+            checkForPyangelo(code);
 
             editor.setReadOnly(true);
 
@@ -519,14 +520,16 @@
 
                 document.getElementById('bottompane').style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
 
-                document.getElementById('editor').style.height = "100%";
-
+                //document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
                 document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
                 document.getElementById('rightpane').style = "width: 330px;"
                 document.getElementById('leftpane').style = "height: 500px; flex-grow: 1;";
-
-                //document.getElementById('console').style = "height: 200px";
-				document.getElementById('console').style = "height: 100%";
+                
+                //document.getElementById('editor').style.height = "100%";
+                document.getElementById('editor').style.height = "500px";
+                
+                document.getElementById('console').style = "height: 200px";
+				//document.getElementById('console').style = "height: 100%";
 
                 document.getElementById('pyangelo').style = "display:block";
 
@@ -534,8 +537,12 @@
                 // TODO: implement optional immediate drawing mode to support this
                 nostep = "1";
                 stepButton.style.display = "none";
-
-
+                
+                new ResizeObserver(function(entries) {
+                    // needed so that resizing the divider forces a resize on the window
+                    // and thereby updating the ace code window properly
+                    window.dispatchEvent(new Event('resize'));
+                }).observe(document.getElementById('leftpane'));                
             }
             else if (mode == "top")
             {
@@ -616,6 +623,12 @@
                 document.getElementById('bottompane').appendChild(document.getElementById('pyangelo'));
 
                 Split(['#leftpane', '#rightpane'])
+                
+                new ResizeObserver(function(entries) {
+                    // needed so that resizing the divider forces a resize on the window
+                    // and thereby updating the ace code window properly
+                    window.dispatchEvent(new Event('resize'));
+                }).observe(document.getElementById('leftpane'));                
             }
         }
 
@@ -694,24 +707,7 @@
         </div>
         <div id ="bottompane"></div>
 
-        <div id="editor" style = "border: 1px solid black">from random import *
-
-secret = randint(1, 100)
-
-print("I'm thinking of a number between 1 and 100...")
-
-guess = -1
-
-while guess != secret:
-    guess = int(input(WHITE + "Enter your guess:"))
-    if guess > secret:
-        print(GREEN + "Lower...")
-    elif guess < secret:
-        print(RED + "Higher")
-
-print(CYAN + "You got it!")
-print(RESET + "Bye now!")
-        </div>
+        <div id="editor" style = "border: 1px solid black"># Your amazaing code goes here.</div>
         <pre id="console" onclick="if (inputElement != null) inputElement.focus();"><div id="consoleClear" onclick="clearConsole();" style="cursor: pointer;">X</div></pre>
 
         <canvas id="pyangelo" height = 500 width = 330 style="border: 1px solid black; flex: 1 1 0px;" tabindex='1'></canvas>
