@@ -10,26 +10,26 @@ gameState = 'intro'
 
 label .here
 clearScreen(BLACK)
-drawText("=== SNAKE ===", 80, 40, font, WHITE)
-drawText("Score: " + str(score), 18, 90, font, WHITE)
+drawText("=== SNAKE ===", 80, 460, font, WHITE)
+drawText("Score: " + str(score), 18, 410, font, WHITE)
 
 # draw the border
 drawRect(18, 98, \
-         290, 372, 1, WHITE)    
+         290, 128, 1, WHITE)    
 
 if gameState == 'intro':
     if progress >= 0:
         font = str(blockSize * 1.5) + "px consolas"
-        drawText("YOU DIED!", 85, 190, font, RED)
+        drawText("YOU DIED!", 85, 310, font, RED)
     font = str(blockSize) + "px consolas"
-    drawText("Controls:", 105, 230, font, WHITE)
-    drawText("'W' moves up", 75, 265, font, WHITE)
-    drawText("'S' moves down", 75, 295, font, WHITE)
-    drawText("'A' moves left", 75, 325, font, WHITE)
-    drawText("'D' moves right", 75, 355, font, WHITE)
+    drawText("Controls:", 105, 270, font, WHITE)
+    drawText("'W' moves up", 75, 235, font, WHITE)
+    drawText("'S' moves down", 75, 205, font, WHITE)
+    drawText("'A' moves left", 75, 175, font, WHITE)
+    drawText("'D' moves right", 75, 145, font, WHITE)
     
     drawText("Press 'ENTER' to play"\
-                        , 45, 415, font, WHITE)
+                        , 45, 85, font, WHITE)
     if isKeyReleased('Enter'):
         gameState = 'play'
         # Initializing values
@@ -54,10 +54,10 @@ elif gameState == 'play':
         dy = 0
     elif isKeyPressed('s'):
         dx = 0
-        dy = 1
+        dy = -1
     elif isKeyPressed('w'):
         dx = 0
-        dy = -1
+        dy = 1
 
     progress = progress + speed * timeElapsed()
     if progress >= 1.0:
@@ -77,7 +77,7 @@ elif gameState == 'play':
     for n, body in enumerate(snake[1:]):
         drawText("📀", body[0], body[1], font)
 
-    if snake[0][0] <= 18 or snake[0][1] <= 100 or snake[0][0] >= 300 or snake[0][1] >= 480: 
+    if snake[0][0] <= 18 or snake[0][1] >= 400 or snake[0][0] >= 300 or snake[0][1] <= 20: 
         gameState = 'intro'            
 
     # did the snake eat itself?
@@ -94,6 +94,6 @@ elif gameState == 'play':
       # can't be located in the snake
       while food in snake:
         foodX = randint(1, 14) * blockSize
-        foodY = randint(6, 23) * blockSize
+        foodY = randint(2, 19) * blockSize
         food = [foodX, foodY]         
 goto .here

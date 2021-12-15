@@ -221,9 +221,9 @@
             var code = ace.edit("editor").getValue();
             var file = new File([code], filename + ".py", {type: "text/plain;charset=utf-8"});
             saveAs(file);
-            saveToLocalStorage();   
+            saveToLocalStorage();
         }
-        
+
         function saveToLocalStorage()
         {
           try {
@@ -233,7 +233,7 @@
           catch(e) {
             console.log("Unable to save to local storage");
           }
-        } 
+        }
 
         function loadFromLocalStorage()
         {
@@ -245,12 +245,12 @@
             var src = localStorage.getItem(filename);
             if (!(src === null || src == "")) {
                 editor.setValue(src, -1);
-            }      
+            }
           }
           catch (e) {
             console.log("Unable to load from local storage");
-          }  
-        }        
+          }
+        }
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -338,10 +338,13 @@
 
             stepRun = stepMode;
             var code = ace.edit("editor").getValue();
-            
-            saveToLocalStorage();  
+
+            saveToLocalStorage();
 
             code = pygmify(code);
+            usingPyangelo = checkForPyangelo(code);
+            setDisplayMode(usingPyangelo ? "canvas": display);
+            if (usingPyangelo) document.getElementById("pyangelo").focus();
 
             editor.setReadOnly(true);
 
@@ -476,7 +479,8 @@
             var reader = new FileReader();
             reader.onload = (function (theFile) {
                 return function (e) {
-                    checkForPyangelo(e.target.result);
+                    usingPyangelo = checkForPyangelo(e.target.result);
+                    setDisplayMode(usingPyangelo ? "canvas": display);
                     editor.setValue(e.target.result, -1);
                     clearConsole();//pyConsole.innerHTML = "";
                 };
@@ -489,8 +493,7 @@
         {
             var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)$/gm;
             var match = code.match(pyangeloPattern);
-
-            setDisplayMode(match != null ? "canvas": display);
+            return (match != null ? true: false);
         }
 
         function setDisplayMode(mode)
@@ -519,14 +522,16 @@
 
                 document.getElementById('bottompane').style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
 
-                document.getElementById('editor').style.height = "100%";
-
+                //document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
                 document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
                 document.getElementById('rightpane').style = "width: 330px;"
                 document.getElementById('leftpane').style = "height: 500px; flex-grow: 1;";
 
-                //document.getElementById('console').style = "height: 200px";
-				document.getElementById('console').style = "height: 100%";
+                //document.getElementById('editor').style.height = "100%";
+                document.getElementById('editor').style.height = "500px";
+
+                document.getElementById('console').style = "height: 200px";
+				//document.getElementById('console').style = "height: 100%";
 
                 document.getElementById('pyangelo').style = "display:block";
 
@@ -535,7 +540,11 @@
                 nostep = "1";
                 stepButton.style.display = "none";
 
-
+                new ResizeObserver(function(entries) {
+                    // needed so that resizing the divider forces a resize on the window
+                    // and thereby updating the ace code window properly
+                    window.dispatchEvent(new Event('resize'));
+                }).observe(document.getElementById('leftpane'));
             }
             else if (mode == "top")
             {
@@ -616,6 +625,12 @@
                 document.getElementById('bottompane').appendChild(document.getElementById('pyangelo'));
 
                 Split(['#leftpane', '#rightpane'])
+
+                new ResizeObserver(function(entries) {
+                    // needed so that resizing the divider forces a resize on the window
+                    // and thereby updating the ace code window properly
+                    window.dispatchEvent(new Event('resize'));
+                }).observe(document.getElementById('leftpane'));
             }
         }
 
@@ -627,7 +642,7 @@
                 if (el.style.length) return prefixes[i] + "calc";
             }
         }
-        
+
         function resetEditor()
         {
             if (confirm("This will reset the code and you will lose your progress so far.\nIs this okay?"))
@@ -635,11 +650,12 @@
                 clearConsole();
                 resetConsole();
                 if (esc != null && esc.length > 0)
-                {            
+                {
                     codeString = decodeFromUTF16(esc);
-                    checkForPyangelo(codeString);
+                    usingPyangelo = checkForPyangelo(codeString);
+                    setDisplayMode(usingPyangelo ? "canvas": display);
                     editor.setValue(codeString, -1);
-                    
+
                     saveToLocalStorage();
                 }
                 else if (project != null && project.length > 0)
@@ -649,22 +665,23 @@
                     client.onreadystatechange = function () {
                         if (client.readyState == 4) {
                             project_src = client.responseText;
-                            checkForPyangelo(project_src);
+                            usingPyangelo = checkForPyangelo(project_src);
+                            setDisplayMode(usingPyangelo ? "canvas": display);
                             editor.setValue(project_src, -1);
                         }
-                        
-                        saveToLocalStorage();                    
+
+                        saveToLocalStorage();
                     };
-                    client.send();                          
-                }  
+                    client.send();
+                }
                 else
                 {
                     editor.setValue("", -1);
                     // clear local storage
                     localStorage.removeItem(filename);
-                }                
+                }
             }
-        }        
+        }
     </script>
 </head>
 
@@ -675,18 +692,13 @@
             <button id="stepButton" type="button" onclick="runSkulpt(true);" style = "width:72px">👣 Step</button>
             <button id="stopButton" type="button" onclick="stopEditor();" style = "width:148px">🛑 Stop</button>
             <button id="nextButton" type="button" style = "width:72px">⏭️ Next</button>
-            <button id="resetButton" type="button" onclick="resetEditor();" style = "width:78px">🔄 Reset</button>                 
+            <button id="resetButton" type="button" onclick="resetEditor();" style = "width:78px">🔄 Reset</button>
             <button id="copyButton" type="button" onclick="copyCode();" style = "width:72px">📋 Copy</button>
             <button id="saveButton" type="button" onclick="saveCode(filename);" style = "width:72px">💾 Save</button>
             <button id="loadButton" type="button" onclick="document.getElementById('file-input').click(); return false;" style = "width:72px">📂 Open</button>
             <button id="URLButton" type="button" onclick="generateURL();" style = "width:72px">URL</button>
             <button id="embedButton" type="button" onclick="generateEmbed();" style = "width:72px">Embed</button>
             <button id="fullscreenButton" type="button" onclick="openFullscreen();" style = "width:104px">🖥️ Fullscreen</button>
-            <!-- <button id="getURLButton" type="button" onclick="getURL();" style = "width:72px">⚡ GET</button>
-            <button id="setURLButton" type="button" onclick="setURL();" style = "width:72px">⚡ SET</button>
-            <input id="setURLInput" type="text">
-            <button id="getCookieButton" type="button" onclick="getCookie();" style = "width:72px">🛑 GET</button>
-            <button id="setCookieButton" type="button" onclick="setCookie();" style = "width:72px">🛑 SET</button> -->
         </form>
         <div class="split" id="split">
             <div id ="leftpane"></div>
@@ -694,24 +706,7 @@
         </div>
         <div id ="bottompane"></div>
 
-        <div id="editor" style = "border: 1px solid black">from random import *
-
-secret = randint(1, 100)
-
-print("I'm thinking of a number between 1 and 100...")
-
-guess = -1
-
-while guess != secret:
-    guess = int(input(WHITE + "Enter your guess:"))
-    if guess > secret:
-        print(GREEN + "Lower...")
-    elif guess < secret:
-        print(RED + "Higher")
-
-print(CYAN + "You got it!")
-print(RESET + "Bye now!")
-        </div>
+        <div id="editor" style = "border: 1px solid black"># Your amazing code goes here!</div>
         <pre id="console" onclick="if (inputElement != null) inputElement.focus();"><div id="consoleClear" onclick="clearConsole();" style="cursor: pointer;">X</div></pre>
 
         <canvas id="pyangelo" height = 500 width = 330 style="border: 1px solid black; flex: 1 1 0px;" tabindex='1'></canvas>
@@ -765,7 +760,8 @@ print(RESET + "Bye now!")
         {
             //codeString = atou(esc);
             codeString = decodeFromUTF16(esc);
-            checkForPyangelo(codeString);
+            usingPyangelo = checkForPyangelo(codeString);
+            setDisplayMode(usingPyangelo ? "canvas": display);
             editor.setValue(codeString, -1);
             //document.getElementById("editor").innerHTML = codeString;
         }
@@ -779,11 +775,12 @@ print(RESET + "Bye now!")
             client.open("GET", "projects/" + project + ".py");
             client.onreadystatechange = function () {
                 if (client.readyState == 4) {
-                
-                    if (localStorage.getItem(filename) === null) 
+
+                    if (localStorage.getItem(filename) === null)
                     {
                         project_src = client.responseText;
-                        checkForPyangelo(project_src);
+                        usingPyangelo = checkForPyangelo(project_src);
+                        setDisplayMode(usingPyangelo ? "canvas": display);
                         editor.setValue(project_src, -1);
                     }
                 }
@@ -811,7 +808,7 @@ print(RESET + "Bye now!")
         var filename = null;
         if (project != null && project.length > 0)
         {
-            filename = project;   
+            filename = project;
         }
         else
         {
@@ -819,10 +816,10 @@ print(RESET + "Bye now!")
             filename = urlParams.get('name')
             if (filename == null || filename.length == 0)
             {
-                filename = "my_code";                  
+                filename = "my_code";
             }
         }
-        loadFromLocalStorage(); 
+        loadFromLocalStorage();
 
         // disable step-run button
         nostep = urlParams.get('nostep')
