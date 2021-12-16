@@ -1,9 +1,9 @@
-# Fill in the blanks below so that IF the user enters 
-# coding, the program displays "Hey, fellow programmer!"
+# Fill in the blanks below so that IF the user types in 
+# "coding", the program displays "Hey, fellow programmer!"
 
 from csinsc import *
 
-________ = input("Enter your favourite subject:")
+________ = input("Enter your favourite subject: ")
 
 if subject ____ "coding":
   print("Hey, fellow programmer!")
