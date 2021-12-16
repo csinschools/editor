@@ -211,8 +211,55 @@
             ctx.fillStyle = "rgb(127, 127, 127)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
+        
+        function isChromiumBrowser()
+        {
+            agent = window.navigator.userAgent.toLowerCase();
+            if ((agent.indexOf("edg/") > -1) || (agent.indexOf("chrome") > -1 && !!window.chrome))
+                return true;
+            else
+                return false;
+        }
+        
+        async function saveCode(filename)
+        {
+            if (isChromiumBrowser())
+                saveCodeFS(filename);
+            else
+                saveCodeFilesaver(filename);            
+        }
+        
+        async function saveCodeFS(filename)
+        {          
+          const options = {
+            suggestedName: filename,
+            types: [
+              {
+                
+                description: 'Text Files',
+                accept: {
+                  'text/plain': ['.py'],
+                },
+              },
+            ],
+          };
+          const handle = await window.showSaveFilePicker(options);
+          var code = ace.edit("editor").getValue();
 
-        function saveCode(filename) {
+          const writable = await handle.createWritable();
+          // Write the contents of the file to the stream.
+          await writable.write(code);
+          // Close the file and write the contents to disk.
+          await writable.close();          
+
+          if (filename != null)
+          {
+            // only save to local storage if a filename was specified
+            saveToLocalStorage();            
+          }
+        }        
+
+        function saveCodeFilesaver(filename) {
             filename = window.prompt("Enter file name:", filename)
             if (filename == null)
             {
@@ -222,6 +269,82 @@
             var file = new File([code], filename + ".py", {type: "text/plain;charset=utf-8"});
             saveAs(file);
         }
+        
+        function saveToLocalStorage()
+        {
+          try {
+            var code = ace.edit("editor").getValue();
+            localStorage.setItem(filename, code);
+          }
+          catch(e) {
+            console.log("Unable to save to local storage");
+          }
+        } 
+        
+        async function loadCode()
+        {
+            if (isChromiumBrowser())
+                loadCodeFS();
+            else
+                document.getElementById('file-input').click();           
+            return false;
+        }
+        
+        async function loadCodeFS()
+        {             
+            const options = {    
+                suggestedName: filename,        
+                types: [
+                  {                                
+                    description: 'Text Files',
+                    accept: {
+                      'text/plain': ['.py'],
+                    },
+                  },
+                ],};          
+            [fileHandle] = await window.showOpenFilePicker(options);
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+
+            checkForPyangelo(contents);
+            editor.setValue(contents, -1);
+            clearConsole();//pyConsole.innerHTML = "";            
+            stopEditor();            
+        }
+
+        function userLoadCode(event) {
+            var files = event.target.files;
+            var file = null;
+            if (files.length > 0) file = files[0];
+            else return;
+            var reader = new FileReader();
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    checkForPyangelo(e.target.result);
+                    editor.setValue(e.target.result, -1);
+                    clearConsole();//pyConsole.innerHTML = "";
+                };
+            })(file);
+            reader.readAsText(file);
+            stopEditor();
+        }        
+
+        function loadFromLocalStorage()
+        {
+          if (filename == null || filename.length == 0)
+          {
+            return;
+          }
+          try {
+            var src = localStorage.getItem(filename);
+            if (!(src === null || src == "")) {
+                editor.setValue(src, -1);
+            }      
+          }
+          catch (e) {
+            console.log("Unable to load from local storage");
+          }  
+        }        
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -436,24 +559,7 @@
                 throw "Stopped!";
             }
         }
-
-        function userLoadCode(event) {
-            var files = event.target.files;
-            var file = null;
-            if (files.length > 0) file = files[0];
-            else return;
-            var reader = new FileReader();
-            reader.onload = (function (theFile) {
-                return function (e) {
-                    checkForPyangelo(e.target.result);
-                    editor.setValue(e.target.result, -1);
-                    clearConsole();//pyConsole.innerHTML = "";
-                };
-            })(file);
-            reader.readAsText(file);
-            stopEditor();
-        }
-
+        
         function checkForPyangelo(code)
         {
             var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)$/gm;
@@ -608,7 +714,7 @@
             <button id="nextButton" type="button" style = "width:72px">⏭️ Next</button>
             <button id="copyButton" type="button" onclick="copyCode();" style = "width:72px">📋 Copy</button>
             <button id="saveButton" type="button" onclick="saveCode(filename);" style = "width:72px">💾 Save</button>
-            <button id="loadButton" type="button" onclick="document.getElementById('file-input').click(); return false;" style = "width:72px">📂 Open</button>
+            <button id="loadButton" type="button" onclick="loadCode();" style = "width:72px">📂 Open</button>
             <button id="URLButton" type="button" onclick="generateURL();" style = "width:72px">URL</button>
             <button id="embedButton" type="button" onclick="generateEmbed();" style = "width:72px">Embed</button>
             <button id="fullscreenButton" type="button" onclick="openFullscreen();" style = "width:104px">🖥️ Fullscreen</button>
