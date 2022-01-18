@@ -1,5 +1,3 @@
-from csinsc import * # Required for .label and .goto to work
-
 starting_likes = input("Please enter the starting number of likes:")
 likes = ____(starting_likes)
 
