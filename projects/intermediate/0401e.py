@@ -1,4 +1,5 @@
 from csinsc import *
+from time import sleep
 
 print("Run, run, as fast as you can!")
 keep_going = ____
