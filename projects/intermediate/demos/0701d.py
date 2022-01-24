@@ -1,4 +1,5 @@
 from csinsc import *
+from time import sleep
 
 print(Colour.yellow + "Hello, my name is Botty the Chatbot!" + Colour.reset)
 sleep(0.5)
