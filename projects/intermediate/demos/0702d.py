@@ -1,5 +1,6 @@
 from csinsc import *
 from random import *
+from time import sleep
 
 health = 100
 potions = 5
