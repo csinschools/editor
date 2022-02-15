@@ -3,14 +3,14 @@
 print("     .|||||||||.     ")
 print("    |||||||||||||    ")
 print("   /. `|||||||||||   ")
-print("  o__,_||||||||||'   ") 
+print("  o__,_||||||||||'   ")
 
 # Type the code below that waits for the user to press the [ENTER] key.
 # Hint: You will need to use the input() command!
 
 
 
-# Print the second hedgehog by copying the code above 
-# and changing the symbols in your first hedgehog so that 
+# Print the second hedgehog by copying the code above
+# and changing the symbols in your first hedgehog so that
 # your second hedgehog has fuzzy fur.
-# Hint: You will need to change this character "|" to ":"!
+# Hint: You will need to change this character "|" to "#"!
