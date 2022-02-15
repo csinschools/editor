@@ -1,4 +1,4 @@
-from csinsc import * # Required for .label and .goto to work
+from csinsc import *
 
 starting_dollars = ____
 dollars = ________
@@ -19,10 +19,10 @@ if choice == __:
 if ________ == __:
   print("Gulp gulp gulp!")
   ________ = ________
-  
+
 if dollars <= 0:
   print("You've run out of money, sorry!")
   print("Game over.")
-  
+
 if dollars > 0:
   ________________
