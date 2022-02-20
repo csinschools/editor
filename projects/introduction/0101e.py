@@ -285,4 +285,4 @@ label .game_over
 answer = input(Colour.red + "Your adventure is over. Would you like to play again? [y/n]" + Colour.reset)
 if answer == "y":
   goto .play_game
-print("Goodbye, hope you had fun!")
+print("Goodbye, hope you had fun!!")
