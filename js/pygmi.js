@@ -2,6 +2,11 @@
 function pygmify(code)
 {
     pass1 = code;
+    
+    // removing '.' in front of labels and gotos
+    // so that the pyangelo grammar works
+    pass1 = pass1.replace("label .", "label ")  
+    pass1 = pass1.replace("goto .", "goto ")  
 
     // forever loop
     var forever_pattern = /^(\s*)(forever).*$/gm;                
@@ -21,8 +26,6 @@ function pygmify(code)
         //pass1 = pass1.replace(match[0], match[1] + "while not" + match[3]);
     }      
     
-
-
     pass2 = pass1;
     // repeat for
     var repeat_for_pattern = /^(\s*)(repeat )(\s*)(\S+)(\s*)=(\s*)(\S*)(\s*)to(\s*)(.*)$/gm;                
