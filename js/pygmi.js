@@ -5,8 +5,8 @@ function pygmify(code)
     
     // removing '.' in front of labels and gotos
     // so that the pyangelo grammar works
-    pass1 = pass1.replace("label .", "label ")  
-    pass1 = pass1.replace("goto .", "goto ")  
+    pass1 = pass1.replace(/label \./g, "label ")  
+    pass1 = pass1.replace(/goto \./g, "goto ")  
 
     // forever loop
     var forever_pattern = /^(\s*)(forever).*$/gm;                
