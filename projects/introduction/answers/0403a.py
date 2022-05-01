@@ -17,4 +17,4 @@ number = input("Enter a number: ")
 celebrity = input("Enter a celebrity: ")
 
 print("The " + colour + " " + animal + " likes to ride " + item + "s.")
-print("They are ranked number " + number + " in the world, just behind " + celebrity)
+print("They are ranked number " + number + " in the world, just behind " + celebrity + ".")
