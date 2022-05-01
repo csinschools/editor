@@ -5,9 +5,10 @@
 
 from csinsc import *
 
-print(Colour.red +      "RAINBOW")
-print(Colour.orange +   "  RAINBOW") 
-print(Colour.green +    "    RAINBOW")  
-print(Colour.yellow +   "    RAINBOW")
-print(Colour.blue +     "  RAINBOW") 
-print(Colour.pink +     "RAINBOW")  
+print(Colour.red        + "RAINBOW")
+print(Colour.orange     + "  RAINBOW")
+print(Colour.yellow     + "    RAINBOW")
+print(Colour.green      + "      RAINBOW")
+print(Colour.cyan       + "    RAINBOW")
+print(Colour.blue       + "  RAINBOW")
+print(Colour.magenta    + "RAINBOW")
