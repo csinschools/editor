@@ -6,7 +6,7 @@ from csinsc import *
 label .again
 
 answer = input("Type 'w' to win: ")
-if answer == 'w':
+if answer == "w":
   print("You win!")
   goto .again
 
