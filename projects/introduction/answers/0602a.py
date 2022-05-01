@@ -10,8 +10,8 @@ from csinsc import *
 label .menu
 
 print("What would you like to do?")
-print("1. Feed")
-print("2. Pet")
+print("1. Feed me")
+print("2. Pet me")
 print("3. Quit")
 
 choice = input("Make youre choice: ")
@@ -19,14 +19,14 @@ choice = input("Make youre choice: ")
 if choice == "1":
   print("Munch.. munch.. munch!")
   goto .menu
-  
+
 if choice == "2":
   print("Pat.. pat.. pat!")
   goto .menu
-  
+
 if choice == "3":
   goto .end
-  
+
 print ("Not a valid choice!")
 goto .menu
 
