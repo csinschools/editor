@@ -3,12 +3,11 @@
 
 from csinsc import *
 
-print("Give this quiz a go!")
-print("Question: how amny legs does a goat have?")
+print("Question: how many legs does a goat have?")
 
-answer = input("Answer now: ")
+answer = input("Enter your answer: ")
 
 if answer == "4":
-    print(Colour.green + "Yay! Correct!" + Colour.reset)
+    print(Colour.green + "Correct! Yay!" + Colour.reset)
 
-print("Bye now.")
+print("Bye now!")
