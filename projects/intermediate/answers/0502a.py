@@ -3,7 +3,7 @@ from random import randint
 keep_trying = True
 
 while keep_trying == True:
-  print("There is a 75%% chance you can pull off this cool dance move!")
+  print("There is a 75% chance you can pull off this cool dance move!")
 
   input("Press [enter] to dance!")
 
