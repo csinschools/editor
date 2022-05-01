@@ -4,7 +4,7 @@
 
 from csinsc import *
 
-print(Colour.orange + "    __")
-print(Colour.yellow + "  <" + Colour.orange + "(" + Colour.white + "o" + Colour.orange + " )___")
+print(Colour.yellow + "    __")
+print(Colour.red + "  <" + Colour.yellow + "(" + Colour.white + "o" + Colour.yellow + " )___")
 print("   ( ._> /")
-print(Colour.blue + "~~~~" + Colour.orange + "`---'" + Colour.blue + "~~~~")
+print(Colour.cyan + "~~~~" + Colour.yellow + "`---'" + Colour.cyan + "~~~~")
