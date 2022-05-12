@@ -24,7 +24,7 @@ number6 = ________ - ________
 print() # This print() just prints a blank line to the screen!
 
 # Print the result to the screen!
-print("I worked out!")
+print("I worked it out!")
 print(________)
 
 print() # This print() just prints a blank line to the screen!
