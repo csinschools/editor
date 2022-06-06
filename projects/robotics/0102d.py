@@ -30,7 +30,7 @@ m1.setLED(4, 4, True)
 # Sleep
 sleep(1)
 # Clear the LED screen
-m1.clearLED()
+m1.clear()
 
 # Turn on the LEDs to make a winky face
 # Left eye
@@ -49,6 +49,11 @@ m1.setLED(4, 1, True)
 m1.setLED(4, 2, True)
 m1.setLED(4, 3, True)
 m1.setLED(4, 4, True)
+
+# Sleep
+sleep(1)
+# Clear the LED screen
+m1.clear()
 
 # Go back to the start of the animation
 goto .start

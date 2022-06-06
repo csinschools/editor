@@ -18,4 +18,4 @@ m1.setLED(4, 4, True)
 sleep(__)
 
 # Clear the LED screen
-m1.clearLED()
+m1.clear()
