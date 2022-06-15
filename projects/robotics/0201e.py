@@ -5,7 +5,8 @@ m1 = Microbit()
 
 # Wait for button A to be pressed
 m1.waitForButtonA()
+sleep(0.5)
 
 # Do some things...
-sleep(__)
 print(____________)
+say(____________)
