@@ -1,4 +1,5 @@
 from microbit import *
+from speech import *
 
 # Connect to your microbit 
 m1 = Microbit()

@@ -318,6 +318,11 @@
           }
         }
 
+        function autoSaveToLocalStorage()
+        {
+            setInterval(saveToLocalStorage, 1000)
+        }
+
         function loadFromLocalStorage()
         {
           if (filename == null || filename.length == 0)
@@ -1048,6 +1053,7 @@
         var inputElement = null;
 
         resetCanvas();
+        autoSaveToLocalStorage();
 
     </script>
 	<div class="modal">
