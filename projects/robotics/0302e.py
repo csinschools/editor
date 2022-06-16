@@ -14,7 +14,7 @@ sleep(0.5)
 # Get current temperature
 temp = m1.____________()
 
-# Make the micro:bit show the temperature
+# Make the micro:bit show the temperature (you should use setText)
 m1._______(temp)
 
 goto .again

@@ -6,8 +6,6 @@ m1.clear()
 
 # Wait for a button to be pressed
 m1.waitForButtonB()
-
-# Do some things...
 sleep(___)
 
 # Create an LED pattern

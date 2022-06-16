@@ -5,7 +5,7 @@ from microbit import *
 _____ = Microbit()
 
 # Enter a loop
-label ._____
+label .again
 
 # Get our bearing and show it
 direction = _____.getBearing()
@@ -13,4 +13,4 @@ print("You are facing: " + ___(_________) + " degrees")
 sleep(0.5)
 
 # Go back to the label
-goto ._____
+goto .again
