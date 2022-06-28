@@ -13,7 +13,7 @@ print("Press any button, then ask me what you need!")
 assistant.waitForButtonPress()
 
 # Get the instruction
-print("Speak!")
+print("I'm listening!")
 choice = listen(5)
 print("Finished listening.")
 print("I heard you say: " + choice)
