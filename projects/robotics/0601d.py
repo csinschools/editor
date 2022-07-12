@@ -13,7 +13,8 @@ while keep_going == True:
     # Show current acceleration
     print("Z: " + str(accZ))
 
-    # Check if the acceleration is greater than 0 (this means the device is upside down!)
+    # Check if the acceleration is greater than 0 
+    # (this means the device is upside down!)
     if accZ > 0:
         keep_going = False
         print("Help!")

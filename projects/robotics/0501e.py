@@ -1,6 +1,4 @@
-from csinsc import *
 from microbit import *
-from speech import *
 
 # Connect to the micro:bit
 m1 = Microbit()
