@@ -1,4 +1,3 @@
-from csinsc import *
 from microbit import *
 
 # Connect to the micro:bit
