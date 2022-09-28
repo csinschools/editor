@@ -98,14 +98,14 @@ async function getCodestoreURL() {
 }
 
 function setTrainingWheels() {
-	if (document.getElementById("trainingWheels").checked)
+	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked)
 		urlParams.set('wheels', 1)
 	else
 		urlParams.delete('wheels')
 }
 
 function setTheme() {
-	if (document.getElementById("lightTheme").checked) {
+	if (document.getElementById("lightTheme") !== null && document.getElementById("lightTheme").checked) {
 		urlParams.set('light', 1);
 		editor.setTheme("ace/theme/eclipse");
 	}
@@ -494,7 +494,7 @@ function runSkulpt(stepMode) {
 	saveToLocalStorage();
 
 	code = stripPeriodFromGoto(code);
-	if (document.getElementById("trainingWheels").checked)
+	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked)
 		code = pygmify(code);
 	usingPyangelo = checkForPyangelo(code);
 	setDisplayMode(usingPyangelo ? "canvas": display);
@@ -874,7 +874,8 @@ if (esc != null && esc.length > 0)
 light = urlParams.get('light')
 if (light != null && light.length > 0) {
 	editor.setTheme("ace/theme/eclipse");
-	document.getElementById("lightTheme").checked = true;
+	if (document.getElementById("lightTheme") !== null)
+        document.getElementById("lightTheme").checked = true;
 }
 else {
 	editor.setTheme("ace/theme/monokai");
@@ -1036,7 +1037,7 @@ if (nofs != null && nofs.length > 0)
 
 // no full screen (if unsupported by other widgets etc.)
 wheels = urlParams.get('wheels')
-if (wheels != null && wheels.length > 0) {
+if (wheels != null && wheels.length > 0 && document.getElementById("trainingWheels") !== null) {
 	document.getElementById("trainingWheels").checked = true;
 }
 
