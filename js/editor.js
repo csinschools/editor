@@ -5,8 +5,7 @@ var animID = null;
 var dots = 0;
 var origMsg = "🔗 Getting URL"
 var prevTime = null;
-function animateURL(timestamp) {
-    document.getElementById("codestoreURL").innerText = origMsg;
+function animateURL(timestamp) {    
     document.getElementById("codestoreURL").disabled = true;
 	if (prevTime == null) {
 		prevTime = timestamp;
@@ -15,7 +14,7 @@ function animateURL(timestamp) {
 		prevTime = timestamp;
 		msg = document.getElementById("codestoreURL").innerText;
 		
-		if (dots < 3) {
+		if (dots < 5) {
 			dots += 1;
 			msg = msg + ".";
 		}
@@ -27,29 +26,45 @@ function animateURL(timestamp) {
 	}
 	animID = window.requestAnimationFrame(animateURL);
 }
-function getCodestoreURL() {
-	document.getElementById("urlContent").innerText = origMsg;
+
+function showURLDialog(msg) {
+    document.getElementById("urlContent").innerHTML = msg;
+    document.getElementById("urlDialog").style.display = "block";      
+}
+
+function resetSnapURLButton() {    
+    document.getElementById("codestoreURL").disabled = false;
+    document.getElementById("codestoreURL").innerText = "🔗 Snapshot to URL";  
+    document.getElementById("codestoreURL").style.textAlign = "center";          
+}
+  
+async function getCodestoreURL() {
+    document.getElementById("codestoreURL").innerText = origMsg;    
+    document.getElementById("codestoreURL").style.textAlign = "left";
 	dots = 0;
 	animID = window.requestAnimationFrame(animateURL);
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", storeURL + 'put', true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.timeout = 10000; // time in milliseconds
+
+    xhr.ontimeout = (e) => {
+		console.log("Timeout");
+		window.cancelAnimationFrame(animID);
+        showURLDialog("Unfortunately it took too long to generate your URL, please save your code to a file instead.");            
+    };    
 
 	xhr.onerror = function() {
 		console.log("Error");
 		window.cancelAnimationFrame(animID);
-        document.getElementById("urlContent").innerHTML = "There was an error generating your URL, please save your code to a file instead."     
-		document.getElementById("urlDialog").style.display = "block";   
-        document.getElementById("codestoreURL").disabled = false;
-        document.getElementById("codestoreURL").innerText = "🔗 Snapshot to URL";        
-		console.log(this);
+        showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead.");  
 	}
 	
 	xhr.onreadystatechange = function() {
 	  if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		if (xhr.responseText.length == 0) {
-            document.getElementById("urlContent").innerHTML = "There was an error generating your URL, please save your code to a file instead."                       
+            showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead.");
 		}
         else {
             codeurl = window.location.toString();
@@ -64,13 +79,9 @@ function getCodestoreURL() {
             
             codeurl += "&id=" + xhr.responseText; 
             
-            document.getElementById("urlContent").innerHTML = "The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL."
-            document.getElementById("urlDialog").style.display = "block";
+            showURLDialog("The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.");
         }
 		window.cancelAnimationFrame(animID);
-        document.getElementById("codestoreURL").disabled = false;
-        document.getElementById("codestoreURL").innerText = "🔗 Snapshot to URL";
-        document.getElementById("urlDialog").style.display = "block";   
 	  }
 	}
 	var code = ace.edit("editor").getValue();
@@ -83,7 +94,6 @@ function getCodestoreURL() {
 		sendURL += "&id=" + id;
 	}
 	*/
-
 	xhr.send(sendURL);            
 }
 
