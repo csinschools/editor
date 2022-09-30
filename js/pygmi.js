@@ -1,3 +1,12 @@
+function stripPeriodFromGoto(code) {
+    pass1 = code;
+    // removing '.' in front of labels and gotos
+    // so that the pyangelo grammar works
+    pass1 = pass1.replace(/label \./g, "label ")  
+    pass1 = pass1.replace(/goto \./g, "goto ") 
+	return pass1;
+}
+
 // preprocess the code to relax language grammar rules for newbies!
 function pygmify(code)
 {
@@ -93,10 +102,6 @@ function pygmify(code)
         {
             lastpass = lastpass.substr(0, match.index) + lastpass.substr(match.index).replace(match[0], match[0] + ":");
         }
-    }    
-
-  
-
-    
+    }      
     return lastpass;
 }
