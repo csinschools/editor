@@ -96,7 +96,8 @@ function outputf(n) {
     if (text.length > 0)
         pyConsole.appendChild(createColouredTextSpanElement(text, color, bgcolor, italics, bold, underlined));                           
     
-    pyConsole.scrollTop = document.getElementById("console").scrollHeight;
+    // force scroll to bottom
+    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }
 
 function inputf(n) {
