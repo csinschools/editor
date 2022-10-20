@@ -1,4 +1,4 @@
-var storeURL = "https://codestore-348206.ts.r.appspot.com/";
+var storeURL = "https://csinsc-codestore.azurewebsites.net/";
 
 var animID = null;
 
@@ -52,19 +52,19 @@ async function getCodestoreURL() {
     xhr.ontimeout = (e) => {
 		console.log("Timeout");
 		window.cancelAnimationFrame(animID);
-        showURLDialog("Unfortunately it took too long to generate your URL, please save your code to a file instead.");            
+        showURLDialog("Unfortunately it took too long to generate your URL, please save your code to a file instead and try again later.");            
     };    
 
 	xhr.onerror = function() {
 		console.log("Error");
 		window.cancelAnimationFrame(animID);
-        showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead.");  
+        showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead and try again later.");  
 	}
 	
 	xhr.onreadystatechange = function() {
 	  if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		if (xhr.responseText.length == 0) {
-            showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead.");
+            showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead and try again later.");
 		}
         else {
             codeurl = window.location.toString();
