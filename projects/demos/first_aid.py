@@ -2,6 +2,7 @@ from csinsc import *
 
 # adapted from flowchart below:
 # https://survive-student-resource.austererisk.com/trauma/anzcor_9_1_1_bleeding.html
+# specifically this image: https://survive-student-resource.austererisk.com/trauma/bleedingflow.jpg
 print(Colour.green + "An interactive guide to managing external bleeding." + Colour.reset)
 label .step1
 printImage("https://media.istockphoto.com/vectors/first-aid-compression-injury-in-the-arm-vector-id477827854?k=20&m=477827854&s=612x612&w=0&h=i50J8-kjhJ6K36yNJlmkUYAcwT-7kx6op2Fvz_J4_7A=", 200)
