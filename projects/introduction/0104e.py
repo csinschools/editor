@@ -14,8 +14,8 @@ drawText("=== SNAKE ===", 80, 460, font, WHITE)
 drawText("Score: " + str(score), 18, 410, font, WHITE)
 
 # draw the border
-drawRect(18, 98, \
-         290, 128, 1, WHITE)    
+drawRect(18, 35, \
+         290, 365, 1, WHITE)    
 
 if gameState == 'intro':
     if progress >= 0:
