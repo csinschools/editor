@@ -500,7 +500,7 @@ function runSkulpt(stepMode) {
 	setDisplayMode(usingPyangelo ? "canvas": display);
 	if (usingPyangelo) document.getElementById("pyangelo").focus();
 
-	editor.setReadOnly(true);
+	//editor.setReadOnly(true);
 
 	_stopped = false;
 	stopButton.style.display = "inline";

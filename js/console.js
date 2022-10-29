@@ -142,6 +142,23 @@ function resetConsole()
     clearConsole();
 }
 
+function createImageElement(url, width, height) {
+    let e = document.createElement("img");  
+    e.src = url;
+    if (width !== null) {
+        e.width = width;
+    }
+    if (height !== null) {
+        e.height = height;
+    }
+    e.onload = onImageLoaded;
+    return e ;
+}
+
+function onImageLoaded() {
+    Sk.builtins.imageLoaded = new Sk.builtin.bool(true);
+}
+
 function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underlined) {
     let t = document.createTextNode(n);        
     let e = document.createElement("span");    
@@ -203,68 +220,15 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
     return e;
 }
 
-function encodeToUTF16(plaintext) {
-  var res = "";
-  for (i = 0; i < plaintext.length; i++)
-  {
-    var ch1 = plaintext.charCodeAt(i);
-    var ch2 = 0;
-    if (ch1 < 256 && i < plaintext.length - 1)
-    {
-      ch2 = plaintext.charCodeAt(++i);   
-      if (ch2 >= 256)
-      {      	
-        ch2 = 0;
-        --i;
-      }
-    }
-    else if (ch1 >= 256)
-    {
-      ch2 = 0;
-      if (i < plaintext.length - 1)
-      {
-        ch2 = plaintext.charCodeAt(++i);    
-      }
-      res = res + "@" + String.fromCharCode(ch1, ch2);
-      continue;
-    }
-    res = res + String.fromCharCode(ch1 * 256 + ch2);    
-  }
-  return res;
-}
-
-function decodeFromUTF16(codedText) {
-  var res = "";
-  
-  for (i = 0; i < codedText.length; i++)
-  {
-    ch = codedText.charCodeAt(i);
-    
-    if (ch == 64)
-    {
-      ch1 = codedText.charCodeAt(++i);
-      ch2 = codedText.charCodeAt(++i);
-      res += String.fromCharCode(ch1, ch2);
-    }
-    else
-    {
-      var ch1 = (ch / 256) % (256);
-      var ch2 = ch % (256);
-           
-      if (ch2 == 0)
-      {
-      	res += String.fromCharCode(ch1);
-      }
-      else
-      {
-      	res += String.fromCharCode(ch1, ch2);
-      }
-    }
-  }
-  return res;
-}
-
-Sk.builtins.clear = function()
-{
+Sk.builtins.clear = function() {
     clearConsole();
+}
+
+Sk.builtins.imageLoaded = new Sk.builtin.bool(false);
+Sk.builtins.addImage = function(url, width, height) {
+    Sk.builtins.imageLoaded = new Sk.builtin.bool(false);
+    if (url.v !== null && url.v.length > 0) {
+        pyConsole.appendChild(createImageElement(url.v, width.v, height.v));       
+        pyConsole.appendChild(document.createElement("br"));      
+    }
 }
