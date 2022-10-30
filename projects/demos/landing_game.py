@@ -36,7 +36,7 @@ earth = 1.0
 mars = 0.38
 moon = 0.16
 neptune = 1.1
-planet = earth # earth = 1, mars = 0.38, moon = 0.16, neptune = 1.1
+planet = moon # earth = 1, mars = 0.38, moon = 0.16, neptune = 1.1
 gravity = -800 * planet
 thrust = 0
 
@@ -50,7 +50,6 @@ while True:
             fuel = fuel + 0.1
         else:
             thrust = 0
-            
         if player.y >= 440:
             player.y = 440
             thrust = 0
@@ -59,14 +58,15 @@ while True:
             player.x += -100 * delta
         if isKeyPressed('d'):
             player.x += 100 * delta
-
-
         if player.x < 0 or player.x > 280:
             state = "end"
         net = gravity + thrust
         #print(gravity, thrust, net)
         #if net > 10:
         #    net = 10
+        if thrust > 0:
+            drawText("🌫️", player.x + 5, player.y -15, "10px monospace")
+            drawText("🌫️", player.x + 25, player.y -15, "10px monospace")
         player.update(net)
         player.draw()
         
@@ -90,5 +90,3 @@ while True:
             player.draw()
             drawText("LANDED!", player.x - 10, player.y + player.size, "20px monospace", GREEN)
             drawText("Fuel:" + str(int(fuel)), 0, 460, "20px monospace", WHITE)
-
-    
