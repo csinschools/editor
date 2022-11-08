@@ -528,6 +528,8 @@ function runSkulpt(stepMode) {
 	handlers["*"] = checkForStop;
 	if (stepRun) {
 		prevLine = 0;
+		// set readOnly for step mode
+		editor.setReadOnly(true);
 		//editor.setTheme("ace/theme/gob");
 		var styleSheet =  document.styleSheets[0];//getStyleSheet('ace-monokai');
 		styleSheet.insertRule(".ace-monokai .ace_marker-layer .ace_active-line {background: #208020}", styleSheet.rules.length);
