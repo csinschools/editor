@@ -300,17 +300,6 @@ function saveCodeFilesaver(filename) {
 	saveToLocalStorage();
 }
 
-function saveToLocalStorage()
-{
-  try {
-	var code = ace.edit("editor").getValue();
-	localStorage.setItem(filename, code);
-  }
-  catch(e) {
-	console.log("Unable to save to local storage");
-  }
-}
-
 function loadFromLocalStorage()
 {
   if (filename == null || filename.length == 0)
@@ -490,6 +479,7 @@ function runSkulpt(stepMode) {
 
 	stepRun = stepMode;
 	var code = ace.edit("editor").getValue();
+
 
 	saveToLocalStorage();
 
@@ -885,41 +875,69 @@ else {
 
 // code store id
 var id = urlParams.get('id');
+// project mode: load from code from existing .py file under /projects
+// only works when hosted on web server (no filesystem mode)
+project = urlParams.get('project');
+
 
 if (id != null && id.length > 0) {
   var xhr2 = new XMLHttpRequest();
   xhr2.open("GET", storeURL + 'get?id=' + id, true);
+
+  spinner.style.display = "block";
+  editor.setValue("# Loading code... please wait.", -1);
+  let editorDiv = document.getElementById("editor");  
+  editorDiv.appendChild(spinner);
+
   xhr2.onreadystatechange = function() { 
-	  if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+	  if (this.readyState === XMLHttpRequest.DONE) {
+	   if (this.status === 200) {
+		// don't check local storage for when there are ids
+		// btw, we purge the id from the URL params when the page is loaded
+		// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
 		codeString = xhr2.responseText;
 		usingPyangelo = checkForPyangelo(codeString);
 		setDisplayMode(usingPyangelo ? "canvas": display);
+
+		spinner.style.display = "none";
+		editorDiv.removeChild(spinner);		
 		editor.setValue(codeString, -1);
 	  }
+	  else {
+		// TODO: error handling
+		alert("There was a problem loading your code form the codestore. Please check the URL and/or try again later.")
+	  }
+	}
   }
   xhr2.send();   
 }
+// only open up project if there is no id
+else if (project != null && project.length > 0) {
+	// only if there is nothing in local storage for that project
+	if (localStorage.getItem(filename) === null) {
+		var client = new XMLHttpRequest();
+		client.open("GET", "projects/" + project + ".py");
+		client.onreadystatechange = function () {
+			if (client.readyState == 4) {
 
-// project mode: load from code from existing .py file under /projects
-// only works when hosted on web server (no filesystem mode)
-project = urlParams.get('project');
-if (project != null && project.length > 0)
-{
-	var client = new XMLHttpRequest();
-	client.open("GET", "projects/" + project + ".py");
-	client.onreadystatechange = function () {
-		if (client.readyState == 4) {
-
-			if (localStorage.getItem(filename) === null)
-			{
-				project_src = client.responseText;
-				usingPyangelo = checkForPyangelo(project_src);
-				setDisplayMode(usingPyangelo ? "canvas": display);
-				editor.setValue(project_src, -1);
+				if (localStorage.getItem(filename) === null)
+				{
+					project_src = client.responseText;
+					usingPyangelo = checkForPyangelo(project_src);
+					setDisplayMode(usingPyangelo ? "canvas": display);
+					editor.setValue(project_src, -1);
+				}
 			}
-		}
-	};
-	client.send();
+		};
+		client.send();
+	}
+	else {
+		loadFromLocalStorage();
+	}
+}
+// no id, and no project, so let's load from local storage
+else {
+	loadFromLocalStorage();
 }
 
 // hide stop and next button on load
@@ -953,7 +971,9 @@ else
 		filename = "my_code";
 	}
 }
-loadFromLocalStorage();
+
+// don't load from local storage if 
+// loadFromLocalStorage();
 
 // disable step-run button
 nostep = urlParams.get('nostep')
@@ -1050,3 +1070,14 @@ var inputElement = null;
 resetCanvas();
 
 document.getElementsByClassName('gutter')[0].style.zIndex = 10;
+
+// get rid of id= from param string
+// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
+let newURL = window.location.toString();
+newURL = newURL.split('?')[0] + "?";
+urlParams.forEach(function(value, key) {
+	if (key != "id" && key !== "undefined") {
+	newURL = newURL + "&" + key + "=" + value;
+	}
+});
+window.history.replaceState(null, null, newURL);

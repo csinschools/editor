@@ -131,6 +131,9 @@ var fontBold = false;
 var fontUnderlined = false;
 var fontSize = "14pt";
 
+var spinner = document.getElementById("spinner");
+spinner.style.display = "none";
+
 function resetConsole()
 {
     fontColour = "rgba(255, 255, 255, 1)";
@@ -145,6 +148,7 @@ function resetConsole()
 function createImageElement(url, width, height) {
     let e = document.createElement("img");  
     e.src = url;
+    e.style.display = "none";
     if (width !== null) {
         e.width = width;
     }
@@ -152,11 +156,23 @@ function createImageElement(url, width, height) {
         e.height = height;
     }
     e.onload = onImageLoaded;
+
+
+    // show the spinner while image is loading
+    spinner.style.display = "block";
+    pyConsole.appendChild(spinner);
+    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
+
     return e ;
 }
 
 function onImageLoaded() {
     Sk.builtins.imageLoaded = new Sk.builtin.bool(true);
+    this.style.display = "block";
+
+    // hide the spinner after image has loaded
+    spinner.style.display = "none";
+    pyConsole.removeChild(spinner);
 }
 
 function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underlined) {
