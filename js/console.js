@@ -245,6 +245,6 @@ Sk.builtins.addImage = function(url, width, height) {
     Sk.builtins.imageLoaded = new Sk.builtin.bool(false);
     if (url.v !== null && url.v.length > 0) {
         pyConsole.appendChild(createImageElement(url.v, width.v, height.v));       
-        pyConsole.appendChild(document.createElement("br"));      
+        //pyConsole.appendChild(document.createElement("br"));      
     }
 }
