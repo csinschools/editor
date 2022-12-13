@@ -1,4 +1,4 @@
-var storeURL = "https://csinsc-codestore.azurewebsites.net/";
+var storeURL = "https://codestore-348206.ts.r.appspot.com/";
 
 var animID = null;
 
@@ -72,7 +72,7 @@ async function getCodestoreURL() {
             delimit = "";
 
             urlParams.forEach(function(value, key) {
-              if (key != "id" && key !== "undefined") {
+              if (key != "id" && key !== "undefined" && key != "project" && key != "headless") {
                 codeurl = codeurl + "&" + key + "=" + value;
               }
             });
@@ -300,23 +300,6 @@ function saveCodeFilesaver(filename) {
 	saveToLocalStorage();
 }
 
-function loadFromLocalStorage()
-{
-  if (filename == null || filename.length == 0)
-  {
-	return;
-  }
-  try {
-	var src = localStorage.getItem(filename);
-	if (!(src === null || src == "")) {
-		editor.setValue(src, -1);
-	}
-  }
-  catch (e) {
-	console.log("Unable to load from local storage");
-  }
-}
-
 function saveToLocalStorage()
 {
   try {
@@ -384,14 +367,12 @@ function loadFromLocalStorage()
   }
   try {
 	var src = localStorage.getItem(filename);
-	if (!(src === null || src == "")) {
-		editor.setValue(src, -1);
-	}      
+	return src;
   }
   catch (e) {
 	console.log("Unable to load from local storage");
-  }  
-}        
+  }
+} 
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
@@ -475,13 +456,14 @@ function getStyleSheet(unique_title) {
 }
 
 var stepRun = false;
-function runSkulpt(stepMode) {
+function runSkulpt(stepMode, code = "") {
 
 	stepRun = stepMode;
-	var code = ace.edit("editor").getValue();
 
-
-	saveToLocalStorage();
+	if (!headless) {
+		code = ace.edit("editor").getValue();
+		saveToLocalStorage();
+	}
 
 	code = stripPeriodFromGoto(code);
 	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked)
@@ -599,8 +581,7 @@ function stopSkulpt() {
 	resetCanvas();
 }
 
-function stopEditor()
-{
+function stopEditor() {
 	_stopped = true;
 	if (inputElement != null)
 	{
@@ -616,15 +597,13 @@ function stopEditor()
 		throw "Stopped!";
 	}
 }
-function checkForPyangelo(code)
-{
+function checkForPyangelo(code) {
 	var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)$/gm;
 	var match = code.match(pyangeloPattern);
 	return (match != null ? true: false);
 }
 
-function setDisplayMode(mode)
-{
+function setDisplayMode(mode, headless = false) {
 	if (prevDisplay != null && prevDisplay == mode)
 	{
 		return;
@@ -640,38 +619,58 @@ function setDisplayMode(mode)
 
 	prevDisplay = mode;
 	// FIXME: Setting display mode to non-canvas after it has been set to canvas causes issues
+	// we're in canvas demo mode
 	if (mode == "canvas")
 	{
-		// we're in canvas demo mode
-		document.getElementById('leftpane').appendChild(document.getElementById('editor'));
-		document.getElementById('rightpane').appendChild(document.getElementById('pyangelo'));
-		document.getElementById('bottompane').appendChild(document.getElementById('consoleWrapper'));
+		if (headless) {
+			// headless inside canvas only
+			let split = document.getElementById('split');
+			let left = document.getElementById('leftpane');
+			let right = document.getElementById('rightpane');
+			let bottom = document.getElementById('bottompane');
+			let pyangelo = document.getElementById('pyangelo');
+			split.appendChild(pyangelo);
+			bottom.appendChild(document.getElementById('consoleWrapper'));
+			bottom.style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
+			split.removeChild(left);		
+			split.removeChild(right);		
+			split.style = "height: 505px; display: block;text-align:center;";
+			pyangelo.style = "display:inline-block;";
 
-		document.getElementById('bottompane').style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
 
-		//document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
-		document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
-		document.getElementById('rightpane').style = "width: 330px;"
-		document.getElementById('leftpane').style = "height: 500px; flex-grow: 1;";
+		}
+		else {			
+			document.getElementById('leftpane').appendChild(document.getElementById('editor'));
+			document.getElementById('rightpane').appendChild(document.getElementById('pyangelo'));
+			document.getElementById('bottompane').appendChild(document.getElementById('consoleWrapper'));
 
-		//document.getElementById('editor').style.height = "100%";
-		document.getElementById('editor').style.height = "500px";
+			document.getElementById('bottompane').style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
+
+			//document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
+			document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
+			document.getElementById('rightpane').style = "width: 330px;"
+			document.getElementById('leftpane').style = "height: 500px; flex-grow: 1;";
+
+			//document.getElementById('editor').style.height = "100%";
+			document.getElementById('editor').style.height = "500px";
+			document.getElementById('pyangelo').style = "display:block";
+
+			new ResizeObserver(function(entries) {
+				// needed so that resizing the divider forces a resize on the window
+				// and thereby updating the ace code window properly
+				window.dispatchEvent(new Event('resize'));
+			}).observe(document.getElementById('leftpane'));			
+		}
 
 		document.getElementById('consoleWrapper').style = "height: 200px";
 		//document.getElementById('console').style = "height: 100%";
 
-		document.getElementById('pyangelo').style = "display:block";
+		
 
 		// no step-run for canvas items
 		// TODO: implement optional immediate drawing mode to support this
 		nostep = "1";
 		stepButton.style.display = "none";
-
-		new ResizeObserver(function(entries) {
-			// needed so that resizing the divider forces a resize on the window
-			// and thereby updating the ace code window properly
-			window.dispatchEvent(new Event('resize'));
-		}).observe(document.getElementById('leftpane'));
 	}
 	else if (mode == "top")
 	{
@@ -770,12 +769,14 @@ function prefixedCalc () {
 	}
 }
 
-function resetEditor()
-{
+function resetEditor() {
 	if (confirm("This will reset the code and you will lose your progress so far.\nIs this okay?"))
 	{
 		clearConsole();
 		resetConsole();
+		editor.setValue("", -1);
+		// clear local storage
+		localStorage.removeItem(filename);		
 		if (esc != null && esc.length > 0)
 		{
 			codeString = decodeFromUTF16(esc);
@@ -797,17 +798,23 @@ function resetEditor()
 					editor.setValue(project_src, -1);
 				}
 
-				saveToLocalStorage();
+				//saveToLocalStorage();
 			};
 			client.send();
 		}
-		else
-		{
-			editor.setValue("", -1);
-			// clear local storage
-			localStorage.removeItem(filename);
-		}
 	}
+}
+
+// for all headless setup (see the setDisplayMode() for canvas specific setup)
+function setupHeadless() {
+	let body = document.getElementsByTagName('body')[0];	
+	body.style.backgroundColor = "#000";
+	let editorDiv = document.getElementById("editor");  
+	editorDiv.style.display = "none";	
+	document.getElementById('container').appendChild(document.getElementById('consoleWrapper'));
+
+	document.getElementById("split").style.display = "none";
+	document.getElementById("buttons").style.display = "none";
 }
 
 // setting up the ace editor
@@ -837,7 +844,13 @@ var embedButton = document.getElementById("embedButton");
 var fsButton = document.getElementById("fullscreenButton");
 
 // grabbing the URL parameters and processing them
+// Order in which we process the URL params are IMPORTANT!
+// e.g. display is needed before project and id
+// e.g. project (filename) is needed opening the project (because localstore is queried on the name)
 urlParams = new URLSearchParams(window.location.search);
+
+var headless = false;
+headless = urlParams.get('headless');
 
 // canvas demo mode: canvas to the right of the editor, console at the bottom
 var prevDisplay = null;
@@ -854,12 +867,10 @@ setDisplayMode(display);
 esc = urlParams.get('code')
 if (esc != null && esc.length > 0)
 {
-	//codeString = atou(esc);
 	codeString = decodeFromUTF16(esc);
 	usingPyangelo = checkForPyangelo(codeString);
 	setDisplayMode(usingPyangelo ? "canvas": display);
 	editor.setValue(codeString, -1);
-	//document.getElementById("editor").innerHTML = codeString;
 }
 
 // dark/light theme
@@ -878,16 +889,45 @@ var id = urlParams.get('id');
 // project mode: load from code from existing .py file under /projects
 // only works when hosted on web server (no filesystem mode)
 project = urlParams.get('project');
+var filename = null;
+if (project != null && project.length > 0)
+{
+	filename = project;
+}
+else
+{
+	// default file name (for saving)
+	filename = urlParams.get('name')
+	if (filename == null || filename.length == 0)
+	{
+		filename = "my_code";
+	}
+}
+// disable headless only if there is something in the localstorage but this is not from the codestore 
+// would occur when 
+if (localStorage.getItem(filename) !== null && !(id != null && id.length > 0)) {
+	headless = false;
+}
 
-
+// load code by id from codestore
 if (id != null && id.length > 0) {
   var xhr2 = new XMLHttpRequest();
+  var editorDiv = document.getElementById("editor"); 
+  var consoleDiv = document.getElementById("console"); 
+
   xhr2.open("GET", storeURL + 'get?id=' + id, true);
 
-  spinner.style.display = "block";
-  editor.setValue("# Loading code... please wait.", -1);
-  let editorDiv = document.getElementById("editor");  
-  editorDiv.appendChild(spinner);
+  if (!headless) {
+	spinner.style.display = "block";
+	editor.setValue("# Loading code... please wait.", -1);
+	 
+	editorDiv.appendChild(spinner);
+  } 
+  else {
+	spinner.style.display = "block";
+	consoleDiv.appendChild(spinner);
+	setupHeadless();
+  }
 
   xhr2.onreadystatechange = function() { 
 	  if (this.readyState === XMLHttpRequest.DONE) {
@@ -897,11 +937,21 @@ if (id != null && id.length > 0) {
 		// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
 		codeString = xhr2.responseText;
 		usingPyangelo = checkForPyangelo(codeString);
-		setDisplayMode(usingPyangelo ? "canvas": display);
+		setDisplayMode(usingPyangelo ? "canvas": display, headless);
 
-		spinner.style.display = "none";
-		editorDiv.removeChild(spinner);		
-		editor.setValue(codeString, -1);
+		if (!headless) {
+			spinner.style.display = "none";
+			editorDiv.removeChild(spinner);		
+			editor.setValue(codeString, -1);
+			// check headless mode			
+		}
+		else {
+			// let's run!
+			spinner.style.display = "none";
+			consoleDiv.removeChild(spinner);					
+			runSkulpt(false, codeString);
+
+		}		
 	  }
 	  else {
 		// TODO: error handling
@@ -914,30 +964,51 @@ if (id != null && id.length > 0) {
 // only open up project if there is no id
 else if (project != null && project.length > 0) {
 	// only if there is nothing in local storage for that project
+	if (headless) {
+		setupHeadless();	
+	}
+
 	if (localStorage.getItem(filename) === null) {
 		var client = new XMLHttpRequest();
 		client.open("GET", "projects/" + project + ".py");
 		client.onreadystatechange = function () {
 			if (client.readyState == 4) {
 
-				if (localStorage.getItem(filename) === null)
+				if (localStorage.getItem(filename) === null || headless)
 				{
 					project_src = client.responseText;
 					usingPyangelo = checkForPyangelo(project_src);
-					setDisplayMode(usingPyangelo ? "canvas": display);
-					editor.setValue(project_src, -1);
+					setDisplayMode(usingPyangelo ? "canvas": display, headless);
+
+					if (!headless) {
+						editor.setValue(project_src, -1);
+					}
+					else {
+						runSkulpt(false, project_src);
+					}
 				}
 			}
 		};
 		client.send();
 	}
 	else {
-		loadFromLocalStorage();
+		let src = loadFromLocalStorage();
+
+		if (!(src === null || src == "")) {
+			usingPyangelo = checkForPyangelo(src);
+			editor.setValue(src, -1);
+			setDisplayMode(usingPyangelo ? "canvas": display);
+		}
 	}
 }
 // no id, and no project, so let's load from local storage
 else {
-	loadFromLocalStorage();
+	let src = loadFromLocalStorage();
+	if (!(src === null || src == "")) {
+		usingPyangelo = checkForPyangelo(src);
+		editor.setValue(src, -1);
+		setDisplayMode(usingPyangelo ? "canvas": display);
+	}	
 }
 
 // hide stop and next button on load
@@ -956,24 +1027,6 @@ else
 	saveButton.style.display = "inline";
 	loadButton.style.display = "inline";
 }
-
-var filename = null;
-if (project != null && project.length > 0)
-{
-	filename = project;
-}
-else
-{
-	// default file name (for saving)
-	filename = urlParams.get('name')
-	if (filename == null || filename.length == 0)
-	{
-		filename = "my_code";
-	}
-}
-
-// don't load from local storage if 
-// loadFromLocalStorage();
 
 // disable step-run button
 nostep = urlParams.get('nostep')
@@ -1069,7 +1122,9 @@ var inputElement = null;
 
 resetCanvas();
 
-document.getElementsByClassName('gutter')[0].style.zIndex = 10;
+var gutters = document.getElementsByClassName('gutter');
+if (gutters.length > 0 && gutters !== undefined)
+	gutters[0].style.zIndex = 10;
 
 // get rid of id= from param string
 // this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
