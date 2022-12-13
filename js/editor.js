@@ -1126,13 +1126,17 @@ var gutters = document.getElementsByClassName('gutter');
 if (gutters.length > 0 && gutters !== undefined)
 	gutters[0].style.zIndex = 10;
 
-// get rid of id= from param string
-// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
-let newURL = window.location.toString();
-newURL = newURL.split('?')[0] + "?";
-urlParams.forEach(function(value, key) {
-	if (key != "id" && key !== "undefined") {
-	newURL = newURL + "&" + key + "=" + value;
-	}
-});
-window.history.replaceState(null, null, newURL);
+// if not in headless mode:
+if (!headless) {
+	// get rid of id= from param string
+	// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
+	let newURL = window.location.toString();
+	newURL = newURL.split('?')[0] + "?";
+	urlParams.forEach(function(value, key) {
+		if (key != "id" && key !== "undefined") {
+		newURL = newURL + "&" + key + "=" + value;
+		}
+	});
+	window.history.replaceState(null, null, newURL);
+}
+// if we are in headless mode, then editor is not active anyway and the ID needs to be in the url for the user to restart via refresh
