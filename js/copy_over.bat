@@ -1,0 +1,1 @@
+copy D:\skulpt-pingskills\skulpt\dist\*.* .

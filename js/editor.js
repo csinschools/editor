@@ -547,6 +547,7 @@ function runSkulpt(stepMode, code = "") {
 
 function stopSkulpt() {
 	editor.setReadOnly(false);
+	stopAllSounds();
 	if (stepRun)
 	{
 		// remove step highlighting
@@ -815,6 +816,15 @@ function setupHeadless() {
 
 	document.getElementById("split").style.display = "none";
 	document.getElementById("buttons").style.display = "none";
+}
+
+function stopAllSounds() {
+    document.querySelectorAll('audio').forEach(element => {
+        element.pause();
+        element.currentTime = 0;
+        element.src ="";
+        element = null;        
+    });
 }
 
 // setting up the ace editor

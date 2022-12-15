@@ -235,6 +235,7 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
     e.appendChild(t);        
     return e;
 }
+///////////////////////// exported helper functions //////////////////////////
 
 Sk.builtins.clear = function() {
     clearConsole();
@@ -247,4 +248,15 @@ Sk.builtins.addImage = function(url, width, height) {
         pyConsole.appendChild(createImageElement(url.v, width.v, height.v));       
         //pyConsole.appendChild(document.createElement("br"));      
     }
+}
+
+Sk.builtins.showSpinner = function() {
+    spinner.style.display = "block";
+    pyConsole.appendChild(spinner);
+    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
+}
+
+Sk.builtins.hideSpinner = function() {
+    spinner.style.display = "none";
+    pyConsole.removeChild(spinner);
 }
