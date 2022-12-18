@@ -104,6 +104,7 @@ function inputf(n) {
     inputPromise = new Promise((function(n, e) {                    
                 inputElement = document.createElement("span");
                 inputElement.setAttribute("contenteditable", "true");
+                inputElement.setAttribute("autocapitalize", "off");
                 inputElement.style.color = "rgb(255,255,255)";
                 inputElement.style.fontSize = "14pt";
                 inputElement.style.outlineStyle = "none";
