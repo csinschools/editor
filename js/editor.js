@@ -466,8 +466,10 @@ function runSkulpt(stepMode, code = "") {
 	}
 
 	code = stripPeriodFromGoto(code);
-	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked)
+	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked) {
+		code = replacePrintConcatenationWithArgs(code);
 		code = pygmify(code);
+	}
 	usingPyangelo = checkForPyangelo(code);
 	setDisplayMode(usingPyangelo ? "canvas": display);
 	if (usingPyangelo) document.getElementById("pyangelo").focus();

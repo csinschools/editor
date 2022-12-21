@@ -7,6 +7,22 @@ function stripPeriodFromGoto(code) {
 	return pass1;
 }
 
+function replacePrintConcatenationWithArgs(code) {
+    var print_pattern = /^(\s*)(slowPrint|print)(.*)$/gm;                
+    var matches = code.matchAll(print_pattern);
+    for (match of matches)
+    {
+        args = match[3];
+        // naive replace
+        // TODO: check for quotes and escapes!
+        //args = args.replace("+", ",");
+        args = args.replace(")", ",sep='')");
+
+        pass1 = pass1.substr(0, match.index) + pass1.substr(match.index).replace(match[0], match[1] + match[2] + args);        
+    }    
+    return pass1;
+}
+
 // preprocess the code to relax language grammar rules for newbies!
 function pygmify(code)
 {
