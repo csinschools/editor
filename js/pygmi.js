@@ -7,18 +7,79 @@ function stripPeriodFromGoto(code) {
 	return pass1;
 }
 
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}
+
+// replaces all + characters not within quotes and brackets with , for argumented print() and slowPrint()
+// as a result, slowPrint() will require named arguments for delay and newLine
+// VERY HACKY!
 function replacePrintConcatenationWithArgs(code) {
-    var print_pattern = /^(\s*)(slowPrint|print)(.*)$/gm;                
+    // print("a" + 2 + 3 + "b") => print("a", 2 , 3 , "b", sep = "")
+    // print("a" + (2 + 3) + "b") => print("a", (2 + 3), "b", sep = "")
+    // only works for single line prints, not preformatted multi-line strings
+    var print_pattern = /^(\s*)(slowPrint|print|say|.*\.slowPrint|.*\.say)(.*)$/gm;                
     var matches = code.matchAll(print_pattern);
     for (match of matches)
     {
         args = match[3];
-        // naive replace
-        // TODO: check for quotes and escapes!
-        //args = args.replace("+", ",");
-        args = args.replace(")", ",sep='')");
 
-        pass1 = pass1.substr(0, match.index) + pass1.substr(match.index).replace(match[0], match[1] + match[2] + args);        
+        new_args = ""
+        quoted = false;
+        quote_type = ""
+        esc = "\\"
+        // TODO: detect escaped quotes!
+        last_bracket_index = 0;
+        bracket_level = 0;
+        preFormatted = false;
+        for (i = 0; i < args.length; i++) {
+            chr = args[i];
+            if (chr == "\"" && !quoted) {
+                // check for preformatted strings
+                // e.g. print(r'''stuff/stuff''')
+                // NOTE: the first instance encountered will nullify all arguments to date and revert to as-is string
+                if (args[i - 1] == "r") {
+                    preFormatted = true;
+                    break;
+                }
+                quoted = true;
+                quote_type = "\""
+                
+            } else if (chr == "'" && !quoted) {
+                // check for preformatted strings
+                // e.g. print(r'''stuff/stuff''')
+                // NOTE: the first instance encountered will nullify all arguments to date and revert to as-is string
+                if (args[i - 1] == "r") {
+                    preFormatted = true;
+                    break;
+                }                
+                quoted = true;
+                quote_type = "'"
+            } else if (chr == "(" && !quoted) {
+                bracket_level ++;
+            } else if (chr == ")" && !quoted) {
+                bracket_level --;
+                last_bracket_index = i;
+            } else if (chr == "\"" && quoted && quote_type == "\"") {
+                quoted = false;
+            } else if (chr == "'" && quoted && quote_type == "'") {
+                quoted = false;
+            } else if (chr == "+" && !quoted && bracket_level == 1) {
+                // replacement of + with , at lowest bracket level
+                // any bracketed, or nested-bracketed expressions will be evaluated normally
+                chr = ",";    
+            } else if (chr == "#" && !quoted) {
+                break;
+            }      
+            new_args += chr;
+        }
+
+        if (preFormatted) {
+            continue;
+        }
+
+        new_args = new_args.substr(0, last_bracket_index) + ",sep='')";
+        pass1 = pass1.substr(0, match.index) + pass1.substr(match.index).replace(match[0], match[1] + match[2] + new_args);        
     }    
     return pass1;
 }
