@@ -119,7 +119,6 @@ function clearConsole() {
 	var clearButton = document.getElementById("consoleClear");
 
 	pyConsole.innerHTML = "";
-	pyConsole.appendChild(clearButton);
 	if (inputElement != null)
 	{
 		inputElement.innerText = "";
@@ -334,10 +333,10 @@ async function loadCodeFS()
 		],};          
 	[fileHandle] = await window.showOpenFilePicker(options);
 	const file = await fileHandle.getFile();
-	const contents = await file.text();
+	codestring = await file.text();
 
-	checkForPyangelo(contents);
-	editor.setValue(contents, -1);
+	checkForPyangelo(codestring);
+	editor.setValue(codestring, -1);
 	clearConsole();//pyConsole.innerHTML = "";            
 	stopEditor();            
 }
@@ -349,9 +348,10 @@ function userLoadCode(event) {
 	else return;
 	var reader = new FileReader();
 	reader.onload = (function (theFile) {
+		codestring = e.target.result;
 		return function (e) {
-			checkForPyangelo(e.target.result);
-			editor.setValue(e.target.result, -1);
+			checkForPyangelo(codestring);
+			editor.setValue(codestring, -1);
 			clearConsole();//pyConsole.innerHTML = "";
 		};
 	})(file);
@@ -782,10 +782,10 @@ function resetEditor() {
 		localStorage.removeItem(filename);		
 		if (esc != null && esc.length > 0)
 		{
-			codeString = decodeFromUTF16(esc);
-			usingPyangelo = checkForPyangelo(codeString);
+			codestring = decodeFromUTF16(esc);
+			usingPyangelo = checkForPyangelo(codestring);
 			setDisplayMode(usingPyangelo ? "canvas": display);
-			editor.setValue(codeString, -1);
+			editor.setValue(codestring, -1);
 
 			saveToLocalStorage();
 		}
@@ -795,10 +795,10 @@ function resetEditor() {
 			client.open("GET", "projects/" + project + ".py");
 			client.onreadystatechange = function () {
 				if (client.readyState == 4) {
-					project_src = client.responseText;
-					usingPyangelo = checkForPyangelo(project_src);
+					codestring = client.responseText;
+					usingPyangelo = checkForPyangelo(codestring);
 					setDisplayMode(usingPyangelo ? "canvas": display);
-					editor.setValue(project_src, -1);
+					editor.setValue(codestring, -1);
 				}
 
 				//saveToLocalStorage();
@@ -861,8 +861,23 @@ var fsButton = document.getElementById("fullscreenButton");
 // e.g. project (filename) is needed opening the project (because localstore is queried on the name)
 urlParams = new URLSearchParams(window.location.search);
 
+var compiled = false;
 var headless = false;
-headless = urlParams.get('headless');
+compiled = urlParams.get('compiled');
+if (compiled) {
+	headless = true;
+	Sk.onAfterCompile = function(name, code) {
+		// clobber compiled code and return with pre-compiled codestring instead
+		if (name == "<stdin>") {
+			return codestring;
+		}
+		else {
+			return code;
+		}
+	}	
+} else {
+	headless = urlParams.get('headless');
+}
 
 // canvas demo mode: canvas to the right of the editor, console at the bottom
 var prevDisplay = null;
@@ -879,10 +894,10 @@ setDisplayMode(display);
 esc = urlParams.get('code')
 if (esc != null && esc.length > 0)
 {
-	codeString = decodeFromUTF16(esc);
-	usingPyangelo = checkForPyangelo(codeString);
+	codestring = decodeFromUTF16(esc);
+	usingPyangelo = checkForPyangelo(codestring);
 	setDisplayMode(usingPyangelo ? "canvas": display);
-	editor.setValue(codeString, -1);
+	editor.setValue(codestring, -1);
 }
 
 // dark/light theme
@@ -917,10 +932,11 @@ else
 }
 // disable headless only if there is something in the localstorage but this is not from the codestore 
 // would occur when 
-if (localStorage.getItem(filename) !== null && !(id != null && id.length > 0)) {
+if (localStorage.getItem(filename) !== null && !(id != null && id.length > 0) && !compiled) {
 	headless = false;
 }
 
+var codestring = "";
 // load code by id from codestore
 if (id != null && id.length > 0) {
   var xhr2 = new XMLHttpRequest();
@@ -947,22 +963,28 @@ if (id != null && id.length > 0) {
 		// don't check local storage for when there are ids
 		// btw, we purge the id from the URL params when the page is loaded
 		// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
-		codeString = xhr2.responseText;
-		usingPyangelo = checkForPyangelo(codeString);
+		codestring = xhr2.responseText;
+		usingPyangelo = checkForPyangelo(codestring);
 		setDisplayMode(usingPyangelo ? "canvas": display, headless);
 
 		if (!headless) {
 			spinner.style.display = "none";
 			editorDiv.removeChild(spinner);		
-			editor.setValue(codeString, -1);
+			editor.setValue(codestring, -1);
 			// check headless mode			
 		}
 		else {
 			// let's run!
 			spinner.style.display = "none";
-			consoleDiv.removeChild(spinner);					
-			runSkulpt(false, codeString);
-
+			consoleDiv.removeChild(spinner);		
+			if (!compiled) {
+				runSkulpt(false, codestring);
+			}
+			else {
+				// the Sk.onAfterCompiled() callback will run the pre-compiled codestring
+				// this just triggers an empty run to kick things off				
+				runSkulpt(false, "");
+			}
 		}		
 	  }
 	  else {
@@ -980,23 +1002,35 @@ else if (project != null && project.length > 0) {
 		setupHeadless();	
 	}
 
-	if (localStorage.getItem(filename) === null) {
+	// if there's nothing in localstorage for this project OR its in precompiled mode ... load from webserver
+	if (localStorage.getItem(filename) === null || compiled) {
 		var client = new XMLHttpRequest();
-		client.open("GET", "projects/" + project + ".py");
+		// compiled files will not have .py extension
+		if (!compiled) {
+			project += ".py";
+		}
+		client.open("GET", "projects/" + project);
 		client.onreadystatechange = function () {
 			if (client.readyState == 4) {
 
 				if (localStorage.getItem(filename) === null || headless)
 				{
-					project_src = client.responseText;
-					usingPyangelo = checkForPyangelo(project_src);
+					codestring = client.responseText;
+					usingPyangelo = checkForPyangelo(codestring);
 					setDisplayMode(usingPyangelo ? "canvas": display, headless);
 
 					if (!headless) {
-						editor.setValue(project_src, -1);
+						editor.setValue(codestring, -1);
 					}
 					else {
-						runSkulpt(false, project_src);
+						if (!compiled) {
+							runSkulpt(false, codestring);
+						}
+						else {
+							// the Sk.onAfterCompiled() callback will run the pre-compiled codestring
+							// this just triggers an empty run to kick things off
+							runSkulpt(false, "");
+						}
 					}
 				}
 			}
@@ -1004,21 +1038,21 @@ else if (project != null && project.length > 0) {
 		client.send();
 	}
 	else {
-		let src = loadFromLocalStorage();
+		codestring = loadFromLocalStorage();
 
-		if (!(src === null || src == "")) {
-			usingPyangelo = checkForPyangelo(src);
-			editor.setValue(src, -1);
+		if (!(codestring === null || codestring == "")) {
+			usingPyangelo = checkForPyangelo(codestring);
+			editor.setValue(codestring, -1);
 			setDisplayMode(usingPyangelo ? "canvas": display);
 		}
 	}
 }
 // no id, and no project, so let's load from local storage
 else {
-	let src = loadFromLocalStorage();
-	if (!(src === null || src == "")) {
-		usingPyangelo = checkForPyangelo(src);
-		editor.setValue(src, -1);
+	codestring = loadFromLocalStorage();
+	if (!(codestring === null || codestring == "")) {
+		usingPyangelo = checkForPyangelo(codestring);
+		editor.setValue(codestring, -1);
 		setDisplayMode(usingPyangelo ? "canvas": display);
 	}	
 }
