@@ -32,6 +32,7 @@ function replacePrintConcatenationWithArgs(code) {
         last_bracket_index = 0;
         bracket_level = 0;
         preFormatted = false;
+        replaceCount = 0;
         for (i = 0; i < args.length; i++) {
             chr = args[i];
             if (chr == "\"" && !quoted) {
@@ -68,6 +69,7 @@ function replacePrintConcatenationWithArgs(code) {
                 // replacement of + with , at lowest bracket level
                 // any bracketed, or nested-bracketed expressions will be evaluated normally
                 chr = ",";    
+                replaceCount++;
             } else if (chr == "#" && !quoted) {
                 break;
             }      
@@ -78,7 +80,9 @@ function replacePrintConcatenationWithArgs(code) {
             continue;
         }
 
-        new_args = new_args.substr(0, last_bracket_index) + ",sep='')";
+        if (replaceCount > 0) {
+            new_args = new_args.substr(0, last_bracket_index) + ",sep='')";
+        }
         pass1 = pass1.substr(0, match.index) + pass1.substr(match.index).replace(match[0], match[1] + match[2] + new_args);        
     }    
     return pass1;
