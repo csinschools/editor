@@ -792,7 +792,7 @@ function resetEditor() {
 		else if (project != null && project.length > 0)
 		{
 			var client = new XMLHttpRequest();
-			client.open("GET", "projects/" + project + ".py");
+			client.open("GET", "projects/" + project);// Removed adding ".py" after compiled query param auto adds .py for non-compiled code
 			client.onreadystatechange = function () {
 				if (client.readyState == 4) {
 					codestring = client.responseText;
