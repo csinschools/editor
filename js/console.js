@@ -261,3 +261,15 @@ Sk.builtins.hideSpinner = function() {
     spinner.style.display = "none";
     pyConsole.removeChild(spinner);
 }
+
+// FIXME: need to preserve CSS stylings of the div
+Sk.builtins.print_screen = function() {
+    var divContents = document.getElementById("consoleWrapper").innerHTML;
+    var a = window.open('', '', 'height=500, width=500');
+    a.document.write('<html>');
+    a.document.write('<body >');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    a.print();
+}
