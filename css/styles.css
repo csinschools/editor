@@ -13,12 +13,14 @@
 	width: 100%;
 	height: 300 px;
 	overflow-y: auto;
-	overflow-x: auto;
+	overflow-x: clip;
 	background-color: #000;
 	position: relative;
 }
 #console {
 	margin: 0px 8px;
+	white-space: pre-wrap;
+	
 }
 #consoleClear {
 	line-height: 12px;

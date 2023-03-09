@@ -124,7 +124,7 @@ function clearConsole() {
 		inputElement.innerText = "";
 		pyConsole.appendChild(inputElement);
 	}
-	pyConsole.appendChild(clearButton);
+	//pyConsole.appendChild(clearButton);
 }
 
 /* When the openFullscreen() function is executed, open the video in fullscreen.
