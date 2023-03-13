@@ -464,6 +464,9 @@ function runSkulpt(stepMode, code = "") {
 	if (!headless) {
 		code = ace.edit("editor").getValue();
 		saveToLocalStorage();
+	} else {
+		var clearButton = document.getElementById("consoleClear");
+		clearButton.style.display = "none";
 	}
 
 	code = stripPeriodFromGoto(code);
@@ -583,6 +586,13 @@ function stopSkulpt() {
 		runButton.style.display = "inline";
 	}
 	resetCanvas();
+	if (headless) {
+		// add re-run button to the console
+		runButton.innerText = "🌀Rerun";
+
+		pyConsole.appendChild(runButton);
+
+	}
 }
 
 function stopEditor() {
