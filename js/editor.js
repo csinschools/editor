@@ -466,7 +466,9 @@ function runSkulpt(stepMode, code = "") {
 		saveToLocalStorage();
 	} else {
 		var clearButton = document.getElementById("consoleClear");
-		clearButton.style.display = "none";
+		if (clearButton !== null) {
+			clearButton.style.display = "none";
+		}
 	}
 
 	code = stripPeriodFromGoto(code);
