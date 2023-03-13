@@ -594,6 +594,8 @@ function stopSkulpt() {
 
 		pyConsole.appendChild(runButton);
 
+		document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
+
 	}
 }
 

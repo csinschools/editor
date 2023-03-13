@@ -174,6 +174,8 @@ function onImageLoaded() {
     // hide the spinner after image has loaded
     spinner.style.display = "none";
     pyConsole.removeChild(spinner);
+
+    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }
 
 function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underlined) {
