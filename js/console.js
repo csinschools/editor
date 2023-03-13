@@ -175,6 +175,7 @@ function onImageLoaded() {
     spinner.style.display = "none";
     pyConsole.removeChild(spinner);
 
+    // readjust console scroll height
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }
 
