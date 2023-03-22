@@ -69,7 +69,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div>
               <button onclick="document.getElementById('urlDialog').style.display = 'none'; resetSnapURLButton();">OK</button>
             </div>
-        </dialog>     
+        </dialog>    
+        <dialog id="errDialog">
+            <div id="errContent"></div>
+            <br>
+            <div>
+              <button onclick="document.getElementById('errDialog').style.display = 'none';">OK</button>
+            </div>
+        </dialog>             
              
         <div class="split" id="split">
             <div id ="leftpane"></div>

@@ -32,6 +32,21 @@ function showURLDialog(msg) {
     document.getElementById("urlDialog").style.display = "block";      
 }
 
+function showErrorDialog(msg, onclose) {
+	document.getElementById("errContent").innerHTML = msg;
+	document.getElementById("errDialog").style.display = "block";     
+	document.getElementById('errDialog').onclick = hideErrorDialog;
+	document.getElementById('errDialog').addEventListener("click", onclose);	 
+}
+
+const afterDialogCloseEvent = new Event("afterDialogClose");
+function hideErrorDialog() {
+	document.getElementById("errDialog").style.display = "none";  
+	let src = document.getElementById("errDialog").getAttribute("source");
+	document.getElementById(src).dispatchEvent(afterDialogCloseEvent);
+	
+}
+
 function resetSnapURLButton() {    
     document.getElementById("codestoreURL").disabled = false;
     document.getElementById("codestoreURL").innerText = "🔗 Snapshot to URL";  
@@ -838,6 +853,8 @@ function setupHeadless() {
 function stopAllSounds() {
     document.querySelectorAll('audio').forEach(element => {
         element.pause();
+		// don't trigger the original error handlers
+		element.onerror = null;
         element.currentTime = 0;
         element.src ="";
         element = null;        

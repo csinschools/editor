@@ -24,13 +24,5 @@ else:
             print("Yes! You got it in 3 goes!")
         else:
             print("Nope!")
-            sleep(0.7)
-            clear()
-            printImage("samples/images/pictionary_04.png")
-            guess = input("What is this?")           
-            if guess == "bridge":
-                print("Yes! You got it in 4 goes!")
-            else:
-                print("Nope!")
-                print("It's a bridge! Are my drawing skills really that bad??!")
+            print("It's a bridge! Are my drawing skills really that bad??!")               
 print("Thanks for playing!")

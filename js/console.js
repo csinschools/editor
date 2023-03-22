@@ -146,39 +146,6 @@ function resetConsole()
     clearConsole();
 }
 
-function createImageElement(url, width, height) {
-    let e = document.createElement("img");  
-    e.src = url;
-    e.style.display = "none";
-    if (width !== null) {
-        e.width = width;
-    }
-    if (height !== null) {
-        e.height = height;
-    }
-    e.onload = onImageLoaded;
-
-
-    // show the spinner while image is loading
-    spinner.style.display = "block";
-    pyConsole.appendChild(spinner);
-    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
-
-    return e ;
-}
-
-function onImageLoaded() {
-    Sk.builtins.imageLoaded = new Sk.builtin.bool(true);
-    this.style.display = "block";
-
-    // hide the spinner after image has loaded
-    spinner.style.display = "none";
-    pyConsole.removeChild(spinner);
-
-    // readjust console scroll height
-    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
-}
-
 function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underlined) {
     let t = document.createTextNode(n);        
     let e = document.createElement("span");    
@@ -239,30 +206,160 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
     e.appendChild(t);        
     return e;
 }
-///////////////////////// exported helper functions //////////////////////////
 
-Sk.builtins.clear = function() {
-    clearConsole();
-}
+/////////////////////// image functions //////////////////////////
 
-Sk.builtins.imageLoaded = new Sk.builtin.bool(false);
-Sk.builtins.addImage = function(url, width, height) {
-    Sk.builtins.imageLoaded = new Sk.builtin.bool(false);
-    if (url.v !== null && url.v.length > 0) {
-        pyConsole.appendChild(createImageElement(url.v, width.v, height.v));       
-        //pyConsole.appendChild(document.createElement("br"));      
+function createImageElement(url, width, height, onload, onerror) {
+    let e = document.createElement("img");  
+    e.id = (Math.random() + 1).toString(36).substring(7);
+    e.src = url;
+    e.style.display = "none";
+    if (width !== null) {
+        e.width = width;
     }
+    if (height !== null) {
+        e.height = height;
+    }
+    e.onload = onImageLoaded;
+    e.addEventListener("load", onload);
+    e.onerror = onImageError;
+
+    e.addEventListener("afterDialogClose", onerror);
+
+    document.getElementById("errDialog").setAttribute("source", e.id);
+
+    return e ;
 }
 
-Sk.builtins.showSpinner = function() {
+function addImage(url, width, height, onload, onerror) {
+    showSpinner();
+    pyConsole.appendChild(createImageElement(url, width, height, onload, onerror));      
+}
+
+function onImageLoaded() {
+    this.style.display = "block";
+    // hide the spinner after image has loaded
+    hideSpinner();
+}
+
+function onImageError() {
+    showErrorDialog("There was an error loading: " + this.src, hideSpinner);    
+}
+
+/////////////////////// audio functions //////////////////////////
+var audioElement = null;
+function stopSound() {
+    if (audioElement !== null && audioElement.parentNode === document.body) {
+      audioElement.onerror = null; 
+      document.body.removeChild(audioElement);
+      audioElement.pause();
+      audioElement.currentTime = 0;
+      audioElement.src ="";
+      audioElement = null;        
+    }
+  }
+
+function createAudioElement(url, loop, onload, onerror) {
+    stopSound();
+    showSpinner();
+    audioElement = new Audio(url);
+    audioElement.id = (Math.random() + 1).toString(36).substring(7);
+    audioElement.loop = loop;
+    audioElement.oncanplaythrough = onAudioCanPlaythrough;
+    audioElement.addEventListener("canplaythrough", onload);
+    audioElement.addEventListener("afterDialogClose", onerror);    
+    audioElement.onerror = onAudioError; 
+    document.getElementById("errDialog").setAttribute("source", audioElement.id);  
+    document.body.appendChild(audioElement);
+}
+
+function onAudioError() {
+    showErrorDialog("There was an error loading: " + this.src, hideSpinner);    
+}
+
+function onAudioCanPlaythrough() {
+    audioElement.play();  
+    
+    // hide the spinner after image has loaded
+    hideSpinner();
+}
+
+function playFreeSound(id, onload, onerror) {
+    //mod.loadingSound = true;
+
+    // stop current sound
+    showSpinner()
+
+    var xhr = new XMLHttpRequest();      
+    const requestURL =  "https://freesound.org/apiv2/sounds/" + id + "/?fields=previews&format=json&token=Vzf4dkU29E5ltPX1sfi2aqCkzG1aKgbITklKHROh";
+    console.log(requestURL);
+    xhr.open("GET", requestURL, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.timeout = 10000; // time in milliseconds
+
+    xhr.ontimeout = (e) => {
+      console.log("Timeout");
+      showErrorDialog("There was an error loading freesound id: " + id, hideSpinner);
+      onerror();
+    };    
+  
+    xhr.onerror = function() {
+      console.log("Error");
+      showErrorDialog("There was an error loading freesound id: " + id, hideSpinner);
+      onerror();
+    }
+    
+    xhr.onreadystatechange = function() {
+      console.log("Response:" + xhr.responseText);
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        if (xhr.responseText.length == 0) {
+        }
+        else {            
+          const response = JSON.parse(xhr.responseText);
+          const url = response["previews"]["preview-hq-ogg"];
+
+          createAudioElement(url, false, onload, onerror);                   
+        }
+      }
+      else if (this.status !== 200) {
+        // 404 or some other status code
+        console.log("Error");
+        hideSpinner();
+        showErrorDialog("There was an error loading freesound id: " + id, onerror);    
+          
+      }
+    } 
+    
+    xhr.send();        
+}
+
+
+//////////////////////// spinner functions /////////////////////
+
+function showSpinner() {
+    // already spinning
+    if (spinner.parentNode == pyConsole) {
+        return;
+    }
     spinner.style.display = "block";
     pyConsole.appendChild(spinner);
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }
 
-Sk.builtins.hideSpinner = function() {
+function hideSpinner() {
+    // already hidden
+    if (spinner.parentNode != pyConsole) {
+        return;
+    }    
     spinner.style.display = "none";
     pyConsole.removeChild(spinner);
+    // readjust console scroll height
+    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;    
+}
+///////////////////////// exported helper functions //////////////////////////
+
+Sk.builtins.clear = function() {
+    clearConsole();
 }
 
 // FIXME: need to preserve CSS stylings of the div
