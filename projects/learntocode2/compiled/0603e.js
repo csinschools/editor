@@ -1,5 +1,5 @@
 Sk.execStart = Sk.lastYield = new Date();
-var $compiledmod = function() {var $scope0=(function($forcegbl, $forceloc){var $loadname4,$loadname6,$loadname9,$compareres10,$loadname13,$loadname16,$compareres17,$loadname21,$loadname24,$loadname27,$compareres28,$loadname31,$loadname32,$loadname31,$loadname32,$lattr34,$loadname36,$loadname31,$loadname32,$lattr34,$loadname36,$lattr38,$loadname41,$compareres42,$loadname46,$loadname49,$loadname52,$loadname55,$loadname58,$loadname61,$loadname64,$loadname67,$loadname70,$compareres71,$loadname75,$compareres76,$loadname80,$compareres81,$loadname85,$compareres86,$loadname90,$compareres91,$loadname95,$compareres96,$loadname99,$loadname102,$compareres103,$loadname106;var $wakeFromSuspension = function() {var susp = $scope0.$wakingSuspension; $scope0.$wakingSuspension = undefined;$blk=susp.$blk; $loc=susp.$loc; $gbl=susp.$gbl; $exc=susp.$exc; $err=susp.$err; $postfinally=susp.$postfinally;$currLineNo=susp.$lineno; $currColNo=susp.$colno; Sk.lastYield=Date.now();$loadname4=susp.$tmps.$loadname4;$loadname6=susp.$tmps.$loadname6;$loadname9=susp.$tmps.$loadname9;$compareres10=susp.$tmps.$compareres10;$loadname13=susp.$tmps.$loadname13;$loadname16=susp.$tmps.$loadname16;$compareres17=susp.$tmps.$compareres17;$loadname21=susp.$tmps.$loadname21;$loadname24=susp.$tmps.$loadname24;$loadname27=susp.$tmps.$loadname27;$compareres28=susp.$tmps.$compareres28;$loadname31=susp.$tmps.$loadname31;$loadname32=susp.$tmps.$loadname32;$lattr34=susp.$tmps.$lattr34;$loadname36=susp.$tmps.$loadname36;$lattr38=susp.$tmps.$lattr38;$loadname41=susp.$tmps.$loadname41;$compareres42=susp.$tmps.$compareres42;$loadname46=susp.$tmps.$loadname46;$loadname49=susp.$tmps.$loadname49;$loadname52=susp.$tmps.$loadname52;$loadname55=susp.$tmps.$loadname55;$loadname58=susp.$tmps.$loadname58;$loadname61=susp.$tmps.$loadname61;$loadname64=susp.$tmps.$loadname64;$loadname67=susp.$tmps.$loadname67;$loadname70=susp.$tmps.$loadname70;$compareres71=susp.$tmps.$compareres71;$loadname75=susp.$tmps.$loadname75;$compareres76=susp.$tmps.$compareres76;$loadname80=susp.$tmps.$loadname80;$compareres81=susp.$tmps.$compareres81;$loadname85=susp.$tmps.$loadname85;$compareres86=susp.$tmps.$compareres86;$loadname90=susp.$tmps.$loadname90;$compareres91=susp.$tmps.$compareres91;$loadname95=susp.$tmps.$loadname95;$compareres96=susp.$tmps.$compareres96;$loadname99=susp.$tmps.$loadname99;$loadname102=susp.$tmps.$loadname102;$compareres103=susp.$tmps.$compareres103;$loadname106=susp.$tmps.$loadname106;try { $ret=susp.child.resume(); } catch(err) { if (!(err instanceof Sk.builtin.BaseException)) { err = new Sk.builtin.ExternalError(err); } err.traceback.push({lineno: $currLineNo, colno: $currColNo, filename: '<stdin>.py'}); if($exc.length>0) { $err=err; $blk=$exc.pop(); } else { throw err; } }};var $saveSuspension = function($child, $filename, $lineno, $colno) {var susp = new Sk.misceval.Suspension(); susp.child=$child;susp.resume=function(){$scope0.$wakingSuspension=susp; return $scope0(); };susp.data=susp.child.data;susp.$blk=$blk;susp.$loc=$loc;susp.$gbl=$gbl;susp.$exc=$exc;susp.$err=$err;susp.$postfinally=$postfinally;susp.$filename=$filename;susp.$lineno=$lineno;susp.$colno=$colno;susp.optional=susp.child.optional;susp.$tmps={"$loadname4":$loadname4,"$loadname6":$loadname6,"$loadname9":$loadname9,"$compareres10":$compareres10,"$loadname13":$loadname13,"$loadname16":$loadname16,"$compareres17":$compareres17,"$loadname21":$loadname21,"$loadname24":$loadname24,"$loadname27":$loadname27,"$compareres28":$compareres28,"$loadname31":$loadname31,"$loadname32":$loadname32,"$lattr34":$lattr34,"$loadname36":$loadname36,"$lattr38":$lattr38,"$loadname41":$loadname41,"$compareres42":$compareres42,"$loadname46":$loadname46,"$loadname49":$loadname49,"$loadname52":$loadname52,"$loadname55":$loadname55,"$loadname58":$loadname58,"$loadname61":$loadname61,"$loadname64":$loadname64,"$loadname67":$loadname67,"$loadname70":$loadname70,"$compareres71":$compareres71,"$loadname75":$loadname75,"$compareres76":$compareres76,"$loadname80":$loadname80,"$compareres81":$compareres81,"$loadname85":$loadname85,"$compareres86":$compareres86,"$loadname90":$loadname90,"$compareres91":$compareres91,"$loadname95":$loadname95,"$compareres96":$compareres96,"$loadname99":$loadname99,"$loadname102":$loadname102,"$compareres103":$compareres103,"$loadname106":$loadname106};return susp;};var $gbl = $forcegbl || {}, $blk=0,$exc=[],$loc=$forceloc || $gbl,$cell={},$err=undefined;var $ret=undefined,$postfinally=undefined,$currLineNo=undefined,$currColNo=undefined;if (typeof Sk.execStart === 'undefined') {Sk.execStart = Date.now()}if (typeof Sk.lastYield === 'undefined') {Sk.lastYield = Date.now()}var $waking=false; if ($scope0.$wakingSuspension!==undefined) { $wakeFromSuspension(); $waking=true; }if (Sk.retainGlobals) {    if (Sk.globals) { $gbl = Sk.globals; Sk.globals = $gbl; $loc = $gbl; }    else { Sk.globals = $gbl; }} else { Sk.globals = $gbl; }while(true){try{var $dateNow = Date.now();if ($dateNow - Sk.execStart > Sk.execLimit) {throw new Sk.builtin.TimeoutError(Sk.timeoutMsg())}if (!$waking && ($dateNow - Sk.lastYield > Sk.yieldLimit)) {var $susp = $saveSuspension({data: {type: 'Sk.yield'}, resume: function() {}}, '<stdin>.py',$currLineNo,$currColNo);$susp.$blk = $blk;$susp.optional = true;return $susp;}$waking = false;switch($blk){case 0: if (Sk.breakpoints('<stdin>.py',1,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',1,0);$susp.$blk = 1;$susp.optional = true;return $susp;}$blk=1;case 1: 
+var $compiledmod = function() {var $scope0=(function($forcegbl, $forceloc){var $loadname4,$loadname6,$loadname9,$compareres10,$loadname13,$loadname16,$compareres17,$loadname21,$loadname24,$loadname27,$compareres28,$loadname31,$loadname32,$loadname31,$loadname32,$lattr34,$binop36,$loadname37,$loadname31,$loadname32,$lattr34,$binop36,$loadname37,$lattr39,$binop40,$loadname42,$compareres43,$loadname47,$loadname48,$loadname47,$loadname48,$lattr50,$binop52,$loadname53,$loadname47,$loadname48,$lattr50,$binop52,$loadname53,$lattr54,$binop55,$loadname57,$loadname60,$loadname63,$loadname66,$loadname69,$loadname72,$compareres73,$loadname77,$loadname78,$loadname77,$loadname78,$lattr80,$binop82,$loadname83,$loadname77,$loadname78,$lattr80,$binop82,$loadname83,$lattr84,$binop85,$loadname87,$loadname90,$loadname93,$loadname96,$compareres97,$loadname100,$compareres101,$loadname105,$loadname106,$loadname105,$loadname106,$lattr108,$binop110,$loadname111,$loadname105,$loadname106,$lattr108,$binop110,$loadname111,$lattr112,$binop113,$loadname115,$loadname118,$compareres119,$loadname122,$loadname123,$loadname122,$loadname123,$lattr125,$binop127,$loadname128,$loadname122,$loadname123,$lattr125,$binop127,$loadname128,$lattr129,$binop130,$loadname132,$loadname135,$loadname138,$loadname141,$compareres142,$loadname145,$compareres146,$loadname149,$loadname150,$loadname149,$loadname150,$lattr151,$binop153,$loadname154,$loadname149,$loadname150,$lattr151,$binop153,$loadname154,$lattr155,$binop156,$loadname158,$loadname160,$compareres161,$loadname165,$loadname166,$loadname165,$loadname166,$lattr167,$binop169,$loadname170,$loadname165,$loadname166,$lattr167,$binop169,$loadname170,$lattr171,$binop172,$loadname174,$loadname177,$compareres178,$loadname181,$loadname183,$loadname181,$loadname183,$lattr184,$binop185,$binop187,$loadname189,$compareres190,$loadname193,$loadname195,$loadname193,$loadname195,$lattr196,$binop197,$binop199,$loadname201,$loadname202,$loadname201,$loadname202,$lattr203,$binop205;var $wakeFromSuspension = function() {var susp = $scope0.$wakingSuspension; $scope0.$wakingSuspension = undefined;$blk=susp.$blk; $loc=susp.$loc; $gbl=susp.$gbl; $exc=susp.$exc; $err=susp.$err; $postfinally=susp.$postfinally;$currLineNo=susp.$lineno; $currColNo=susp.$colno; Sk.lastYield=Date.now();$loadname4=susp.$tmps.$loadname4;$loadname6=susp.$tmps.$loadname6;$loadname9=susp.$tmps.$loadname9;$compareres10=susp.$tmps.$compareres10;$loadname13=susp.$tmps.$loadname13;$loadname16=susp.$tmps.$loadname16;$compareres17=susp.$tmps.$compareres17;$loadname21=susp.$tmps.$loadname21;$loadname24=susp.$tmps.$loadname24;$loadname27=susp.$tmps.$loadname27;$compareres28=susp.$tmps.$compareres28;$loadname31=susp.$tmps.$loadname31;$loadname32=susp.$tmps.$loadname32;$lattr34=susp.$tmps.$lattr34;$binop36=susp.$tmps.$binop36;$loadname37=susp.$tmps.$loadname37;$lattr39=susp.$tmps.$lattr39;$binop40=susp.$tmps.$binop40;$loadname42=susp.$tmps.$loadname42;$compareres43=susp.$tmps.$compareres43;$loadname47=susp.$tmps.$loadname47;$loadname48=susp.$tmps.$loadname48;$lattr50=susp.$tmps.$lattr50;$binop52=susp.$tmps.$binop52;$loadname53=susp.$tmps.$loadname53;$lattr54=susp.$tmps.$lattr54;$binop55=susp.$tmps.$binop55;$loadname57=susp.$tmps.$loadname57;$loadname60=susp.$tmps.$loadname60;$loadname63=susp.$tmps.$loadname63;$loadname66=susp.$tmps.$loadname66;$loadname69=susp.$tmps.$loadname69;$loadname72=susp.$tmps.$loadname72;$compareres73=susp.$tmps.$compareres73;$loadname77=susp.$tmps.$loadname77;$loadname78=susp.$tmps.$loadname78;$lattr80=susp.$tmps.$lattr80;$binop82=susp.$tmps.$binop82;$loadname83=susp.$tmps.$loadname83;$lattr84=susp.$tmps.$lattr84;$binop85=susp.$tmps.$binop85;$loadname87=susp.$tmps.$loadname87;$loadname90=susp.$tmps.$loadname90;$loadname93=susp.$tmps.$loadname93;$loadname96=susp.$tmps.$loadname96;$compareres97=susp.$tmps.$compareres97;$loadname100=susp.$tmps.$loadname100;$compareres101=susp.$tmps.$compareres101;$loadname105=susp.$tmps.$loadname105;$loadname106=susp.$tmps.$loadname106;$lattr108=susp.$tmps.$lattr108;$binop110=susp.$tmps.$binop110;$loadname111=susp.$tmps.$loadname111;$lattr112=susp.$tmps.$lattr112;$binop113=susp.$tmps.$binop113;$loadname115=susp.$tmps.$loadname115;$loadname118=susp.$tmps.$loadname118;$compareres119=susp.$tmps.$compareres119;$loadname122=susp.$tmps.$loadname122;$loadname123=susp.$tmps.$loadname123;$lattr125=susp.$tmps.$lattr125;$binop127=susp.$tmps.$binop127;$loadname128=susp.$tmps.$loadname128;$lattr129=susp.$tmps.$lattr129;$binop130=susp.$tmps.$binop130;$loadname132=susp.$tmps.$loadname132;$loadname135=susp.$tmps.$loadname135;$loadname138=susp.$tmps.$loadname138;$loadname141=susp.$tmps.$loadname141;$compareres142=susp.$tmps.$compareres142;$loadname145=susp.$tmps.$loadname145;$compareres146=susp.$tmps.$compareres146;$loadname149=susp.$tmps.$loadname149;$loadname150=susp.$tmps.$loadname150;$lattr151=susp.$tmps.$lattr151;$binop153=susp.$tmps.$binop153;$loadname154=susp.$tmps.$loadname154;$lattr155=susp.$tmps.$lattr155;$binop156=susp.$tmps.$binop156;$loadname158=susp.$tmps.$loadname158;$loadname160=susp.$tmps.$loadname160;$compareres161=susp.$tmps.$compareres161;$loadname165=susp.$tmps.$loadname165;$loadname166=susp.$tmps.$loadname166;$lattr167=susp.$tmps.$lattr167;$binop169=susp.$tmps.$binop169;$loadname170=susp.$tmps.$loadname170;$lattr171=susp.$tmps.$lattr171;$binop172=susp.$tmps.$binop172;$loadname174=susp.$tmps.$loadname174;$loadname177=susp.$tmps.$loadname177;$compareres178=susp.$tmps.$compareres178;$loadname181=susp.$tmps.$loadname181;$loadname183=susp.$tmps.$loadname183;$lattr184=susp.$tmps.$lattr184;$binop185=susp.$tmps.$binop185;$binop187=susp.$tmps.$binop187;$loadname189=susp.$tmps.$loadname189;$compareres190=susp.$tmps.$compareres190;$loadname193=susp.$tmps.$loadname193;$loadname195=susp.$tmps.$loadname195;$lattr196=susp.$tmps.$lattr196;$binop197=susp.$tmps.$binop197;$binop199=susp.$tmps.$binop199;$loadname201=susp.$tmps.$loadname201;$loadname202=susp.$tmps.$loadname202;$lattr203=susp.$tmps.$lattr203;$binop205=susp.$tmps.$binop205;try { $ret=susp.child.resume(); } catch(err) { if (!(err instanceof Sk.builtin.BaseException)) { err = new Sk.builtin.ExternalError(err); } err.traceback.push({lineno: $currLineNo, colno: $currColNo, filename: '<stdin>.py'}); if($exc.length>0) { $err=err; $blk=$exc.pop(); } else { throw err; } }};var $saveSuspension = function($child, $filename, $lineno, $colno) {var susp = new Sk.misceval.Suspension(); susp.child=$child;susp.resume=function(){$scope0.$wakingSuspension=susp; return $scope0(); };susp.data=susp.child.data;susp.$blk=$blk;susp.$loc=$loc;susp.$gbl=$gbl;susp.$exc=$exc;susp.$err=$err;susp.$postfinally=$postfinally;susp.$filename=$filename;susp.$lineno=$lineno;susp.$colno=$colno;susp.optional=susp.child.optional;susp.$tmps={"$loadname4":$loadname4,"$loadname6":$loadname6,"$loadname9":$loadname9,"$compareres10":$compareres10,"$loadname13":$loadname13,"$loadname16":$loadname16,"$compareres17":$compareres17,"$loadname21":$loadname21,"$loadname24":$loadname24,"$loadname27":$loadname27,"$compareres28":$compareres28,"$loadname31":$loadname31,"$loadname32":$loadname32,"$lattr34":$lattr34,"$binop36":$binop36,"$loadname37":$loadname37,"$lattr39":$lattr39,"$binop40":$binop40,"$loadname42":$loadname42,"$compareres43":$compareres43,"$loadname47":$loadname47,"$loadname48":$loadname48,"$lattr50":$lattr50,"$binop52":$binop52,"$loadname53":$loadname53,"$lattr54":$lattr54,"$binop55":$binop55,"$loadname57":$loadname57,"$loadname60":$loadname60,"$loadname63":$loadname63,"$loadname66":$loadname66,"$loadname69":$loadname69,"$loadname72":$loadname72,"$compareres73":$compareres73,"$loadname77":$loadname77,"$loadname78":$loadname78,"$lattr80":$lattr80,"$binop82":$binop82,"$loadname83":$loadname83,"$lattr84":$lattr84,"$binop85":$binop85,"$loadname87":$loadname87,"$loadname90":$loadname90,"$loadname93":$loadname93,"$loadname96":$loadname96,"$compareres97":$compareres97,"$loadname100":$loadname100,"$compareres101":$compareres101,"$loadname105":$loadname105,"$loadname106":$loadname106,"$lattr108":$lattr108,"$binop110":$binop110,"$loadname111":$loadname111,"$lattr112":$lattr112,"$binop113":$binop113,"$loadname115":$loadname115,"$loadname118":$loadname118,"$compareres119":$compareres119,"$loadname122":$loadname122,"$loadname123":$loadname123,"$lattr125":$lattr125,"$binop127":$binop127,"$loadname128":$loadname128,"$lattr129":$lattr129,"$binop130":$binop130,"$loadname132":$loadname132,"$loadname135":$loadname135,"$loadname138":$loadname138,"$loadname141":$loadname141,"$compareres142":$compareres142,"$loadname145":$loadname145,"$compareres146":$compareres146,"$loadname149":$loadname149,"$loadname150":$loadname150,"$lattr151":$lattr151,"$binop153":$binop153,"$loadname154":$loadname154,"$lattr155":$lattr155,"$binop156":$binop156,"$loadname158":$loadname158,"$loadname160":$loadname160,"$compareres161":$compareres161,"$loadname165":$loadname165,"$loadname166":$loadname166,"$lattr167":$lattr167,"$binop169":$binop169,"$loadname170":$loadname170,"$lattr171":$lattr171,"$binop172":$binop172,"$loadname174":$loadname174,"$loadname177":$loadname177,"$compareres178":$compareres178,"$loadname181":$loadname181,"$loadname183":$loadname183,"$lattr184":$lattr184,"$binop185":$binop185,"$binop187":$binop187,"$loadname189":$loadname189,"$compareres190":$compareres190,"$loadname193":$loadname193,"$loadname195":$loadname195,"$lattr196":$lattr196,"$binop197":$binop197,"$binop199":$binop199,"$loadname201":$loadname201,"$loadname202":$loadname202,"$lattr203":$lattr203,"$binop205":$binop205};return susp;};var $gbl = $forcegbl || {}, $blk=0,$exc=[],$loc=$forceloc || $gbl,$cell={},$err=undefined;var $ret=undefined,$postfinally=undefined,$currLineNo=undefined,$currColNo=undefined;if (typeof Sk.execStart === 'undefined') {Sk.execStart = Date.now()}if (typeof Sk.lastYield === 'undefined') {Sk.lastYield = Date.now()}var $waking=false; if ($scope0.$wakingSuspension!==undefined) { $wakeFromSuspension(); $waking=true; }if (Sk.retainGlobals) {    if (Sk.globals) { $gbl = Sk.globals; Sk.globals = $gbl; $loc = $gbl; }    else { Sk.globals = $gbl; }} else { Sk.globals = $gbl; }while(true){try{var $dateNow = Date.now();if ($dateNow - Sk.execStart > Sk.execLimit) {throw new Sk.builtin.TimeoutError(Sk.timeoutMsg())}if (!$waking && ($dateNow - Sk.lastYield > Sk.yieldLimit)) {var $susp = $saveSuspension({data: {type: 'Sk.yield'}, resume: function() {}}, '<stdin>.py',$currLineNo,$currColNo);$susp.$blk = $blk;$susp.optional = true;return $susp;}$waking = false;switch($blk){case 0: if (Sk.breakpoints('<stdin>.py',1,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',1,0);$susp.$blk = 1;$susp.optional = true;return $susp;}$blk=1;case 1: 
 
 $currLineNo = 1;
 $currColNo = 0;
@@ -77,62 +77,52 @@ $currColNo = 4;
 var $loadname31=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname32=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname32.tp$getattr($scope0.$const33, true);$blk=34;case 34: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',15,10); }
 if ($ret === undefined) {
 throw new Sk.builtin.AttributeError($loadname32.sk$attrError() + " has no attribute '" + $scope0.$const33.$jsstr() + "'");
-};var $lattr34=$ret;var $loadname36=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname36.tp$getattr($scope0.$const37, true);$blk=35;case 35: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',15,36); }
+};var $lattr34=$ret;var $binop36=Sk.abstr.numberBinOp($lattr34,$scope0.$const35,'Add');var $loadname37=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname37.tp$getattr($scope0.$const38, true);$blk=35;case 35: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',15,36); }
 if ($ret === undefined) {
-throw new Sk.builtin.AttributeError($loadname36.sk$attrError() + " has no attribute '" + $scope0.$const37.$jsstr() + "'");
-};var $lattr38=$ret;$ret = ($loadname31.tp$call)?$loadname31.tp$call([$lattr34,$scope0.$const35,$lattr38],['sep',$scope0.$const39]) : Sk.misceval.applyOrSuspend($loadname31,undefined,undefined,['sep',$scope0.$const39],[$lattr34,$scope0.$const35,$lattr38]);$blk=36;case 36: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',15,4); }var $call40=$ret;
+throw new Sk.builtin.AttributeError($loadname37.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr39=$ret;var $binop40=Sk.abstr.numberBinOp($binop36,$lattr39,'Add');$ret = ($loadname31.tp$call)?$loadname31.tp$call([$binop40],undefined) : Sk.misceval.applyOrSuspend($loadname31,undefined,undefined,undefined,[$binop40]);$blk=36;case 36: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',15,4); }var $call41=$ret;
 
 $currLineNo = 15;
 $currColNo = 4;
 
-$blk=29;case 29: if (Sk.breakpoints('<stdin>.py',19,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',19,0);$susp.$blk = 43;$susp.optional = true;return $susp;}$blk=43;case 43: 
+$blk=29;case 29: if (Sk.breakpoints('<stdin>.py',19,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',19,0);$susp.$blk = 45;$susp.optional = true;return $susp;}$blk=45;case 45: 
 
 $currLineNo = 19;
 $currColNo = 0;
 
-var $loadname49=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname49.tp$call)?$loadname49.tp$call([$scope0.$const50],undefined) : Sk.misceval.applyOrSuspend($loadname49,undefined,undefined,undefined,[$scope0.$const50]);$blk=44;case 44: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',19,0); }var $call51=$ret;
+var $loadname57=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname57.tp$call)?$loadname57.tp$call([$scope0.$const58],undefined) : Sk.misceval.applyOrSuspend($loadname57,undefined,undefined,undefined,[$scope0.$const58]);$blk=46;case 46: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',19,0); }var $call59=$ret;
 
 $currLineNo = 19;
 $currColNo = 0;
 
-if (Sk.breakpoints('<stdin>.py',20,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',20,0);$susp.$blk = 45;$susp.optional = true;return $susp;}$blk=45;case 45: 
+if (Sk.breakpoints('<stdin>.py',20,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',20,0);$susp.$blk = 47;$susp.optional = true;return $susp;}$blk=47;case 47: 
 
 $currLineNo = 20;
 $currColNo = 0;
 
-var $loadname52=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname52.tp$call)?$loadname52.tp$call([$scope0.$const53],undefined) : Sk.misceval.applyOrSuspend($loadname52,undefined,undefined,undefined,[$scope0.$const53]);$blk=46;case 46: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',20,0); }var $call54=$ret;
+var $loadname60=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname60.tp$call)?$loadname60.tp$call([$scope0.$const61],undefined) : Sk.misceval.applyOrSuspend($loadname60,undefined,undefined,undefined,[$scope0.$const61]);$blk=48;case 48: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',20,0); }var $call62=$ret;
 
 $currLineNo = 20;
 $currColNo = 0;
 
-if (Sk.breakpoints('<stdin>.py',21,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',21,0);$susp.$blk = 47;$susp.optional = true;return $susp;}$blk=47;case 47: 
+if (Sk.breakpoints('<stdin>.py',21,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',21,0);$susp.$blk = 49;$susp.optional = true;return $susp;}$blk=49;case 49: 
 
 $currLineNo = 21;
 $currColNo = 0;
 
-var $loadname55=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname55.tp$call)?$loadname55.tp$call([$scope0.$const56],undefined) : Sk.misceval.applyOrSuspend($loadname55,undefined,undefined,undefined,[$scope0.$const56]);$blk=48;case 48: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',21,0); }var $call57=$ret;
+var $loadname63=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname63.tp$call)?$loadname63.tp$call([$scope0.$const64],undefined) : Sk.misceval.applyOrSuspend($loadname63,undefined,undefined,undefined,[$scope0.$const64]);$blk=50;case 50: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',21,0); }var $call65=$ret;
 
 $currLineNo = 21;
 $currColNo = 0;
 
-if (Sk.breakpoints('<stdin>.py',22,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',22,0);$susp.$blk = 49;$susp.optional = true;return $susp;}$blk=49;case 49: 
+if (Sk.breakpoints('<stdin>.py',22,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',22,0);$susp.$blk = 51;$susp.optional = true;return $susp;}$blk=51;case 51: 
 
 $currLineNo = 22;
 $currColNo = 0;
 
-var $loadname58=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname58.tp$call)?$loadname58.tp$call([$scope0.$const59],undefined) : Sk.misceval.applyOrSuspend($loadname58,undefined,undefined,undefined,[$scope0.$const59]);$blk=50;case 50: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',22,0); }var $call60=$ret;
+var $loadname66=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname66.tp$call)?$loadname66.tp$call([$scope0.$const67],undefined) : Sk.misceval.applyOrSuspend($loadname66,undefined,undefined,undefined,[$scope0.$const67]);$blk=52;case 52: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',22,0); }var $call68=$ret;
 
 $currLineNo = 22;
-$currColNo = 0;
-
-if (Sk.breakpoints('<stdin>.py',23,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',23,0);$susp.$blk = 51;$susp.optional = true;return $susp;}$blk=51;case 51: 
-
-$currLineNo = 23;
-$currColNo = 0;
-
-var $loadname61=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname61.tp$call)?$loadname61.tp$call([$scope0.$const62],undefined) : Sk.misceval.applyOrSuspend($loadname61,undefined,undefined,undefined,[$scope0.$const62]);$blk=52;case 52: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',23,0); }var $call63=$ret;
-
-$currLineNo = 23;
 $currColNo = 0;
 
 if (Sk.breakpoints('<stdin>.py',24,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',24,0);$susp.$blk = 53;$susp.optional = true;return $susp;}$blk=53;case 53: 
@@ -140,37 +130,78 @@ if (Sk.breakpoints('<stdin>.py',24,0)) {var $susp = $saveSuspension({data: {type
 $currLineNo = 24;
 $currColNo = 0;
 
-var $loadname64=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname64.tp$call)?$loadname64.tp$call([$scope0.$const65],undefined) : Sk.misceval.applyOrSuspend($loadname64,undefined,undefined,undefined,[$scope0.$const65]);$blk=54;case 54: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',24,0); }var $call66=$ret;
+var $loadname69=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname69.tp$call)?$loadname69.tp$call([$scope0.$const70],undefined) : Sk.misceval.applyOrSuspend($loadname69,undefined,undefined,undefined,[$scope0.$const70]);$blk=54;case 54: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',24,9); }var $call71=$ret;
 
 $currLineNo = 24;
-$currColNo = 0;
-
-if (Sk.breakpoints('<stdin>.py',26,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',26,0);$susp.$blk = 55;$susp.optional = true;return $susp;}$blk=55;case 55: 
-
-$currLineNo = 26;
-$currColNo = 0;
-
-var $loadname67=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname67.tp$call)?$loadname67.tp$call([$scope0.$const68],undefined) : Sk.misceval.applyOrSuspend($loadname67,undefined,undefined,undefined,[$scope0.$const68]);$blk=56;case 56: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',26,9); }var $call69=$ret;
-
-$currLineNo = 26;
 $currColNo = 9;
 
-$loc.choice=$call69;if (Sk.breakpoints('<stdin>.py',27,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',27,0);$susp.$blk = 57;$susp.optional = true;return $susp;}$blk=57;case 57: 
+$loc.choice=$call71;if (Sk.breakpoints('<stdin>.py',25,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',25,0);$susp.$blk = 55;$susp.optional = true;return $susp;}$blk=55;case 55: 
 
-$currLineNo = 27;
+$currLineNo = 25;
 $currColNo = 0;
 
-var $loadname70=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres71=null;$ret = Sk.misceval.richCompareBool($loadname70,$scope0.$const72,'Eq', true);$blk=61;case 61: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',27,3); }$compareres71=Sk.builtin.bool($ret);var $jfalse73=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse73){$blk=60;continue;}$blk=60;case 60: var $jfalse74=($compareres71===false||!Sk.misceval.isTrue($compareres71));if($jfalse74){$blk=59;continue;}if (Sk.breakpoints('<stdin>.py',28,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',28,4);$susp.$blk = 62;$susp.optional = true;return $susp;}$blk=62;case 62: 
+var $loadname72=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres73=null;$ret = Sk.misceval.richCompareBool($loadname72,$scope0.$const74,'Eq', true);$blk=59;case 59: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',25,3); }$compareres73=Sk.builtin.bool($ret);var $jfalse75=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse75){$blk=58;continue;}$blk=58;case 58: var $jfalse76=($compareres73===false||!Sk.misceval.isTrue($compareres73));if($jfalse76){$blk=57;continue;}if (Sk.breakpoints('<stdin>.py',26,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',26,4);$susp.$blk = 60;$susp.optional = true;return $susp;}$blk=60;case 60: 
+
+$currLineNo = 26;
+$currColNo = 4;
+
+var $loadname77=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname78=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname78.tp$getattr($scope0.$const79, true);$blk=61;case 61: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',26,10); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname78.sk$attrError() + " has no attribute '" + $scope0.$const79.$jsstr() + "'");
+};var $lattr80=$ret;var $binop82=Sk.abstr.numberBinOp($lattr80,$scope0.$const81,'Add');var $loadname83=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname83.tp$getattr($scope0.$const38, true);$blk=62;case 62: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',26,54); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname83.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr84=$ret;var $binop85=Sk.abstr.numberBinOp($binop82,$lattr84,'Add');$ret = ($loadname77.tp$call)?$loadname77.tp$call([$binop85],undefined) : Sk.misceval.applyOrSuspend($loadname77,undefined,undefined,undefined,[$binop85]);$blk=63;case 63: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',26,4); }var $call86=$ret;
+
+$currLineNo = 26;
+$currColNo = 4;
+
+if (Sk.breakpoints('<stdin>.py',27,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',27,4);$susp.$blk = 64;$susp.optional = true;return $susp;}$blk=64;case 64: 
+
+$currLineNo = 27;
+$currColNo = 4;
+
+var $loadname87=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname87.tp$call)?$loadname87.tp$call([$scope0.$const88],undefined) : Sk.misceval.applyOrSuspend($loadname87,undefined,undefined,undefined,[$scope0.$const88]);$blk=65;case 65: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',27,4); }var $call89=$ret;
+
+$currLineNo = 27;
+$currColNo = 4;
+
+if (Sk.breakpoints('<stdin>.py',28,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',28,4);$susp.$blk = 66;$susp.optional = true;return $susp;}$blk=66;case 66: 
 
 $currLineNo = 28;
 $currColNo = 4;
 
-$loc.item=$scope0.$const3;$blk=58;case 58: if (Sk.breakpoints('<stdin>.py',37,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',37,0);$susp.$blk = 86;$susp.optional = true;return $susp;}$blk=86;case 86: 
+var $loadname90=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname90.tp$call)?$loadname90.tp$call([$scope0.$const91],undefined) : Sk.misceval.applyOrSuspend($loadname90,undefined,undefined,undefined,[$scope0.$const91]);$blk=67;case 67: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',28,4); }var $call92=$ret;
 
-$currLineNo = 37;
+$currLineNo = 28;
+$currColNo = 4;
+
+if (Sk.breakpoints('<stdin>.py',29,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',29,4);$susp.$blk = 68;$susp.optional = true;return $susp;}$blk=68;case 68: 
+
+$currLineNo = 29;
+$currColNo = 4;
+
+var $loadname93=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname93.tp$call)?$loadname93.tp$call([$scope0.$const94],undefined) : Sk.misceval.applyOrSuspend($loadname93,undefined,undefined,undefined,[$scope0.$const94]);$blk=69;case 69: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',29,18); }var $call95=$ret;
+
+$currLineNo = 29;
+$currColNo = 18;
+
+$loc.item_choice=$call95;if (Sk.breakpoints('<stdin>.py',30,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',30,4);$susp.$blk = 70;$susp.optional = true;return $susp;}$blk=70;case 70: 
+
+$currLineNo = 30;
+$currColNo = 4;
+
+var $loadname96=$loc.item_choice!==undefined?$loc.item_choice:Sk.misceval.loadname('item_choice',$gbl);;var $compareres97=null;$ret = Sk.misceval.richCompareBool($loadname96,$scope0.$const74,'Eq', true);$blk=74;case 74: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',30,7); }$compareres97=Sk.builtin.bool($ret);var $jfalse98=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse98){$blk=73;continue;}$blk=73;case 73: var $jfalse99=($compareres97===false||!Sk.misceval.isTrue($compareres97));if($jfalse99){$blk=72;continue;}if (Sk.breakpoints('<stdin>.py',31,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',31,8);$susp.$blk = 75;$susp.optional = true;return $susp;}$blk=75;case 75: 
+
+$currLineNo = 31;
+$currColNo = 8;
+
+$loc.item=$scope0.$const3;$blk=71;case 71: $blk=56;case 56: if (Sk.breakpoints('<stdin>.py',56,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',56,0);$susp.$blk = 133;$susp.optional = true;return $susp;}$blk=133;case 133: 
+
+$currLineNo = 56;
 $currColNo = 0;
 
-$blk=6; continue;if (Sk.breakpoints('<stdin>.py',39,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',39,0);$susp.$blk = 87;$susp.optional = true;return $susp;}$blk=87; continue;case 15: if (Sk.breakpoints('<stdin>.py',10,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',10,5);$susp.$blk = 20;$susp.optional = true;return $susp;}$blk=20;case 20: 
+$blk=6; continue;if (Sk.breakpoints('<stdin>.py',58,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',58,0);$susp.$blk = 134;$susp.optional = true;return $susp;}$blk=134; continue;case 15: if (Sk.breakpoints('<stdin>.py',10,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',10,5);$susp.$blk = 20;$susp.optional = true;return $susp;}$blk=20;case 20: 
 
 $currLineNo = 10;
 $currColNo = 5;
@@ -190,91 +221,245 @@ $blk=21;case 21: $blk=14; continue;case 30: if (Sk.breakpoints('<stdin>.py',16,5
 $currLineNo = 16;
 $currColNo = 5;
 
-var $loadname41=$loc.shipping!==undefined?$loc.shipping:Sk.misceval.loadname('shipping',$gbl);;var $compareres42=null;$ret = Sk.misceval.richCompareBool($loadname41,$scope0.$const43,'Eq', true);$blk=40;case 40: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',16,5); }$compareres42=Sk.builtin.bool($ret);var $jfalse44=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse44){$blk=39;continue;}$blk=39;case 39: var $jfalse45=($compareres42===false||!Sk.misceval.isTrue($compareres42));if($jfalse45){$blk=38;continue;}if (Sk.breakpoints('<stdin>.py',17,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',17,4);$susp.$blk = 41;$susp.optional = true;return $susp;}$blk=41;case 41: 
+var $loadname42=$loc.shipping!==undefined?$loc.shipping:Sk.misceval.loadname('shipping',$gbl);;var $compareres43=null;$ret = Sk.misceval.richCompareBool($loadname42,$scope0.$const44,'Eq', true);$blk=40;case 40: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',16,5); }$compareres43=Sk.builtin.bool($ret);var $jfalse45=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse45){$blk=39;continue;}$blk=39;case 39: var $jfalse46=($compareres43===false||!Sk.misceval.isTrue($compareres43));if($jfalse46){$blk=38;continue;}if (Sk.breakpoints('<stdin>.py',17,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',17,4);$susp.$blk = 41;$susp.optional = true;return $susp;}$blk=41;case 41: 
 
 $currLineNo = 17;
 $currColNo = 4;
 
-var $loadname46=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname46.tp$call)?$loadname46.tp$call([$scope0.$const47],undefined) : Sk.misceval.applyOrSuspend($loadname46,undefined,undefined,undefined,[$scope0.$const47]);$blk=42;case 42: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',17,4); }var $call48=$ret;
+var $loadname47=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname48=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname48.tp$getattr($scope0.$const49, true);$blk=42;case 42: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',17,10); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname48.sk$attrError() + " has no attribute '" + $scope0.$const49.$jsstr() + "'");
+};var $lattr50=$ret;var $binop52=Sk.abstr.numberBinOp($lattr50,$scope0.$const51,'Add');var $loadname53=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname53.tp$getattr($scope0.$const38, true);$blk=43;case 43: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',17,33); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname53.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr54=$ret;var $binop55=Sk.abstr.numberBinOp($binop52,$lattr54,'Add');$ret = ($loadname47.tp$call)?$loadname47.tp$call([$binop55],undefined) : Sk.misceval.applyOrSuspend($loadname47,undefined,undefined,undefined,[$binop55]);$blk=44;case 44: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',17,4); }var $call56=$ret;
 
 $currLineNo = 17;
 $currColNo = 4;
 
-$blk=38;case 38: $blk=29; continue;case 59: if (Sk.breakpoints('<stdin>.py',29,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',29,5);$susp.$blk = 63;$susp.optional = true;return $susp;}$blk=63;case 63: 
+$blk=38;case 38: $blk=29; continue;case 57: if (Sk.breakpoints('<stdin>.py',37,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',37,5);$susp.$blk = 88;$susp.optional = true;return $susp;}$blk=88;case 88: 
 
-$currLineNo = 29;
+$currLineNo = 37;
 $currColNo = 5;
 
-var $loadname75=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres76=null;$ret = Sk.misceval.richCompareBool($loadname75,$scope0.$const77,'Eq', true);$blk=67;case 67: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',29,5); }$compareres76=Sk.builtin.bool($ret);var $jfalse78=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse78){$blk=66;continue;}$blk=66;case 66: var $jfalse79=($compareres76===false||!Sk.misceval.isTrue($compareres76));if($jfalse79){$blk=65;continue;}if (Sk.breakpoints('<stdin>.py',30,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',30,4);$susp.$blk = 68;$susp.optional = true;return $susp;}$blk=68;case 68: 
+var $loadname118=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres119=null;$ret = Sk.misceval.richCompareBool($loadname118,$scope0.$const102,'Eq', true);$blk=92;case 92: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',37,5); }$compareres119=Sk.builtin.bool($ret);var $jfalse120=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse120){$blk=91;continue;}$blk=91;case 91: var $jfalse121=($compareres119===false||!Sk.misceval.isTrue($compareres119));if($jfalse121){$blk=90;continue;}if (Sk.breakpoints('<stdin>.py',38,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',38,4);$susp.$blk = 93;$susp.optional = true;return $susp;}$blk=93;case 93: 
 
-$currLineNo = 30;
+$currLineNo = 38;
 $currColNo = 4;
 
-$loc.item=$scope0.$const18;$blk=64;case 64: $blk=58; continue;case 65: if (Sk.breakpoints('<stdin>.py',31,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',31,5);$susp.$blk = 69;$susp.optional = true;return $susp;}$blk=69;case 69: 
+var $loadname122=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname123=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname123.tp$getattr($scope0.$const124, true);$blk=94;case 94: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',38,10); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname123.sk$attrError() + " has no attribute '" + $scope0.$const124.$jsstr() + "'");
+};var $lattr125=$ret;var $binop127=Sk.abstr.numberBinOp($lattr125,$scope0.$const126,'Add');var $loadname128=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname128.tp$getattr($scope0.$const38, true);$blk=95;case 95: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',38,59); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname128.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr129=$ret;var $binop130=Sk.abstr.numberBinOp($binop127,$lattr129,'Add');$ret = ($loadname122.tp$call)?$loadname122.tp$call([$binop130],undefined) : Sk.misceval.applyOrSuspend($loadname122,undefined,undefined,undefined,[$binop130]);$blk=96;case 96: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',38,4); }var $call131=$ret;
 
-$currLineNo = 31;
-$currColNo = 5;
-
-var $loadname80=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres81=null;$ret = Sk.misceval.richCompareBool($loadname80,$scope0.$const82,'Eq', true);$blk=73;case 73: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',31,5); }$compareres81=Sk.builtin.bool($ret);var $jfalse83=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse83){$blk=72;continue;}$blk=72;case 72: var $jfalse84=($compareres81===false||!Sk.misceval.isTrue($compareres81));if($jfalse84){$blk=71;continue;}if (Sk.breakpoints('<stdin>.py',32,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',32,4);$susp.$blk = 74;$susp.optional = true;return $susp;}$blk=74;case 74: 
-
-$currLineNo = 32;
+$currLineNo = 38;
 $currColNo = 4;
 
-$loc.shipping=$scope0.$const2;$blk=70;case 70: $blk=64; continue;case 71: if (Sk.breakpoints('<stdin>.py',33,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',33,5);$susp.$blk = 75;$susp.optional = true;return $susp;}$blk=75;case 75: 
-
-$currLineNo = 33;
-$currColNo = 5;
-
-var $loadname85=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres86=null;$ret = Sk.misceval.richCompareBool($loadname85,$scope0.$const87,'Eq', true);$blk=79;case 79: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',33,5); }$compareres86=Sk.builtin.bool($ret);var $jfalse88=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse88){$blk=78;continue;}$blk=78;case 78: var $jfalse89=($compareres86===false||!Sk.misceval.isTrue($compareres86));if($jfalse89){$blk=77;continue;}if (Sk.breakpoints('<stdin>.py',34,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',34,4);$susp.$blk = 80;$susp.optional = true;return $susp;}$blk=80;case 80: 
-
-$currLineNo = 34;
-$currColNo = 4;
-
-$loc.shipping=$scope0.$const43;$blk=76;case 76: $blk=70; continue;case 77: if (Sk.breakpoints('<stdin>.py',35,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',35,5);$susp.$blk = 81;$susp.optional = true;return $susp;}$blk=81;case 81: 
-
-$currLineNo = 35;
-$currColNo = 5;
-
-var $loadname90=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres91=null;$ret = Sk.misceval.richCompareBool($loadname90,$scope0.$const92,'Eq', true);$blk=84;case 84: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',35,5); }$compareres91=Sk.builtin.bool($ret);var $jfalse93=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse93){$blk=83;continue;}$blk=83;case 83: var $jfalse94=($compareres91===false||!Sk.misceval.isTrue($compareres91));if($jfalse94){$blk=82;continue;}if (Sk.breakpoints('<stdin>.py',36,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',36,4);$susp.$blk = 85;$susp.optional = true;return $susp;}$blk=85;case 85: 
-
-$currLineNo = 36;
-$currColNo = 4;
-
-$blk=88; continue;$blk=82;case 88: if (Sk.breakpoints('<stdin>.py',39,0)) {var $susp = $saveSuspension({data: {type: 'Sk.delay'}, resume: function() {}}, '<stdin>.py',39,0);$susp.$blk = 89;$susp.optional = true;return $susp;}$blk=89;case 89: $blk=90;case 90: if (Sk.breakpoints('<stdin>.py',40,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',40,0);$susp.$blk = 91;$susp.optional = true;return $susp;}$blk=91;case 91: 
-
-$currLineNo = 40;
-$currColNo = 0;
-
-var $loadname95=$loc.item!==undefined?$loc.item:Sk.misceval.loadname('item',$gbl);;var $compareres96=null;$ret = Sk.misceval.richCompareBool($loadname95,$scope0.$const3,'Eq', true);$blk=95;case 95: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',40,3); }$compareres96=Sk.builtin.bool($ret);var $jfalse97=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse97){$blk=94;continue;}$blk=94;case 94: var $jfalse98=($compareres96===false||!Sk.misceval.isTrue($compareres96));if($jfalse98){$blk=93;continue;}if (Sk.breakpoints('<stdin>.py',41,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',41,4);$susp.$blk = 96;$susp.optional = true;return $susp;}$blk=96;case 96: 
-
-$currLineNo = 41;
-$currColNo = 4;
-
-var $loadname99=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname99.tp$call)?$loadname99.tp$call([$scope0.$const100],undefined) : Sk.misceval.applyOrSuspend($loadname99,undefined,undefined,undefined,[$scope0.$const100]);$blk=97;case 97: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',41,4); }var $call101=$ret;
-
-$currLineNo = 41;
-$currColNo = 4;
-
-$blk=92;case 92: return $loc;throw new Sk.builtin.SystemError('internal error: unterminated block');case 82: $blk=76; continue;case 87: 
+if (Sk.breakpoints('<stdin>.py',39,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',39,4);$susp.$blk = 97;$susp.optional = true;return $susp;}$blk=97;case 97: 
 
 $currLineNo = 39;
-$currColNo = 0;
+$currColNo = 4;
 
-$blk=88; continue;case 93: if (Sk.breakpoints('<stdin>.py',42,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',42,5);$susp.$blk = 98;$susp.optional = true;return $susp;}$blk=98;case 98: 
+var $loadname132=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname132.tp$call)?$loadname132.tp$call([$scope0.$const133],undefined) : Sk.misceval.applyOrSuspend($loadname132,undefined,undefined,undefined,[$scope0.$const133]);$blk=98;case 98: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',39,4); }var $call134=$ret;
+
+$currLineNo = 39;
+$currColNo = 4;
+
+if (Sk.breakpoints('<stdin>.py',40,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',40,4);$susp.$blk = 99;$susp.optional = true;return $susp;}$blk=99;case 99: 
+
+$currLineNo = 40;
+$currColNo = 4;
+
+var $loadname135=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname135.tp$call)?$loadname135.tp$call([$scope0.$const136],undefined) : Sk.misceval.applyOrSuspend($loadname135,undefined,undefined,undefined,[$scope0.$const136]);$blk=100;case 100: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',40,4); }var $call137=$ret;
+
+$currLineNo = 40;
+$currColNo = 4;
+
+if (Sk.breakpoints('<stdin>.py',41,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',41,4);$susp.$blk = 101;$susp.optional = true;return $susp;}$blk=101;case 101: 
+
+$currLineNo = 41;
+$currColNo = 4;
+
+var $loadname138=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname138.tp$call)?$loadname138.tp$call([$scope0.$const139],undefined) : Sk.misceval.applyOrSuspend($loadname138,undefined,undefined,undefined,[$scope0.$const139]);$blk=102;case 102: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',41,22); }var $call140=$ret;
+
+$currLineNo = 41;
+$currColNo = 22;
+
+$loc.shipping_choice=$call140;if (Sk.breakpoints('<stdin>.py',42,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',42,4);$susp.$blk = 103;$susp.optional = true;return $susp;}$blk=103;case 103: 
 
 $currLineNo = 42;
+$currColNo = 4;
+
+var $loadname141=$loc.shipping_choice!==undefined?$loc.shipping_choice:Sk.misceval.loadname('shipping_choice',$gbl);;var $compareres142=null;$ret = Sk.misceval.richCompareBool($loadname141,$scope0.$const74,'Eq', true);$blk=107;case 107: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',42,7); }$compareres142=Sk.builtin.bool($ret);var $jfalse143=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse143){$blk=106;continue;}$blk=106;case 106: var $jfalse144=($compareres142===false||!Sk.misceval.isTrue($compareres142));if($jfalse144){$blk=105;continue;}if (Sk.breakpoints('<stdin>.py',43,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',43,8);$susp.$blk = 108;$susp.optional = true;return $susp;}$blk=108;case 108: 
+
+$currLineNo = 43;
+$currColNo = 8;
+
+$loc.shipping=$scope0.$const2;$blk=104;case 104: $blk=89;case 89: $blk=56; continue;case 72: if (Sk.breakpoints('<stdin>.py',32,9)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',32,9);$susp.$blk = 76;$susp.optional = true;return $susp;}$blk=76;case 76: 
+
+$currLineNo = 32;
+$currColNo = 9;
+
+var $loadname100=$loc.item_choice!==undefined?$loc.item_choice:Sk.misceval.loadname('item_choice',$gbl);;var $compareres101=null;$ret = Sk.misceval.richCompareBool($loadname100,$scope0.$const102,'Eq', true);$blk=80;case 80: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',32,9); }$compareres101=Sk.builtin.bool($ret);var $jfalse103=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse103){$blk=79;continue;}$blk=79;case 79: var $jfalse104=($compareres101===false||!Sk.misceval.isTrue($compareres101));if($jfalse104){$blk=78;continue;}if (Sk.breakpoints('<stdin>.py',33,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',33,8);$susp.$blk = 81;$susp.optional = true;return $susp;}$blk=81;case 81: 
+
+$currLineNo = 33;
+$currColNo = 8;
+
+$loc.item=$scope0.$const18;$blk=77;case 77: $blk=71; continue;case 78: if (Sk.breakpoints('<stdin>.py',35,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',35,8);$susp.$blk = 82;$susp.optional = true;return $susp;}$blk=82;case 82: 
+
+$currLineNo = 35;
+$currColNo = 8;
+
+var $loadname105=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname106=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname106.tp$getattr($scope0.$const107, true);$blk=83;case 83: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',35,14); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname106.sk$attrError() + " has no attribute '" + $scope0.$const107.$jsstr() + "'");
+};var $lattr108=$ret;var $binop110=Sk.abstr.numberBinOp($lattr108,$scope0.$const109,'Add');var $loadname111=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname111.tp$getattr($scope0.$const38, true);$blk=84;case 84: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',35,58); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname111.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr112=$ret;var $binop113=Sk.abstr.numberBinOp($binop110,$lattr112,'Add');$ret = ($loadname105.tp$call)?$loadname105.tp$call([$binop113],undefined) : Sk.misceval.applyOrSuspend($loadname105,undefined,undefined,undefined,[$binop113]);$blk=85;case 85: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',35,8); }var $call114=$ret;
+
+$currLineNo = 35;
+$currColNo = 8;
+
+if (Sk.breakpoints('<stdin>.py',36,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',36,8);$susp.$blk = 86;$susp.optional = true;return $susp;}$blk=86;case 86: 
+
+$currLineNo = 36;
+$currColNo = 8;
+
+var $loadname115=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname115.tp$call)?$loadname115.tp$call([$scope0.$const116],undefined) : Sk.misceval.applyOrSuspend($loadname115,undefined,undefined,undefined,[$scope0.$const116]);$blk=87;case 87: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',36,8); }var $call117=$ret;
+
+$currLineNo = 36;
+$currColNo = 8;
+
+$blk=77; continue;case 90: if (Sk.breakpoints('<stdin>.py',49,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',49,5);$susp.$blk = 121;$susp.optional = true;return $susp;}$blk=121;case 121: 
+
+$currLineNo = 49;
 $currColNo = 5;
 
-var $loadname102=$loc.item!==undefined?$loc.item:Sk.misceval.loadname('item',$gbl);;var $compareres103=null;$ret = Sk.misceval.richCompareBool($loadname102,$scope0.$const18,'Eq', true);$blk=101;case 101: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',42,5); }$compareres103=Sk.builtin.bool($ret);var $jfalse104=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse104){$blk=100;continue;}$blk=100;case 100: var $jfalse105=($compareres103===false||!Sk.misceval.isTrue($compareres103));if($jfalse105){$blk=99;continue;}if (Sk.breakpoints('<stdin>.py',43,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',43,4);$susp.$blk = 102;$susp.optional = true;return $susp;}$blk=102;case 102: 
+var $loadname160=$loc.choice!==undefined?$loc.choice:Sk.misceval.loadname('choice',$gbl);;var $compareres161=null;$ret = Sk.misceval.richCompareBool($loadname160,$scope0.$const162,'Eq', true);$blk=125;case 125: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',49,5); }$compareres161=Sk.builtin.bool($ret);var $jfalse163=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse163){$blk=124;continue;}$blk=124;case 124: var $jfalse164=($compareres161===false||!Sk.misceval.isTrue($compareres161));if($jfalse164){$blk=123;continue;}if (Sk.breakpoints('<stdin>.py',50,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',50,4);$susp.$blk = 126;$susp.optional = true;return $susp;}$blk=126;case 126: 
 
-$currLineNo = 43;
+$currLineNo = 50;
 $currColNo = 4;
 
-var $loadname106=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;$ret = ($loadname106.tp$call)?$loadname106.tp$call([$scope0.$const107],undefined) : Sk.misceval.applyOrSuspend($loadname106,undefined,undefined,undefined,[$scope0.$const107]);$blk=103;case 103: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',43,4); }var $call108=$ret;
+$blk=135; continue;$blk=122;case 135: if (Sk.breakpoints('<stdin>.py',58,0)) {var $susp = $saveSuspension({data: {type: 'Sk.delay'}, resume: function() {}}, '<stdin>.py',58,0);$susp.$blk = 136;$susp.optional = true;return $susp;}$blk=136;case 136: $blk=137;case 137: if (Sk.breakpoints('<stdin>.py',59,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',59,0);$susp.$blk = 138;$susp.optional = true;return $susp;}$blk=138;case 138: 
 
-$currLineNo = 43;
+$currLineNo = 59;
+$currColNo = 0;
+
+var $loadname177=$loc.item!==undefined?$loc.item:Sk.misceval.loadname('item',$gbl);;var $compareres178=null;$ret = Sk.misceval.richCompareBool($loadname177,$scope0.$const3,'Eq', true);$blk=142;case 142: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',59,3); }$compareres178=Sk.builtin.bool($ret);var $jfalse179=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse179){$blk=141;continue;}$blk=141;case 141: var $jfalse180=($compareres178===false||!Sk.misceval.isTrue($compareres178));if($jfalse180){$blk=140;continue;}if (Sk.breakpoints('<stdin>.py',60,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',60,4);$susp.$blk = 143;$susp.optional = true;return $susp;}$blk=143;case 143: 
+
+$currLineNo = 60;
 $currColNo = 4;
 
-$blk=99;case 99: $blk=92; continue;}}catch(err){ if (!(err instanceof Sk.builtin.BaseException)) { err = new Sk.builtin.ExternalError(err); } err.traceback.push({lineno: $currLineNo, colno: $currColNo, filename: '<stdin>.py'}); if ($exc.length>0) { $err = err; $blk=$exc.pop(); continue; } else { throw err; }} } });$scope0.$const2 = new Sk.builtin.str("shipping_free");$scope0.$const3 = new Sk.builtin.str("item_balloon");$scope0.$const7 = new Sk.builtin.str("Your item:");$scope0.$const14 = new Sk.builtin.str("\ud83c\udf88");$scope0.$const18 = new Sk.builtin.str("item_popper");$scope0.$const22 = new Sk.builtin.str("\ud83c\udf89");$scope0.$const25 = new Sk.builtin.str("Shipping mode:");$scope0.$const33 = new Sk.builtin.str('yellow');$scope0.$const35 = new Sk.builtin.str("Free!");$scope0.$const37 = new Sk.builtin.str('reset');$scope0.$const39 = new Sk.builtin.str("");$scope0.$const43 = new Sk.builtin.str("shipping_standard");$scope0.$const47 = new Sk.builtin.str("$5");$scope0.$const50 = new Sk.builtin.str("==== Menu ====");$scope0.$const53 = new Sk.builtin.str("[1] Change item to balloon");$scope0.$const56 = new Sk.builtin.str("[2] Change item to firecracker");$scope0.$const59 = new Sk.builtin.str("[3] Use free shipping");$scope0.$const62 = new Sk.builtin.str("[4] Use standard shipping");$scope0.$const65 = new Sk.builtin.str("[5] Checkout");$scope0.$const68 = new Sk.builtin.str("Enter your choice:");$scope0.$const72 = new Sk.builtin.str("1");$scope0.$const77 = new Sk.builtin.str("2");$scope0.$const82 = new Sk.builtin.str("3");$scope0.$const87 = new Sk.builtin.str("4");$scope0.$const92 = new Sk.builtin.str("5");$scope0.$const100 = new Sk.builtin.str("The ballon costs: $1.40");$scope0.$const107 = new Sk.builtin.str("The popper costs: $1.75");
+var $loadname181=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname183=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname183.tp$getattr($scope0.$const33, true);$blk=144;case 144: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',60,33); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname183.sk$attrError() + " has no attribute '" + $scope0.$const33.$jsstr() + "'");
+};var $lattr184=$ret;var $binop185=Sk.abstr.numberBinOp($scope0.$const182,$lattr184,'Add');var $binop187=Sk.abstr.numberBinOp($binop185,$scope0.$const186,'Add');$ret = ($loadname181.tp$call)?$loadname181.tp$call([$binop187],undefined) : Sk.misceval.applyOrSuspend($loadname181,undefined,undefined,undefined,[$binop187]);$blk=145;case 145: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',60,4); }var $call188=$ret;
+
+$currLineNo = 60;
+$currColNo = 4;
+
+$blk=139;case 139: if (Sk.breakpoints('<stdin>.py',63,0)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',63,0);$susp.$blk = 153;$susp.optional = true;return $susp;}$blk=153;case 153: 
+
+$currLineNo = 63;
+$currColNo = 0;
+
+var $loadname201=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname202=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname202.tp$getattr($scope0.$const38, true);$blk=154;case 154: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',63,6); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname202.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr203=$ret;var $binop205=Sk.abstr.numberBinOp($lattr203,$scope0.$const204,'Add');$ret = ($loadname201.tp$call)?$loadname201.tp$call([$binop205],undefined) : Sk.misceval.applyOrSuspend($loadname201,undefined,undefined,undefined,[$binop205]);$blk=155;case 155: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',63,0); }var $call206=$ret;
+
+$currLineNo = 63;
+$currColNo = 0;
+
+return $loc;throw new Sk.builtin.SystemError('internal error: unterminated block');case 105: if (Sk.breakpoints('<stdin>.py',44,9)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',44,9);$susp.$blk = 109;$susp.optional = true;return $susp;}$blk=109;case 109: 
+
+$currLineNo = 44;
+$currColNo = 9;
+
+var $loadname145=$loc.shipping_choice!==undefined?$loc.shipping_choice:Sk.misceval.loadname('shipping_choice',$gbl);;var $compareres146=null;$ret = Sk.misceval.richCompareBool($loadname145,$scope0.$const102,'Eq', true);$blk=113;case 113: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',44,9); }$compareres146=Sk.builtin.bool($ret);var $jfalse147=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse147){$blk=112;continue;}$blk=112;case 112: var $jfalse148=($compareres146===false||!Sk.misceval.isTrue($compareres146));if($jfalse148){$blk=111;continue;}if (Sk.breakpoints('<stdin>.py',45,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',45,8);$susp.$blk = 114;$susp.optional = true;return $susp;}$blk=114;case 114: 
+
+$currLineNo = 45;
+$currColNo = 8;
+
+$loc.shipping=$scope0.$const44;$blk=110;case 110: $blk=104; continue;case 111: if (Sk.breakpoints('<stdin>.py',47,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',47,8);$susp.$blk = 115;$susp.optional = true;return $susp;}$blk=115;case 115: 
+
+$currLineNo = 47;
+$currColNo = 8;
+
+var $loadname149=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname150=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname150.tp$getattr($scope0.$const107, true);$blk=116;case 116: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',47,14); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname150.sk$attrError() + " has no attribute '" + $scope0.$const107.$jsstr() + "'");
+};var $lattr151=$ret;var $binop153=Sk.abstr.numberBinOp($lattr151,$scope0.$const152,'Add');var $loadname154=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname154.tp$getattr($scope0.$const38, true);$blk=117;case 117: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',47,62); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname154.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr155=$ret;var $binop156=Sk.abstr.numberBinOp($binop153,$lattr155,'Add');$ret = ($loadname149.tp$call)?$loadname149.tp$call([$binop156],undefined) : Sk.misceval.applyOrSuspend($loadname149,undefined,undefined,undefined,[$binop156]);$blk=118;case 118: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',47,8); }var $call157=$ret;
+
+$currLineNo = 47;
+$currColNo = 8;
+
+if (Sk.breakpoints('<stdin>.py',48,8)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',48,8);$susp.$blk = 119;$susp.optional = true;return $susp;}$blk=119;case 119: 
+
+$currLineNo = 48;
+$currColNo = 8;
+
+var $loadname158=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname158.tp$call)?$loadname158.tp$call([$scope0.$const116],undefined) : Sk.misceval.applyOrSuspend($loadname158,undefined,undefined,undefined,[$scope0.$const116]);$blk=120;case 120: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',48,8); }var $call159=$ret;
+
+$currLineNo = 48;
+$currColNo = 8;
+
+$blk=110; continue;case 122: $blk=89; continue;case 123: if (Sk.breakpoints('<stdin>.py',52,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',52,4);$susp.$blk = 127;$susp.optional = true;return $susp;}$blk=127;case 127: 
+
+$currLineNo = 52;
+$currColNo = 4;
+
+var $loadname165=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname166=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname166.tp$getattr($scope0.$const107, true);$blk=128;case 128: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',52,10); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname166.sk$attrError() + " has no attribute '" + $scope0.$const107.$jsstr() + "'");
+};var $lattr167=$ret;var $binop169=Sk.abstr.numberBinOp($lattr167,$scope0.$const168,'Add');var $loadname170=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname170.tp$getattr($scope0.$const38, true);$blk=129;case 129: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',52,54); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname170.sk$attrError() + " has no attribute '" + $scope0.$const38.$jsstr() + "'");
+};var $lattr171=$ret;var $binop172=Sk.abstr.numberBinOp($binop169,$lattr171,'Add');$ret = ($loadname165.tp$call)?$loadname165.tp$call([$binop172],undefined) : Sk.misceval.applyOrSuspend($loadname165,undefined,undefined,undefined,[$binop172]);$blk=130;case 130: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',52,4); }var $call173=$ret;
+
+$currLineNo = 52;
+$currColNo = 4;
+
+if (Sk.breakpoints('<stdin>.py',53,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',53,4);$susp.$blk = 131;$susp.optional = true;return $susp;}$blk=131;case 131: 
+
+$currLineNo = 53;
+$currColNo = 4;
+
+var $loadname174=$loc.input!==undefined?$loc.input:Sk.misceval.loadname('input',$gbl);;$ret = ($loadname174.tp$call)?$loadname174.tp$call([$scope0.$const175],undefined) : Sk.misceval.applyOrSuspend($loadname174,undefined,undefined,undefined,[$scope0.$const175]);$blk=132;case 132: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',53,4); }var $call176=$ret;
+
+$currLineNo = 53;
+$currColNo = 4;
+
+$blk=122; continue;case 134: 
+
+$currLineNo = 58;
+$currColNo = 0;
+
+$blk=135; continue;case 140: if (Sk.breakpoints('<stdin>.py',61,5)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',61,5);$susp.$blk = 146;$susp.optional = true;return $susp;}$blk=146;case 146: 
+
+$currLineNo = 61;
+$currColNo = 5;
+
+var $loadname189=$loc.item!==undefined?$loc.item:Sk.misceval.loadname('item',$gbl);;var $compareres190=null;$ret = Sk.misceval.richCompareBool($loadname189,$scope0.$const18,'Eq', true);$blk=149;case 149: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',61,5); }$compareres190=Sk.builtin.bool($ret);var $jfalse191=($ret===false||!Sk.misceval.isTrue($ret));if($jfalse191){$blk=148;continue;}$blk=148;case 148: var $jfalse192=($compareres190===false||!Sk.misceval.isTrue($compareres190));if($jfalse192){$blk=147;continue;}if (Sk.breakpoints('<stdin>.py',62,4)) {var $susp = $saveSuspension({data: {type: 'Sk.debug'}, resume: function() {}}, '<stdin>.py',62,4);$susp.$blk = 150;$susp.optional = true;return $susp;}$blk=150;case 150: 
+
+$currLineNo = 62;
+$currColNo = 4;
+
+var $loadname193=$loc.print!==undefined?$loc.print:Sk.misceval.loadname('print',$gbl);;var $loadname195=$loc.Colour!==undefined?$loc.Colour:Sk.misceval.loadname('Colour',$gbl);;$ret = $loadname195.tp$getattr($scope0.$const33, true);$blk=151;case 151: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',62,33); }
+if ($ret === undefined) {
+throw new Sk.builtin.AttributeError($loadname195.sk$attrError() + " has no attribute '" + $scope0.$const33.$jsstr() + "'");
+};var $lattr196=$ret;var $binop197=Sk.abstr.numberBinOp($scope0.$const194,$lattr196,'Add');var $binop199=Sk.abstr.numberBinOp($binop197,$scope0.$const198,'Add');$ret = ($loadname193.tp$call)?$loadname193.tp$call([$binop199],undefined) : Sk.misceval.applyOrSuspend($loadname193,undefined,undefined,undefined,[$binop199]);$blk=152;case 152: if ($ret && $ret.$isSuspension) { return $saveSuspension($ret,'<stdin>.py',62,4); }var $call200=$ret;
+
+$currLineNo = 62;
+$currColNo = 4;
+
+$blk=147;case 147: $blk=139; continue;}}catch(err){ if (!(err instanceof Sk.builtin.BaseException)) { err = new Sk.builtin.ExternalError(err); } err.traceback.push({lineno: $currLineNo, colno: $currColNo, filename: '<stdin>.py'}); if ($exc.length>0) { $err = err; $blk=$exc.pop(); continue; } else { throw err; }} } });$scope0.$const2 = new Sk.builtin.str("shipping_free");$scope0.$const3 = new Sk.builtin.str("item_balloon");$scope0.$const7 = new Sk.builtin.str("Your item:");$scope0.$const14 = new Sk.builtin.str("\ud83c\udf88");$scope0.$const18 = new Sk.builtin.str("item_popper");$scope0.$const22 = new Sk.builtin.str("\ud83c\udf89");$scope0.$const25 = new Sk.builtin.str("Shipping mode:");$scope0.$const33 = new Sk.builtin.str('yellow');$scope0.$const35 = new Sk.builtin.str("Free!");$scope0.$const38 = new Sk.builtin.str('reset');$scope0.$const44 = new Sk.builtin.str("shipping_standard");$scope0.$const49 = new Sk.builtin.str('orange');$scope0.$const51 = new Sk.builtin.str("$5");$scope0.$const58 = new Sk.builtin.str("==== Menu ====");$scope0.$const61 = new Sk.builtin.str("[1] Change item");$scope0.$const64 = new Sk.builtin.str("[2] Change shipping");$scope0.$const67 = new Sk.builtin.str("[3] Checkout and Exit");$scope0.$const70 = new Sk.builtin.str("Enter your choice:");$scope0.$const74 = new Sk.builtin.str("1");$scope0.$const79 = new Sk.builtin.str('cyan');$scope0.$const81 = new Sk.builtin.str("    ==== Select item ====");$scope0.$const88 = new Sk.builtin.str("    [1] \ud83c\udf88 Balloon");$scope0.$const91 = new Sk.builtin.str("    [2] \ud83c\udf89 Popper");$scope0.$const94 = new Sk.builtin.str("    Enter your item:");$scope0.$const102 = new Sk.builtin.str("2");$scope0.$const107 = new Sk.builtin.str('red');$scope0.$const109 = new Sk.builtin.str("    Invalid item selection");$scope0.$const116 = new Sk.builtin.str("    Press [Enter] to return to main menu");$scope0.$const124 = new Sk.builtin.str('green');$scope0.$const126 = new Sk.builtin.str("    ==== Select shipping ====");$scope0.$const133 = new Sk.builtin.str("    [1] Free");$scope0.$const136 = new Sk.builtin.str("    [2] Standard");$scope0.$const139 = new Sk.builtin.str("    Enter your shipping choice:");$scope0.$const152 = new Sk.builtin.str("    Invalid shipping selection");$scope0.$const162 = new Sk.builtin.str("3");$scope0.$const168 = new Sk.builtin.str("Invalid choice, try again.");$scope0.$const175 = new Sk.builtin.str("Press [Enter] to return to main menu");$scope0.$const182 = new Sk.builtin.str("The ballon costs: ");$scope0.$const186 = new Sk.builtin.str("$1.40");$scope0.$const194 = new Sk.builtin.str("The popper costs: ");$scope0.$const198 = new Sk.builtin.str("$1.75");$scope0.$const204 = new Sk.builtin.str("Thanks for visiting our store!");
 return $scope0;}();
 $compiledmod;
