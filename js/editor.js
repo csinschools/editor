@@ -917,10 +917,14 @@ if (display == null || display.length == 0)
 }
 setDisplayMode(display);
 
+
+// auto run
+autorun = urlParams.get('autorun')
+autorun =  (autorun != null && autorun.length > 0);
+
 // embedded code in the URL
 esc = urlParams.get('code')
-if (esc != null && esc.length > 0)
-{
+if (esc != null && esc.length > 0) {
 	esc = decodeURIComponent(esc);
 	usingPyangelo = checkForPyangelo(esc);
 	setDisplayMode(usingPyangelo ? "canvas": display);
@@ -1003,8 +1007,10 @@ if (!(esc != null && esc.length > 0)) {
 					if (!headless) {
 						spinner.style.display = "none";
 						editorDiv.removeChild(spinner);		
-						editor.setValue(codestring, -1);
-						// check headless mode			
+						editor.setValue(codestring, -1);							
+						if (autorun) {
+							runSkulpt(false, codestring);
+						}							
 					}
 					else {
 						// let's run!
@@ -1057,6 +1063,9 @@ if (!(esc != null && esc.length > 0)) {
 
 						if (!headless) {
 							editor.setValue(codestring, -1);
+							if (autorun) {
+								runSkulpt(false, codestring);
+							}
 						}
 						else {
 							if (!compiled) {
@@ -1080,6 +1089,9 @@ if (!(esc != null && esc.length > 0)) {
 				usingPyangelo = checkForPyangelo(codestring);
 				editor.setValue(codestring, -1);
 				setDisplayMode(usingPyangelo ? "canvas": display);
+				if (autorun) {
+					runSkulpt(false, codestring);
+				}				
 			}
 		}
 	}
@@ -1090,6 +1102,10 @@ if (!(esc != null && esc.length > 0)) {
 			usingPyangelo = checkForPyangelo(codestring);
 			editor.setValue(codestring, -1);
 			setDisplayMode(usingPyangelo ? "canvas": display);
+
+			if (autorun) {
+				runSkulpt(false, codestring);
+			}			
 		}	
 	}
 }
@@ -1106,6 +1122,9 @@ else {
 			runSkulpt(false, "");
 		}
 	}	
+	else if (autorun) {
+		runSkulpt(false, esc);
+	}
 }
 
 // hide stop and next button on load

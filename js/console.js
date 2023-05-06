@@ -113,9 +113,8 @@ function inputf(n) {
                 inputElement.addEventListener("keyup", (function(e) {
                     e.preventDefault();
                     if (e.key ==="Enter") {
-                        userResponse = inputElement.innerText.replace(/\n+$/, "");
-                        inputElement.remove();
-                        inputElement = null;
+                        userResponse = this.innerText.replace(/\n+$/, "");
+                        this.remove();
                         outputf(userResponse);
                         outputf("\n");
                         n(userResponse);
