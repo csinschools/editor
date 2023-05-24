@@ -361,6 +361,14 @@ Sk.builtins.clear = function() {
     clearConsole();
 }
 
+Sk.builtins.showSpinner = function() {
+    showSpinner();
+}
+
+Sk.builtins.hideSpinner = function() {
+    hideSpinner();
+}
+
 // FIXME: need to preserve CSS stylings of the div
 Sk.builtins.print_screen = function() {
     var divContents = document.getElementById("consoleWrapper").innerHTML;
