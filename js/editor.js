@@ -10,7 +10,8 @@ function animateURL(timestamp) {
 	if (prevTime == null) {
 		prevTime = timestamp;
 	}
-	if (timestamp - 400 > prevTime) {
+	if (timestamp - 400 >
+		 prevTime) {
 		prevTime = timestamp;
 		msg = document.getElementById("codestoreURL").innerText;
 		
@@ -25,6 +26,22 @@ function animateURL(timestamp) {
 		document.getElementById("codestoreURL").innerText = msg;
 	}
 	animID = window.requestAnimationFrame(animateURL);
+}
+
+function checkBrowser() {
+	var supported = false;
+	let userAgent = navigator.userAgent;
+	
+	if(userAgent.match(/chrome|chromium|crios/i)) {
+		supported |= true;
+	} else if(userAgent.match(/safari/i)) {
+		supported |= true;
+	} else if(userAgent.match(/edg/i)) {
+		supported |= true;
+	}
+	if (!supported) {
+		showURLDialog("<p style='color: red;'>Sorry, your browser is not supported and the editor may not work as expected.</p>We recommend you use <b>Google Chrome</b>.")
+	}
 }
 
 function showURLDialog(msg) {
@@ -416,6 +433,8 @@ async function nextlineStepper(susp)
 	}
 }
 
+
+
 async function lineStepper(susp)
 {
 	checkForStop();
@@ -471,6 +490,8 @@ function runSkulpt(stepMode, code = "") {
 		}
 	}
 
+
+	code = run_lexer(code);
 	code = stripPeriodFromGoto(code);
 	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked) {
 		code = replacePrintConcatenationWithArgs(code);
@@ -529,9 +550,16 @@ function runSkulpt(stepMode, code = "") {
 	}
 
 	var e = Sk.misceval.asyncToPromise((function() {
-		return Sk.importMainWithBody("<stdin>", true, code, true)})
+		var a;
+		try {
+			a = Sk.importMainWithBody("<stdin>", true, code, true);
+		}
+		catch (err) {
+			logError(err.toString());
+		}
+		return a;
+		})
 		, handlers);
-
 	e.catch((function(err) {
 		if (err.message) {
 		   logError(err.message);
@@ -556,6 +584,7 @@ function runSkulpt(stepMode, code = "") {
 function stopSkulpt() {
 	editor.setReadOnly(false);
 	stopAllSounds();
+	hideSpinner();
 	if (stepRun)
 	{
 		// remove step highlighting
@@ -855,6 +884,8 @@ function stopAllSounds() {
 }
 
 // setting up the ace editor
+checkBrowser();
+
 var pyConsole = document.getElementById("console");
 
 var editor = ace.edit("editor");

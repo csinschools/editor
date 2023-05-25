@@ -11,6 +11,97 @@ String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
 
+/////////////////////////////////////////// cloud variables parser ///////////////////////////
+function convertTokensToCloud(tokens, lexlang) {
+    for (i = 0; i < tokens.length; i++) {
+        if ((tokens[i].text.substr(0, 6) == "cloud_") && tokens[i].type == lexlang.IDENTIFIER && !(tokens[i].flags & lexlang.flags.MEMBER)) {
+            tokens[i].text = "getCloudVariable('" + tokens[i].text + "')";
+        }
+    }
+}
+
+// returns the first cloud token encountered in the tokens array
+function getCloudToken(tokens, lexlang) {
+    for (i = 0; i < tokens.length; i++) {
+        if ((tokens[i].text.substr(0, 6) == "cloud_") && tokens[i].type == lexlang.IDENTIFIER && !(tokens[i].flags & lexlang.flags.MEMBER)) {
+            return tokens[i].text;
+        }
+    }
+    return "";    
+}
+
+function hasCloudToken(tokens, lexlang) {
+    for (i = 0; i < tokens.length; i++) {
+        if ((tokens[i].text.substr(0, 6) == "cloud_") && tokens[i].type == lexlang.IDENTIFIER && !(tokens[i].flags & lexlang.flags.MEMBER)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function joinTokensToString(tokens) {
+    let joined = "";
+    for (i = 0; i < tokens.length; i++) {
+        joined += tokens[i].text;
+    }    
+    return joined;
+}
+
+function run_lexer(code) {
+    var pretokens = [];
+    var posttokens = [];
+    var tokens = pretokens;
+
+    var newCode = "";
+    var lexlang = lexpy.gen(lex);
+    var lexer = new lex.Lexer(lexlang, code);
+
+    let token = lexer.get_token();
+    while (token != null) {
+        if (token.text.indexOf("\n") != -1) {
+            if (posttokens.length == 0) {
+                convertTokensToCloud(pretokens, lexlang);
+                newCode += (joinTokensToString(pretokens))                
+            } else {
+                // assignment
+                convertTokensToCloud(posttokens, lexlang);
+                if (hasCloudToken(pretokens, lexlang)) {
+                    newCode += ("setCloudVariable('" + getCloudToken(pretokens, lexlang) + "'," + joinTokensToString(posttokens) + ")")
+                } else {
+                    newCode += (joinTokensToString(pretokens) + "=" + joinTokensToString(posttokens))
+                }
+            }
+            newCode += token.text;
+
+            // reset states
+            pretokens = [];
+            posttokens = [];
+            tokens = pretokens;
+        } else if (token.text == "=") {
+            tokens = posttokens;
+        } else {
+            tokens.push(token);
+        }
+        console.log(token);
+        token = lexer.get_token();
+    }
+    if (posttokens.length == 0) {
+        convertTokensToCloud(pretokens, lexlang);
+        newCode += (joinTokensToString(pretokens))                
+    } else {
+        // assignment
+        convertTokensToCloud(posttokens, lexlang);
+        if (hasCloudToken(pretokens, lexlang)) {
+            newCode += ("setCloudVariable('" + getCloudToken(pretokens, lexlang) + "'," + joinTokensToString(posttokens) + ")")
+        } else {
+            newCode += (joinTokensToString(pretokens) + "=" + joinTokensToString(posttokens))
+        }
+    }
+    console.log(newCode);
+    return newCode;
+}
+/////////////////////////////////////////// cloud variables parser ///////////////////////////
+
 // replaces all + characters not within quotes and brackets with , for argumented print() and slowPrint()
 // as a result, slowPrint() will require named arguments for delay and newLine
 // VERY HACKY!
