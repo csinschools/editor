@@ -889,6 +889,24 @@ checkBrowser();
 var pyConsole = document.getElementById("console");
 
 var editor = ace.edit("editor");
+	// This adds a 3mb gzipped file for the Ruff linter
+	// https://github.com/charliermarsh/ruff
+	// Not sure how you could make this async to still run the editor
+	// while this is downloading.
+  var provider = LanguageProvider.fromCdn(
+	"https://www.unpkg.com/ace-linters@0.10.3/build/"
+  );
+
+  provider.setGlobalOptions("python", {
+	// Flake8 Errors to support common Introduction to Coding Syntax
+    errorCodesToIgnore: [
+        "E501", // lines > 80 char
+        "F403", // import *
+		"F821", // undefined name e.g. "goto"
+		"F405" // possibly undefined name from import *
+    ],
+});
+  provider.registerEditor(editor);
 var darkTheme = true;
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
