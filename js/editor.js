@@ -898,10 +898,12 @@ var editor = ace.edit("editor");
   );
 
   provider.setGlobalOptions("python", {
+	// Ruff custom configurations
+	// https://beta.ruff.rs/docs/settings/
+	  configuration: {
+		  builtins: ["label", "goto", "forever", "clear"] // etc.
+		},
 	// Flake8 Errors to support common Introduction to Coding Syntax
-	configuration: {
-		builtins: ["label", "goto", "forever", "clear"] // etc.
-    },
     errorCodesToIgnore: [
         "F403", // import *
 		"F405" // possibly undefined name from import *
