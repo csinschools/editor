@@ -899,11 +899,15 @@ var editor = ace.edit("editor");
 
   provider.setGlobalOptions("python", {
 	// Flake8 Errors to support common Introduction to Coding Syntax
+	configuration: {
+		builtins: ["label", "goto", "forever", "clear"] // etc.
+    },
     errorCodesToIgnore: [
-        "E501", // lines > 80 char
         "F403", // import *
-		"F821", // undefined name e.g. "goto"
 		"F405" // possibly undefined name from import *
+    ],
+    errorCodesToTreatAsWarning: [
+        "E501", // lines > 80 char
     ],
 });
   provider.registerEditor(editor);
