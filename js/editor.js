@@ -136,6 +136,16 @@ function setTrainingWheels() {
 		urlParams.delete('wheels')
 }
 
+function setThemeByButton() {
+	document.getElementById("lightTheme").checked = !document.getElementById("lightTheme").checked;
+	if (document.getElementById("lightTheme").checked) {
+		themeButton.innerText = "⚫ Theme";
+	} else {
+		themeButton.innerText = "💡 Theme";
+	}
+	setTheme();
+}
+
 function setTheme() {
 	if (document.getElementById("lightTheme") !== null && document.getElementById("lightTheme").checked) {
 		urlParams.set('light', 1);
@@ -144,6 +154,25 @@ function setTheme() {
 	else {
 		editor.setTheme("ace/theme/monokai");
 		urlParams.delete('light')
+		// add step highlighting if debugging is on
+		if (stepRun) {
+			for (i = 0; i < document.styleSheets.length; i++) {
+				let styleSheet =  document.styleSheets[i];
+				if (styleSheet.ownerNode.id == "ace-monokai") {
+					for (j = 0; j < styleSheet.cssRules.length; j++) {
+						var rule = styleSheet.cssRules[j];
+						if (rule.cssText.indexOf(".ace_active-line") != -1 && rule.cssText.indexOf(".ace_marker-layer") != -1) {
+							break;
+						}
+					}	
+					// only if the existing rule is not the last one... (the rule in the template, and not the one we added previously)
+					// then add a new rule
+					if (j < styleSheet.cssRules.length - 1) {
+						styleSheet.insertRule(".ace-monokai .ace_marker-layer .ace_active-line {background: #208020}", styleSheet.cssRules.length);				
+					}					
+				}
+			}
+		}		
 	}
 }
  
@@ -409,16 +438,26 @@ function singleStep()
 	});
 }
 
-var prevLine = 0;
+var prevLine = -1;
 async function nextlineStepper(susp)
 {
 	checkForStop();
 	try {
 		var child = susp.child;
-		while (child.child.child != null)
+		
+		// record the last child which was from <stdin.py> - this would be
+		// the deepest level code in our current active display (e.g. function calling functions etc.)
+		var lastStdinChild = child;
+		
+		while ((child.child.child != null))
 		{
 			child = child.child;
+			if (child.$filename === "<stdin>.py") {
+				lastStdinChild = child;
+			}
 		}
+
+		child = lastStdinChild;
 		if (child.$lineno != prevLine)
 		{
 			editor.gotoLine(child.$lineno);
@@ -475,11 +514,29 @@ function getStyleSheet(unique_title) {
   }
 }
 
+function errToString(err) {
+	let ret = err.tp$name;
+	ret += ": " + err.tp$str().v;
+	if (err.traceback.length !== 0) {
+		for (i = 0; i < err.traceback.length; i++) {
+			if (err.traceback[i].filename == "<stdin>.py") {
+				ret += " on line " + err.traceback[i].lineno;
+				break;
+			}
+		}
+		// find the first <stdin> filename in the trace
+		if (i == err.traceback.length) {
+			ret += " on line " + err.traceback[0].lineno;
+		}
+	} else {
+		ret += " at <unknown>";
+	}
+	return ret;	
+}
+
 var stepRun = false;
 function runSkulpt(stepMode, code = "") {
-
 	stepRun = stepMode;
-
 	if (!headless) {
 		code = ace.edit("editor").getValue();
 		saveToLocalStorage();
@@ -489,8 +546,6 @@ function runSkulpt(stepMode, code = "") {
 			clearButton.style.display = "none";
 		}
 	}
-
-
 	code = run_lexer(code);
 	code = stripPeriodFromGoto(code);
 	if (document.getElementById("trainingWheels") !== null && document.getElementById("trainingWheels").checked) {
@@ -501,8 +556,6 @@ function runSkulpt(stepMode, code = "") {
 	setDisplayMode(usingPyangelo ? "canvas": display);
 	if (usingPyangelo) document.getElementById("pyangelo").focus();
 
-	//editor.setReadOnly(true);
-
 	_stopped = false;
 	stopButton.style.display = "inline";
 	stepButton.style.display = "none";
@@ -510,7 +563,7 @@ function runSkulpt(stepMode, code = "") {
 	stopButton.style.width = "144px";
 
 	// clear the console
-	clearConsole();//pyConsole.innerHTML = "";
+	clearConsole();
 	just_run = true;
 
 	resetConsole();
@@ -531,16 +584,32 @@ function runSkulpt(stepMode, code = "") {
 		prevLine = 0;
 		// set readOnly for step mode
 		editor.setReadOnly(true);
-		//editor.setTheme("ace/theme/gob");
-		var styleSheet =  document.styleSheets[0];//getStyleSheet('ace-monokai');
-		styleSheet.insertRule(".ace-monokai .ace_marker-layer .ace_active-line {background: #208020}", styleSheet.rules.length);
-		if (autostep != null)
-		{
+	
+		// insert step highlight rule if one doesn't already exist (need to check if user toggles theme, the rule can be re-added)
+		if (!document.getElementById("lightTheme").checked) {
+			for (i = 0; i < document.styleSheets.length; i++) {
+				let styleSheet =  document.styleSheets[i];//getStyleSheet('ace-monokai');
+				if (styleSheet.ownerNode.id == "ace-monokai") {
+					for (j = 0; j < styleSheet.cssRules.length; j++) {
+						var rule = styleSheet.cssRules[j];
+						if (rule.cssText.indexOf(".ace_active-line") != -1 && rule.cssText.indexOf(".ace_marker-layer") != -1) {
+							break;
+						}
+					}	
+					// only if the existing rule is not the last one... (the rule in the template, and not the one we added previously)
+					// then add a new rule
+					if (j < styleSheet.cssRules.length - 1) {
+						styleSheet.insertRule(".ace-monokai .ace_marker-layer .ace_active-line {background: #208020}", styleSheet.cssRules.length);				
+					}					
+				}
+			}
+		}
+		prevLine = -1;
+		if (autostep != null) {
 			handlers["Sk.debug"] = lineStepper;
 			handlers["Sk.delay"] = lineStepper;
 		}
-		else
-		{
+		else {
 			handlers["Sk.debug"] = nextlineStepper;
 			handlers["Sk.delay"] = nextlineStepper;
 			// shorten stop button
@@ -555,7 +624,7 @@ function runSkulpt(stepMode, code = "") {
 			a = Sk.importMainWithBody("<stdin>", true, code, true);
 		}
 		catch (err) {
-			logError(err.toString());
+			logError(errToString(err));
 		}
 		return a;
 		})
@@ -570,11 +639,11 @@ function runSkulpt(stepMode, code = "") {
 		   }
 		}
 		else {
-		   logError(err.toString());
-		   if (err.stack)
-		   {
-			   logError(err.stack);
-		   }
+			logError(errToString(err));
+			if (err.stack)
+			{
+				logError(err.stack);
+			}
 	}}));
 	e.finally((function() {
 		stopSkulpt();
@@ -585,14 +654,25 @@ function stopSkulpt() {
 	editor.setReadOnly(false);
 	stopAllSounds();
 	hideSpinner();
-	if (stepRun)
-	{
+	if (stepRun) {
 		// remove step highlighting
-		var styleSheet =  document.styleSheets[0];
-		var lastRule = styleSheet.rules[styleSheet.rules.length - 1];
-		if (lastRule.cssText.indexOf(".ace_active-line") != -1)
-		{
-			styleSheet.deleteRule(styleSheet.rules.length - 1);
+		// need to check all stylesheets regardless of what the current theme is because user could have
+		// flipped the theme during debug stepping
+		for (i = 0; i < document.styleSheets.length; i++) {
+			let styleSheet =  document.styleSheets[i];
+			if (styleSheet.ownerNode.id == "ace-monokai") {
+				// delete any highlight rules from the end
+				// when we first encounter a non-highlight rule we stop
+				// (assumes that the template highlight rule is NOT at the end!)
+				for (j =  styleSheet.cssRules.length - 1; j >= 0; j--) {
+					var rule = styleSheet.cssRules[j];
+					if (rule.cssText.indexOf(".ace_active-line") != -1 && rule.cssText.indexOf(".ace_marker-layer") != -1) {
+						styleSheet.deleteRule(j);
+					} else {
+						break;
+					}
+				}
+			}
 		}
 	}
 	just_run = false;
@@ -600,19 +680,14 @@ function stopSkulpt() {
 	stopButton.style.display = "none";
 	nextButton.style.display = "none";
 	runButton.style.display = "inline";
-	if (nostep != null && nostep.length > 0)
-	{
+	if (nostep != null && nostep.length > 0) {
 		stepButton.style.display = "none";
-	}
-	else
-	{
+	} else {
 		stepButton.style.display = "inline";
 	}
-	if (norun != null && norun.length > 0)
-	{
+	if (norun != null && norun.length > 0) {
 		runButton.style.display = "none";
-	}
-	else
+	} else
 	{
 		runButton.style.display = "inline";
 	}
@@ -628,12 +703,10 @@ function stopSkulpt() {
 				runSkulpt(false, ace.edit("editor").getValue());
 			};
 	    }
-
 		pyConsole.appendChild(runButton);
-
 		document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
-
 	}
+	stepRun = false;
 }
 
 function stopEditor() {
@@ -907,6 +980,7 @@ var stepButton = document.getElementById("stepButton");
 var nextButton = document.getElementById("nextButton");
 var copyButton = document.getElementById("copyButton");
 var stopButton = document.getElementById("stopButton");
+var themeButton = document.getElementById("themeToggle");
 var URLButton = document.getElementById("URLButton");
 var fsButton = document.getElementById("fullscreenButton");
 
