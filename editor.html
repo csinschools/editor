@@ -25,6 +25,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="sk-chase-dot"></div>
         <div class="sk-chase-dot"></div>
     </div>      
+    <script src="js/jsframe.min.js" type="text/javascript" charset="utf-8"></script>    
+    <script src="js/tf.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/teachablemachine-image.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/skulpt.min.js" type="text/javascript"></script>
     <script src="js/skulpt-stdlib.js" type="text/javascript"></script>
     <script src="js/pygmi.js" type="text/javascript" charset="utf-8"></script>
@@ -34,7 +37,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/FileSaver.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/split.min.js" type="text/javascript" charset="utf-8"></script>
-
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -50,7 +52,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <button id="stopButton" type="button" onclick="stopEditor();" style = "width:148px">🛑 Stop</button>
             <button id="nextButton" type="button" style = "width:72px">⏭️ Next</button>
             <button id="resetButton" type="button" onclick="resetEditor();" style = "width:78px">🔄 Reset</button>
-            <button id="copyButton" type="button" onclick="copyCode();" style = "width:72px">📋 Copy</button>
+            <!--<button id="copyButton" type="button" onclick="copyCode();" style = "width:72px">📋 Copy</button>-->
             <button id="saveButton" type="button" onclick="saveCode(filename);" style = "width:72px">💾 Save</button>
             <button id="loadButton" type="button" onclick="loadCode();" style = "width:72px">📂 Open</button>
             <button id="URLButton" type="button" onclick="generateURL();" style = "width:72px">URL</button>

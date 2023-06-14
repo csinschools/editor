@@ -654,6 +654,7 @@ function stopSkulpt() {
 	editor.setReadOnly(false);
 	stopAllSounds();
 	hideSpinner();
+	destroyWebCam();
 	if (stepRun) {
 		// remove step highlighting
 		// need to check all stylesheets regardless of what the current theme is because user could have
@@ -1274,6 +1275,7 @@ else
 	runButton.style.display = "inline";
 }
 
+/*
 // disable copy code button
 nocopy = urlParams.get('nocopy')
 if (nocopy != null && nocopy.length > 0)
@@ -1284,6 +1286,7 @@ else
 {
 	copyButton.style.display = "inline";
 }
+*/
 
 // autostep
 // (linestepper with sleep)

@@ -355,6 +355,103 @@ function hideSpinner() {
     // readjust console scroll height
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;    
 }
+
+///////////////////////// web cam functions //////////////////////////
+
+var webCamAnimationID = null;
+var webcamFrame = null;
+var toplevelFrame = null;
+var webcam = null;
+let model, labelContainer, maxPredictions, jsFrame;
+  
+async function createWebCam() {
+    jsFrame = new JSFrame(); 
+    //Create window
+    webcamFrame = jsFrame.create({
+        title: 'Webcam View',
+        left: 200, top: 200, width: 200, height: 220,
+        movable: true,//Enable to be moved by mouse
+        resizable: true,//Enable to be resized by mouse
+        html: '<div id="webcam-container"></div>',   
+    });
+    
+    const flip = true; // whether to flip the webcam
+    webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+    await webcam.setup(); // request access to the webcam
+    await webcam.play();
+    webCamAnimationID = window.requestAnimationFrame(loop);
+
+    // append elements to the DOM
+    webcamFrame.$('#webcam-container').appendChild(webcam.canvas); 
+    webcamFrame.htmlElement.parentNode.parentNode.style.zIndex=20;
+    toplevelFrame = webcamFrame.htmlElement.parentNode.parentNode;
+
+    webcamFrame.on('closeButton', 'click', (_frame, evt) => {
+        destroyWebCam();
+    });    
+    webcamFrame.show();     
+}
+
+async function printWebCam() {   
+    const flip = true; // whether to flip the webcam
+    webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+    await webcam.setup(); // request access to the webcam
+    await webcam.play();
+    webCamAnimationID = window.requestAnimationFrame(loop);
+    webcam.canvas.style.display = "block";
+    pyConsole.appendChild(webcam.canvas);
+}
+
+function pauseWebCam() {
+    if (webcamFrame !== null) {
+        window.cancelAnimationFrame(webCamAnimationID);
+    }
+}
+
+function resumeWebCam() {
+    if (webcamFrame !== null) {
+        webCamAnimationID = window.requestAnimationFrame(loop);
+    }
+}
+
+function destroyWebCam() {
+    console.log("Closing webcam window");
+    //let topParent = webcamFrame.htmlElement.parentNode.parentNode;      
+    window.cancelAnimationFrame(webCamAnimationID);
+    if (webcamFrame !== null) {
+        webcamFrame.closeFrame();  
+        webcamFrame = null;
+    }    
+    if (toplevelFrame !== null) {
+        toplevelFrame.remove();
+        toplevelFrame = null
+    }   
+
+    if (webcam !== null)
+    {
+        webcam = null;
+    }
+}
+  
+function loop() {
+    webcam.update(); // update the webcam frame
+    //await predict();
+    webCamAnimationID = window.requestAnimationFrame(loop);
+}
+
+Sk.builtins.saveWebCamImage = function(name) {
+    if (webcam !== null) {
+        var data = webcam.canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
+        let downloadLink = document.createElement("a");        
+        if (name === undefined) {
+            name = 'webcam.png';
+        }
+        downloadLink.setAttribute('href', data);
+        downloadLink.setAttribute('download', name);   
+        downloadLink.click();     
+    }    
+}
+
 ///////////////////////// exported helper functions //////////////////////////
 
 Sk.builtins.clear = function() {
@@ -380,3 +477,4 @@ Sk.builtins.print_screen = function() {
     a.document.close();
     a.print();
 }
+

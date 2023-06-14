@@ -82,7 +82,7 @@ function run_lexer(code) {
         } else {
             tokens.push(token);
         }
-        console.log(token);
+        //console.log(token);
         token = lexer.get_token();
     }
     if (posttokens.length == 0) {
@@ -97,7 +97,7 @@ function run_lexer(code) {
             newCode += (joinTokensToString(pretokens) + "=" + joinTokensToString(posttokens))
         }
     }
-    console.log(newCode);
+    //console.log(newCode);
     return newCode;
 }
 /////////////////////////////////////////// cloud variables parser ///////////////////////////
