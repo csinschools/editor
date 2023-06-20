@@ -701,7 +701,7 @@ function stopSkulpt() {
 			// not needed for compiled code because runSkulpt can be called with "" code (default)
 			// as it will be clobbered by the codescript global in the sk.afterCompile handler anyway
 			runButton.onclick = function() {
-				runSkulpt(false, ace.edit("editor").getValue());
+				runSkulpt(false, codestring);
 			};
 	    }
 		pyConsole.appendChild(runButton);
