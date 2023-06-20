@@ -51,37 +51,31 @@ function outputf(n) {
             if (typeof(match) !== 'undefined')
             {
                 code = parseInt(match[1]);
-                if (code == 0)
-                {
+                if (code == 0) {
                     // reset
                     color = "rgb(255,255,255)";
                     bgcolor = "rgb(0,0,0)";                    
                     bold = false;
                     italics = false;
                     underlined = false;
-                }
-                else if (code == 38)
-                {
+                } else if (code == 38) {
                     color = "rgb(" + parseInt(match[2]) + "," + parseInt(match[3]) + "," + parseInt(match[4]) + ")"; 
-                }
-                else if (code == 48)
-                {
+                } else if (code == 48) {
                     bgcolor = "rgb(" + parseInt(match[2]) + "," + parseInt(match[3]) + "," + parseInt(match[4]) + ")"; 
-                }
-                else if (code == 1)
-                {
+                } else if (code == 1) {
                     // bold
                     bold = true;
-                }
-                else if (code == 3)
-                {
+                } else if (code == 3) {
                     // italics
                     italics = true;
-                }
-                else if (code == 4)
-                {
+                } else if (code == 4) {
                     // underlined
                     underlined = true;
+                } else if (code == 5) {
+                    // default style
+                    bold = false;
+                    italics = false;
+                    underlined = false;
                 }                
                 i = match.index + match[0].length;
             }

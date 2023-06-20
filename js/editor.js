@@ -701,7 +701,12 @@ function stopSkulpt() {
 			// not needed for compiled code because runSkulpt can be called with "" code (default)
 			// as it will be clobbered by the codescript global in the sk.afterCompile handler anyway
 			runButton.onclick = function() {
-				runSkulpt(false, codestring);
+				if (codestring !== "") {
+					runSkulpt(false, codestring);
+				} else if (esc !== "") {
+					runSkulpt(false, esc);
+				}
+				// otherwise no code to run in a headless mode!
 			};
 	    }
 		pyConsole.appendChild(runButton);
