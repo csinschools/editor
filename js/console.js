@@ -357,7 +357,19 @@ var webcamFrame = null;
 var toplevelFrame = null;
 var webcam = null;
 let model, labelContainer, maxPredictions, jsFrame;
-  
+
+async function loadImageModel() {
+    document.getElementById("tmImageDialog").style.display = "block";  
+}
+
+function getWebCamCanvas() {
+    if (webcam !== null) {
+        return webcam.canvas;
+    } else {
+        return null;
+    }    
+}
+ 
 async function createWebCam() {
     jsFrame = new JSFrame(); 
     //Create window
@@ -446,6 +458,13 @@ Sk.builtins.saveWebCamImage = function(name) {
     }    
 }
 
+Sk.builtins.getWebCamImage = function() {
+    let data = "";
+    if (webcam !== null) {
+        data = webcam.canvas.toDataURL('image/png');
+    }    
+    return new Sk.builtin.str(data);
+}
 ///////////////////////// exported helper functions //////////////////////////
 
 Sk.builtins.clear = function() {

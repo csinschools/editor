@@ -57,11 +57,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <button id="loadButton" type="button" onclick="loadCode();" style = "width:72px">📂 Open</button>
             <button id="URLButton" type="button" onclick="generateURL();" style = "width:72px">URL</button>
             <button id="fullscreenButton" type="button" onclick="openFullscreen();" style = "width:104px">🖥️ Fullscreen</button>
-			<button id="themeToggle" type="button" onclick="setThemeByButton();" style = "width:80px">💡 Theme</button>
+			      <button id="themeToggle" type="button" onclick="setThemeByButton();" style = "width:80px">💡 Theme</button>
             <button id="codestoreURL" type="button" onclick="getCodestoreURL();" style = "width:148px">🔗 Snapshot to URL</button>            
             <input hidden id="lightTheme" type="checkbox" onclick="setTheme()"></input>
-            <input hidden id="trainingWheels" type="checkbox" onclick="setTrainingWheels()"><!--Training Wheels--></input>
-                
+            <input hidden id="trainingWheels" type="checkbox" onclick="setTrainingWheels()"><!--Training Wheels--></input>                
         </form>
         <dialog id="urlDialog">
             <div id="urlContent"></div>
@@ -76,8 +75,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div>
               <button onclick="document.getElementById('errDialog').style.display = 'none';">OK</button>
             </div>
-        </dialog>             
-             
+        </dialog>     
+        <dialog id="tmImageDialog">
+          <div id="tmImageContent"></div>
+          <p><input type="file" id = "upload-model" name="Upload Model" accept=".json"/></p>
+          <p><input type="file" id = "upload-weights" name="Upload Weights" accept=".bin"/></p>
+          <p><input type="file" id = "upload-metadata" name="Upload metadata" accept=".json"/></p>
+          <div>
+            <button id = "tmImageDialogOKBtn" onclick="document.getElementById('tmImageDialog').style.display = 'none';">OK</button>
+          </div>
+        </dialog>                                
         <div class="split" id="split">
             <div id ="leftpane"></div>
             <div id ="rightpane"></div>
@@ -86,7 +93,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div id="editor" style = "border: 1px solid black"># Your amazing code goes here!
 </div>
-        <div id="consoleWrapper"><div id="consoleClear" onclick="clearConsole();" style="cursor: pointer;">X</div><pre id="console" onclick="if (inputElement != null) inputElement.focus();"></pre></div>
+        <div id="consoleWrapper" onclick="if (inputElement != null) inputElement.focus();"><div id="consoleClear" onclick="clearConsole();" style="cursor: pointer;">X</div><pre id="console"></pre></div>
 
         <canvas id="pyangelo" height = 500 width = 330 style="border: 1px solid black; flex: 1 1 0px;" tabindex='1'></canvas>
     </div>

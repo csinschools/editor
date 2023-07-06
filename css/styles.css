@@ -1,3 +1,11 @@
+// disabling two finger back swipe interfering with horizontal editor scroll
+html {
+	overscroll-behavior-x: none;
+  } 
+body {
+	overscroll-behavior-x: none;
+}
+
 #editor{
 	box-sizing:border-box;
 	border-top:2px solid #000;
@@ -6,6 +14,7 @@
 	//background-color:#000;
 	//color:#fff;
 	padding:10px 10px 5px;
+	overscroll-behavior-x: none;
 }
 #consoleWrapper {
 	border: 10 px solid #d3d3d3;
@@ -20,6 +29,7 @@
 #console {
 	margin: 0px 8px;
 	white-space: pre-wrap;
+	overscroll-behavior-x: none;
 	
 }
 #consoleClear {

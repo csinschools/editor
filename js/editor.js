@@ -1048,6 +1048,7 @@ if (light != null && light.length > 0) {
 	editor.setTheme("ace/theme/eclipse");
 	if (document.getElementById("lightTheme") !== null)
         document.getElementById("lightTheme").checked = true;
+	themeButton.innerText = "⚫ Theme";
 }
 else {
 	editor.setTheme("ace/theme/monokai");
