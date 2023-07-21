@@ -10,7 +10,6 @@ print(Colour.yellow + r'''
 |\|  | /|           the City of Gold...          |\  | |/|
 | `---' |                                        | `---' |
 |       |----------------------------------------|       |
-\       |                                        |       /
  \     /                                          \     /
   `---'                                            `---'
 ''' + Colour.reset)
@@ -27,10 +26,10 @@ clear()
 print(Colour.cyan + "You are in a cave." + Colour.reset)
 print(r"        ___..-.")
 print(r"     ._/  __ \_`-.__")
-print(r"     / .'/##\_ `-.  \--.")
-print(r"     .-_/#@@##\  /-' `\_")
-print(r"jgs - /########\_  \._   `-")
-print(r"    ' '''''''''' '''''''")
+print(r"     / .'/"+ Colour.grey + "OO" + Colour.reset + "\_ `-.  \--.")
+print(r"    /.-_/"+ Colour.grey + "OOOOO" + Colour.reset + "\  /-' `\_")
+print(r"  /-- /"+ Colour.grey + "OOOOOOOO" + Colour.reset + "\_  \._   \`-")
+print(r" '     ' '''''''''' '''''''")
 print()
 print("You can go [north], [south], [east] or [west].")
 direction = input("Where would you like to go:")
@@ -49,9 +48,9 @@ goto .cave
 label .waterfall
 clear()
 print(Colour.cyan + "You are underneath a giant waterfall." + Colour.reset)
-print(r'''
-          ~-~`~-~-~-~-~-~-~'~-~-~
-        ~ejm~-~- -~-~-~-~
+print(Colour.blue + r'''
+          ~-~`~-~-~-~-~-~
+        ~ejm~-~- -~-~
        !
        !!
       ':
@@ -60,14 +59,11 @@ print(r'''
       '! '
      ! :'
       :'!
-      ':!
      ' '!
-      :'!
-      '!!
 -~'~-~':!
   ~-~-~!'
    ~-~!'
-''')
+''' + Colour.reset)
 print("You can go [south] or [east].")
 direction = input("Where would you like to go:")
 if direction == "south":
@@ -81,20 +77,17 @@ goto .waterfall
 label .forest
 clear()
 print(Colour.cyan + "You are in a dense forest." + Colour.reset)
-print(r'''
-      ---\=,__,>,_`-.
- --z--;" /_/  `. `.   |
- --'//`/'  `    \  '. |
- ,_\---_\._   :  `.\ |/
-//--'> ___ ``-,_   \  \
-'=-`',' / `-, __`-. |
-//7;<\     / ,--._ ` |
--/;\'/` -='/|(    \ \
- // '\   // | `    | |
-  `    .        :  |
-           :       `
-    :           |:  ||
-   |   :      : |   |''')
+print(Colour.green +r'''
+       _-_
+    /~~   ~~\
+ /~~         ~~\
+{               }
+ \  _-     -_  /
+   ~  ''' + Colour.orange + r'''\\ //  ''' + Colour.green + '''~''' + Colour.orange + r'''
+_- -   | | _- _
+  _ -  | |   -_
+      // \\
+''' + Colour.reset)
 print("To the south, you can hear some low growling noises.")
 print("You can go [south] or [north].")
 direction = input("Where would you like to go:")
@@ -110,12 +103,14 @@ goto .forest
 label .stream
 clear()
 print(Colour.cyan + "You are next to a stream of crystal clear water." + Colour.reset)
-print("You can go [east] or [north].")
+print("You can go [east], [west] or [north].")
 direction = input("Where would you like to go:")
 if direction == "east":
   goto .valley
 if direction == "north":
   goto .clearing
+if direction == "west":
+  goto .cave  
 print("You can't go that way!")
 input(Colour.green + "Press [enter] to continue." + Colour.reset)
 goto .stream
@@ -226,10 +221,10 @@ clear()
 print(Colour.cyan + "You are back in the cave you started in." + Colour.reset)
 print(r"        ___..-.")
 print(r"     ._/  __ \_`-.__")
-print(r"     / .'/" + Colour.blue + "~~" + Colour.reset + "\_ `-.  \--.")
-print(r"     .-_/" + Colour.blue + "~~~~~" + Colour.reset + "\  /-' `\_")
-print(r"jgs - /" + Colour.blue + "~~~~~~~~" + Colour.reset + "\_  \._   `-")
-print(r"    ' '''''''''' '''''''")
+print(r"     / .'/"+ Colour.cyan + "~~" + Colour.reset + "\_ `-.  \--.")
+print(r"    /.-_/"+ Colour.cyan + "~~~~~" + Colour.reset + "\  /-' `\_")
+print(r"  /-- /"+ Colour.cyan + "~~~~~~~~" + Colour.reset + "\_  \._   \`-")
+print(r" '     ' '''''''''' '''''''")
 print("However, there seems to be a magic staircase leading downwards.")
 print("You can go [north], [south], [east], [west] or [down].")
 direction = input("Where would you like to go:")
@@ -265,16 +260,6 @@ print(Colour.yellow + r'''
          |A | |            | U  |
        )_|  | |____)-----( |    |
       ///|__|-'////       \|___)=(__X
-     /////////////         \///   \/ \
-     |           |  U    U |//     \u|
-     |   )_,-,___|_)=(     | |  U  |_|_X
-     |  ///   \\|//   \    | |  __ |/// \
-   )_')(//     \Y/     >---)=( /  \|  | |-
-  //// ,\ u   u |   u /////   \|  ||__|A|-
- |  | .. |      |    ///// ,-, \__||------
--'--'_::_|______'----| u | | | |----------
-                     |___|_|_|_|----------
-                          `---------------
 ''' + Colour.reset)
 print("You fill your bags and pockets with all the treasures and gold they can hold. You have fulfilled your quest!")
 print("Now, where was the exit again...?")

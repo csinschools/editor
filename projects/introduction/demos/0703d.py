@@ -2,16 +2,17 @@
 # https://www.allaboutlean.com/amazon-fulfillment-2/
 from csinsc import *
 
-print(">>> The Special Delivery <<<")
+print(">>> The " + Colour.green + "S" + Colour.red + "p" + Colour.yellow + "e" + Colour.grey + "c" + Colour.pink + "i" + Colour.orange + "a" + Colour.cyan + "l" + Colour.reset + " Delivery <<<")
 print()
 print("A friend of yours who works at the Amazon warehouse has forgotten to retrieve their birthday purchase.")
+print()
 print("You decide to surprise them by heading down to the warehouse to retrieve the special delivery yourself!")
 
 print()
-print("Hint: Check out the map of the warehouse on this web page:")
+print("Hint: Check out the map of the warehouse on this web page: ")
 print("   https://www.allaboutlean.com/amazon-fulfillment-2/")
 print()
-input("Press [Enter] to start")
+input("Press " + Colour.green + "[Enter] " + Colour.reset + "to start")
 
 
 label .inbound
@@ -31,9 +32,9 @@ print(Colour.cyan + r'''                       ______________________________
 \|| /  \ |_______________| /  \ |__| /  \ |__| /  \|_|/
    | () |                 | () |    | () |    | () |
     \__/                   \__/      \__/      \__/)''' + Colour.reset)
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- receive")
-location = input("Where would you like to go:")
+location = input("Where would you like to go: ")
 if location == "receive":
     goto .receive_area
 # secret option, revealed later in game
@@ -46,7 +47,7 @@ goto .inbound
 label .truck
 clear()
 print("You open the driver's door and climb into the truck...")
-print("Inside the glove compartment you find a torn corner of paper with the following written on it:")
+print("Inside the glove compartment you find a torn corner of paper with the following written on it: ")
 print(Colour.green + "d5" + Colour.reset)
 input("Press [Enter] to return to the inbound area")
 goto .inbound
@@ -75,10 +76,10 @@ print(r'''       _______________  _______________
 ||_____________||||_____________|||.'________|________|''')
 print("Goods are stacked on rows and rows of shelves here.")
 print("If you know the shelf location of the item, type it in and the robotic arm will retrieve it for you.")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- receive")
 print("- hazmat")
-location = input("Where would you like to go (or enter shelf code to get item):")
+location = input("Where would you like to go (or enter shelf code to get item): ")
 if location == "receive":
     goto .receive_area
 if location == "hazmat":
@@ -112,10 +113,10 @@ print(r'''       _______________  _______________
 ||_____________||||_____________|||.'________|________|''')
 print("Goods are stacked on rows and rows of shelves here.")
 print("If you know the shelf location of the item, type it in and the robotic arm will retrieve it for you.")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- returns")
 print("- packing")
-location = input("Where would you like to go (or enter shelf code to get item):")
+location = input("Where would you like to go (or enter shelf code to get item): ")
 if location == "returns":
     goto .returns
 if location == "packing":
@@ -149,9 +150,9 @@ print(r'''       _______________  _______________
 ||_____________||||_____________|||.'________|________|''')
 print("Goods are stacked on rows and rows of shelves here.")
 print("If you know the shelf location of the item, type it in and the robotic arm will retrieve it for you.")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- receive")
-location = input("Where would you like to go (or enter shelf code to get item):")
+location = input("Where would you like to go (or enter shelf code to get item): ")
 if location == "receive":
     goto .receive_area
 confirm = input(Colour.red + "You only get ONE chance to retrieve an item." + Colour.reset + " Are you sure you would like to retrieve the item at " + Colour.yellow + location + Colour.reset + "? (y/n)")
@@ -183,9 +184,9 @@ print(r'''       _______________  _______________
 ||_____________||||_____________|||.'________|________|''')
 print("Goods are stacked on rows and rows of shelves here.")
 print("If you know the shelf location of the item, type it in and the robotic arm will retrieve it for you.")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- packing")
-location = input("Where would you like to go (or enter shelf code to get item):")
+location = input("Where would you like to go (or enter shelf code to get item): ")
 if location == "packing":
     goto .packing
 confirm = input(Colour.red + "You only get ONE chance to retrieve an item." + Colour.reset + " Are you sure you would like to retrieve the item at " + Colour.yellow + location + Colour.reset + "? (y/n)")
@@ -231,12 +232,12 @@ print(Colour.grey + r'''  .' '.....................................' '.
 @'.'                                         '.'@
  \'...........................................'/
   |___________________________________________|''' + Colour.reset)
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- tower b")
 print("- tower d")
 print("- outbound")
 print("- receive")
-location = input("Where would you like to go:")
+location = input("Where would you like to go: ")
 if location == "tower b":
     goto .picktower_b
 if location == "tower d":
@@ -267,9 +268,9 @@ print("You are in the hazardous materials area.")
 print("You can smell the faint whiff of noxious fumes and there")
 print("are hazard signs everywhere.")
 print("An serious looking hazmat supervisor is here (type " + Colour.green + "'talk'" + Colour.reset + " to talk to him).")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- tower a")
-location = input("Where would you like to go:")
+location = input("Where would you like to go: ")
 if location == "tower a":
     goto .picktower_a
 if location == "talk":
@@ -299,9 +300,9 @@ print(Colour.orange + r'''                       ______________________________
 \|| /  \ |_______________| /  \ |__| /  \ |__| /  \|_|/
    | () |                 | () |    | () |    | () |
     \__/                   \__/      \__/      \__/)''' + Colour.reset)
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- packing")
-location = input("Where would you like to go:")
+location = input("Where would you like to go: ")
 if location == "packing":
     goto .packing
 print("Sorry, I don't understand where that is.")
@@ -320,9 +321,9 @@ print(Colour.yellow + r'''      _________________
 print("Boxes and boxes of returned items are stacked here.")
 print("A cheerful looking returns officer is cutting open another returned package.")
 print("(type " + Colour.green + "'talk'" + Colour.reset + " to talk to her).")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- tower b")
-location = input("Where would you like to go:")
+location = input("Where would you like to go: ")
 if location == "tower b":
     goto .picktower_b
 if location == "talk":
@@ -350,12 +351,12 @@ clear()
 print(">>> You are in the receiving area. <<<")
 print("Inbound goods are being unpacked and distributed into the different picktowers.")
 print("There is a helpful looking woman here (type " + Colour.green + "'talk'" + Colour.reset + " to talk to her).")
-print("You can head towards the following areas:")
+print("You can head towards the following areas: ")
 print("- tower a")
 print("- tower c")
 print("- packing")
 print("- inbound")
-location = input("Where would you like to go:")
+location = input("Where would you like to go: ")
 if location == "tower a":
     goto .picktower_a
 if location == "tower c":

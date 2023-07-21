@@ -923,6 +923,11 @@ function resetEditor() {
 		else if (project != null && project.length > 0)
 		{
 			var client = new XMLHttpRequest();
+			// Fixes a race condition where .py is not appended to the project name if user double clicks on the reset button
+			// before code fully loads (??)
+			if (!compiled && project.slice(-3) !== ".py") {
+				project += ".py";
+			}			
 			client.open("GET", "projects/" + project);// Removed adding ".py" after compiled query param auto adds .py for non-compiled code
 			client.onreadystatechange = function () {
 				if (client.readyState == 4) {
