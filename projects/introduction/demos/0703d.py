@@ -89,7 +89,8 @@ print("If you know the shelf location of the item, type it in and the robotic ar
 print("You can head towards the following areas: ")
 print("- receive")
 print("- hazmat")
-location = input("Where would you like to go (or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package): ")
+print("- or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package")
+location = input("Where would you like to go: ")
 if location == "receive":
     goto .receive_area
 if location == "hazmat":
@@ -99,6 +100,8 @@ if location == "code":
     confirm = input(Colour.red + "You only get ONE chance to retrieve an item." + Colour.reset + " Are you sure you would like to retrieve the item at " + Colour.yellow + location + Colour.reset + "? (y/n)")
     if confirm == "y":
         goto .miss_ending
+    input("Press [Enter] to continue")
+    goto .picktower_a        
 print("Sorry, I don't understand where that is.")
 input("Press [Enter] to continue")
 goto .picktower_a
@@ -126,7 +129,8 @@ print("If you know the shelf location of the item, type it in and the robotic ar
 print("You can head towards the following areas: ")
 print("- returns")
 print("- packing")
-location = input("Where would you like to go (or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package): ")
+print("- or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package")
+location = input("Where would you like to go: ")
 if location == "returns":
     goto .returns
 if location == "packing":
@@ -136,6 +140,8 @@ if location == "code":
     confirm = input(Colour.red + "You only get ONE chance to retrieve an item." + Colour.reset + " Are you sure you would like to retrieve the item at " + Colour.yellow + location + Colour.reset + "? (y/n)")
     if confirm == "y":
         goto .miss_ending
+    input("Press [Enter] to continue")
+    goto .picktower_b        
 print("Sorry, I don't understand where that is.")
 input("Press [Enter] to continue")
 goto .picktower_b
@@ -162,7 +168,8 @@ print("Goods are stacked on rows and rows of shelves here.")
 print("If you know the shelf location of the item, type it in and the robotic arm will retrieve it for you.")
 print("You can head towards the following areas: ")
 print("- receive")
-location = input("Where would you like to go (or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package): ")
+print("- or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package")
+location = input("Where would you like to go: ")
 if location == "receive":
     goto .receive_area
 if location == "code":
@@ -170,6 +177,8 @@ if location == "code":
     confirm = input(Colour.red + "You only get ONE chance to retrieve an item." + Colour.reset + " Are you sure you would like to retrieve the item at " + Colour.yellow + location + Colour.reset + "? (y/n)")
     if confirm == "y":
         goto .miss_ending
+    input("Press [Enter] to continue")
+    goto .picktower_c        
 print("Sorry, I don't understand where that is.")
 input("Press [Enter] to continue")
 goto .picktower_c
@@ -196,7 +205,8 @@ print("Goods are stacked on rows and rows of shelves here.")
 print("If you know the shelf location of the item, type it in and the robotic arm will retrieve it for you.")
 print("You can head towards the following areas: ")
 print("- packing")
-location = input("Where would you like to go (or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package): ")
+print("- or type in " +  Colour.green + "code" + Colour.reset + " to enter in a code for the package")
+location = input("Where would you like to go: ")
 if location == "packing":
     goto .packing
 if location == "code":
@@ -204,6 +214,8 @@ if location == "code":
     confirm = input(Colour.red + "You only get ONE chance to retrieve an item." + Colour.reset + " Are you sure you would like to retrieve the item at " + Colour.yellow + location + Colour.reset + "? (y/n)")
     if confirm == "y":
         goto .check_ending
+    input("Press [Enter] to continue")
+    goto .picktower_d
 print("Sorry, I don't understand where that is.")
 input("Press [Enter] to continue")
 goto .picktower_d
