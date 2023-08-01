@@ -305,9 +305,10 @@ print(r'''┌─────────┬─────────┐       
 print("You are in the hazardous materials area.")
 print("You can smell the faint whiff of noxious fumes and there")
 print("are hazard signs everywhere.")
-print("An serious looking hazmat supervisor is here (type " + Colour.green + "'talk'" + Colour.reset + " to talk to him).")
+print("An serious looking hazmat supervisor is here.")
 print("You can head towards the following areas: ")
 print("- tower a")
+print("- or type " + Colour.green + "'talk'" + Colour.reset + " to talk to the supervisor")
 location = input("Where would you like to go: ")
 if location == "tower a":
     goto .picktower_a
@@ -367,9 +368,9 @@ print(r'''┌─────────┬─────────┐       
      └──────────────┴──────────┴─────────┘''')
 print("Boxes and boxes of returned items are stacked here.")
 print("A cheerful looking returns officer is cutting open another returned package.")
-print("(type " + Colour.green + "'talk'" + Colour.reset + " to talk to her).")
 print("You can head towards the following areas: ")
 print("- tower b")
+print("- or type " + Colour.green + "'talk'" + Colour.reset + " to talk to the returns officer")
 location = input("Where would you like to go: ")
 if location == "tower b":
     goto .picktower_b
@@ -412,12 +413,13 @@ print(r'''┌─────────┬─────────┐       
      └──────────────┴──────────┴─────────┘''')
 
 print("Inbound goods are being unpacked and distributed into the different picktowers.")
-print("There is a helpful looking woman here (type " + Colour.green + "'talk'" + Colour.reset + " to talk to her).")
+print("There is a helpful looking woman here.")
 print("You can head towards the following areas: ")
 print("- tower a")
 print("- tower c")
 print("- packing")
 print("- inbound")
+print("- or type " + Colour.green + "'talk'" + Colour.reset + " to talk to the woman")
 location = input("Where would you like to go: ")
 if location == "tower a":
     goto .picktower_a
