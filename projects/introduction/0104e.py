@@ -5,13 +5,13 @@ blockSize = 20
 font = str(blockSize) + "px consolas"
 
 progress = -1
-score = 0
+start = 0
 gameState = 'intro'
 
 label .here
 clearScreen(BLACK)
 drawText("=== SNAKE ===", 80, 460, font, WHITE)
-drawText("Score: " + str(score), 18, 410, font, WHITE)
+drawText("Score: " + str(start), 18, 410, font, WHITE)
 
 # draw the border
 drawRect(18, 35, \
@@ -33,7 +33,7 @@ if gameState == 'intro':
     if isKeyReleased('Enter'):
         gameState = 'play'
         # Initializing values
-        score = 0
+        start = 0
         speed = 4
         
         # Initial snake co-ordinates
@@ -88,7 +88,7 @@ elif gameState == 'play':
     if snake[0] == food:
       # grow snake
       snake.append([snake[-1][0], snake[-1][1]])
-      score += 100
+      start += 100
       speed += 0.25
       # generate new food
       # can't be located in the snake
