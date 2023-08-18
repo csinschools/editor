@@ -1,5 +1,5 @@
 from csinsc import *
-
+# from CodingComp.io submission, Semester 1, 2023
 #friendly reminder
 label .game_start
 print("NOTE:")

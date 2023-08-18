@@ -967,6 +967,10 @@ function stopAllSounds() {
     });
 }
 
+function openPiskel() {
+	window.open('piskel', '_blank');
+}
+
 // setting up the ace editor
 checkBrowser();
 
@@ -994,12 +998,21 @@ var stopButton = document.getElementById("stopButton");
 var themeButton = document.getElementById("themeToggle");
 var URLButton = document.getElementById("URLButton");
 var fsButton = document.getElementById("fullscreenButton");
+var piskelButton = document.getElementById("piskelButton");
 
 // grabbing the URL parameters and processing them
 // Order in which we process the URL params are IMPORTANT!
 // e.g. display is needed before project and id
 // e.g. project (filename) is needed opening the project (because localstore is queried on the name)
 urlParams = new URLSearchParams(window.location.search);
+
+// get URL button
+piskelButton.style.display = "none";
+piskelButtonOn = urlParams.get('piskel')
+if (piskelButtonOn != null && piskelButtonOn.length > 0)
+{
+	piskelButton.style.display = "inline";
+}
 
 var compiled = false;
 var headless = false;
@@ -1283,7 +1296,11 @@ if (norun != null && norun.length > 0)
 }
 else
 {
-	runButton.style.display = "inline";
+	// this was turning the runButton on when loading from ID as autorun
+	// do an explicit check for autorun first
+	if (!autorun) {
+		runButton.style.display = "inline";
+	}
 }
 
 /*
