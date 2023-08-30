@@ -264,6 +264,8 @@ function createAudioElement(url, loop, onload, onerror) {
     audioElement.onerror = onAudioError; 
     document.getElementById("errDialog").setAttribute("source", audioElement.id);  
     document.body.appendChild(audioElement);
+
+    return audioElement;
 }
 
 function onAudioError() {
@@ -277,6 +279,7 @@ function onAudioCanPlaythrough() {
     hideSpinner();
 }
 
+//TODO: return an audio element from this call, otherwise setVolume() etc. won't work
 function playFreeSound(id, onload, onerror) {
     //mod.loadingSound = true;
 
