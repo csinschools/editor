@@ -38,8 +38,7 @@ function outputf(n) {
     i = 0;
     while (n.length > 0)
     {
-        if (n[0] == "\u001b")
-        {
+        if (n[0] == "\u001b") {
             i++;
             if (text.length > 0)
                 pyConsole.appendChild(createColouredTextSpanElement(text, color, bgcolor, italics, bold, underlined));                
@@ -128,8 +127,7 @@ var fontSize = "14pt";
 var spinner = document.getElementById("spinner");
 spinner.style.display = "none";
 
-function resetConsole()
-{
+function resetConsole() {
     fontColour = "rgba(255, 255, 255, 1)";
     fontBgColour = "rgba(0, 0, 0, 1)";
     fontItalics = false;
@@ -143,18 +141,13 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
     let t = document.createTextNode(n);        
     let e = document.createElement("span");    
     
-    if (typeof(color) !== 'undefined')
-    {
+    if (typeof(color) !== 'undefined') {
         fontColour = color;
-    }    
-    
-    if (typeof(bgcolor) !== 'undefined')
-    {
+    }        
+    if (typeof(bgcolor) !== 'undefined') {
         fontBgColour = bgcolor;
-    }
-    
-    if (typeof(italics) !== 'undefined')
-    {
+    }    
+    if (typeof(italics) !== 'undefined') {
         if (italics)
         {
             fontItalics = "italic";
@@ -163,10 +156,8 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
         {
             fontItalics = "normal";
         }            
-    }
-    
-    if (typeof(bold) !== 'undefined')
-    {
+    }    
+    if (typeof(bold) !== 'undefined') {
         if (bold)
         {
             fontBold = "bold";
@@ -176,9 +167,7 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
             fontBold = "normal";
         }    
     }    
-
-    if (typeof(underlined) !== 'undefined')
-    {
+    if (typeof(underlined) !== 'undefined') {
         if (underlined)
         {
             fontUnderlined = "underline";
@@ -321,8 +310,7 @@ function playFreeSound(id, onload, onerror) {
         // 404 or some other status code
         console.log("Error");
         hideSpinner();
-        showErrorDialog("There was an error loading freesound id: " + id, onerror);    
-          
+        showErrorDialog("There was an error loading freesound id: " + id, onerror);              
       }
     } 
     
@@ -368,6 +356,14 @@ async function loadImageModel() {
 function getWebCamCanvas() {
     if (webcam !== null) {
         return webcam.canvas;
+    } else {
+        return null;
+    }    
+}
+
+function getImageFromWebCam() {
+    if (webcam !== null) {
+        return webcam.canvas.toDataURL();
     } else {
         return null;
     }    
@@ -435,9 +431,8 @@ function destroyWebCam() {
         toplevelFrame.remove();
         toplevelFrame = null
     }   
-
-    if (webcam !== null)
-    {
+    if (webcam !== null) {
+        webcam.stop();
         webcam = null;
     }
 }
