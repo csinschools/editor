@@ -578,6 +578,9 @@ function runSkulpt(stepMode, code = "") {
 		__future__: Sk.python3
 	});
 
+	// turtle graphics
+	(Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'turtleCanvas';
+
 	var handlers = {};
 	handlers["*"] = checkForStop;
 	if (stepRun) {

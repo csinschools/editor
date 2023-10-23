@@ -341,6 +341,22 @@ function hideSpinner() {
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;    
 }
 
+////////////////////// turtle graphics functions /////////////////////
+function createTurtleCanvas() {
+    
+    // already created
+    if (document.getElementById("turtleCanvas") !== null) {
+        return;
+    }
+    let turtle = document.createElement("div");   
+    turtle.id = "turtleCanvas";
+    turtle.style.backgroundColor = "#fff";
+    pyConsole.appendChild(turtle);
+
+    // scroll to bottom
+    document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
+}
+
 ///////////////////////// web cam functions //////////////////////////
 
 var webCamAnimationID = null;
@@ -487,5 +503,9 @@ Sk.builtins.print_screen = function() {
     a.document.write('</body></html>');
     a.document.close();
     a.print();
+}
+
+Sk.builtins.showTurtle = function() {
+    createTurtleCanvas();
 }
 
