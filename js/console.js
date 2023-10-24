@@ -351,7 +351,13 @@ function createTurtleCanvas() {
     let turtle = document.createElement("div");   
     turtle.id = "turtleCanvas";
     turtle.style.backgroundColor = "#fff";
+    // inline-block needed to snap the containing div to the size of the canvas elements injected by turtle
+    // (so that the bgcolor doesn't extend horizontally to the edge of the screen)
+    turtle.style.display = "inline-block";
     pyConsole.appendChild(turtle);
+
+    // have to append a line break because of the inline-block display of the turtle canvas
+    pyConsole.appendChild(document.createElement("br"));
 
     // scroll to bottom
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
