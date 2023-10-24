@@ -16,6 +16,7 @@ penup()
 forward(20)
 pendown()
 
+bgcolor("yellow")
 begin_fill()
 
 color("black")
@@ -34,6 +35,7 @@ penup()
 forward(40)
 pendown()
 
+bgcolor("cyan")
 repeat 6:
     forward(40)
     right(60)
@@ -43,6 +45,7 @@ penup()
 forward(160)
 pendown()
 
+bgcolor("white")
 speed("fastest")
 repeat 20:
     repeat 3:
@@ -53,17 +56,25 @@ repeat 20:
 speed("slowest")
 left(135)
 penup()
-forward(180)
+forward(120)
 pendown()
 
-bgcolor("grey")
+write("Next part is advanced...", font = ("arial", "12pt", "bold"))
+sleep(1)
 
-red = 0
+penup()
+forward(60)
+pendown()
+
+
+
+counter = 0
 speed("fastest")
-repeat 30:
-    color(red / 30, 0, 0)
+repeat 50:
+    bgcolor(0, counter / 50, 1 - counter / 50)
+    color(counter / 50, 0, counter / 50)
     repeat 4:
-        forward(50)
+        forward(counter + 5)
         right(90)
-    right(12)
-    red = red + 1
+    right(10)
+    counter = counter + 1

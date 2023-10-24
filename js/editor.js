@@ -1017,6 +1017,12 @@ if (piskelButtonOn != null && piskelButtonOn.length > 0)
 	piskelButton.style.display = "inline";
 }
 
+// training wheels
+wheels = urlParams.get('wheels')
+if (wheels != null && wheels.length > 0 && document.getElementById("trainingWheels") !== null) {
+	document.getElementById("trainingWheels").checked = true;
+}
+
 var compiled = false;
 var headless = false;
 compiled = urlParams.get('compiled');
@@ -1352,12 +1358,6 @@ nofs = urlParams.get('nofs')
 if (nofs != null && nofs.length > 0)
 {
 	fsButton.style.display = "none";
-}
-
-// no full screen (if unsupported by other widgets etc.)
-wheels = urlParams.get('wheels')
-if (wheels != null && wheels.length > 0 && document.getElementById("trainingWheels") !== null) {
-	document.getElementById("trainingWheels").checked = true;
 }
 
 var just_run = false;
