@@ -2,6 +2,7 @@ from goodies import *
 
 setSchool("school_ID")
 
-question = input("Enter a question: ")
-answer = getChatGPTAnswer(question)
-print("ChatGPT thinks the answer is: " + answer)
+topic = input("Enter a topic for me to write a poem about: ")
+poem = getChatGPTAnswer("Write a poem about " + topic)
+print("ChatGPT, the poet, says...")
+print(poem)
