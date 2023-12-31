@@ -67,9 +67,16 @@ function hideErrorDialog() {
 function resetSnapURLButton() {    
     document.getElementById("codestoreURL").disabled = false;
     document.getElementById("codestoreURL").innerText = "🔗 Snapshot to URL";  
-    document.getElementById("codestoreURL").style.textAlign = "center";          
+    document.getElementById("codestoreURL").style.textAlign = "center";    
+	document.getElementById("copyToClip").innerText = "Copy URL";      
 }
-  
+
+var codeurl;
+function copyURLToClipboard() {
+	navigator.clipboard.writeText(codeurl);
+	document.getElementById("copyToClip").innerText = "Copied!";
+}
+
 async function getCodestoreURL() {
     document.getElementById("codestoreURL").innerText = origMsg;    
     document.getElementById("codestoreURL").style.textAlign = "left";
