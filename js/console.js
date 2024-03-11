@@ -369,6 +369,7 @@ var webCamAnimationID = null;
 var webcamFrame = null;
 var toplevelFrame = null;
 var webcam = null;
+var showPose = false;
 let model, labelContainer, maxPredictions, jsFrame;
 
 async function loadImageModel() {
@@ -403,7 +404,8 @@ async function createWebCam() {
     });
     
     const flip = true; // whether to flip the webcam
-    webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+    //webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+    webcam = new tmPose.Webcam(200, 200, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
     webCamAnimationID = window.requestAnimationFrame(loop);
@@ -421,7 +423,8 @@ async function createWebCam() {
 
 async function printWebCam() {   
     const flip = true; // whether to flip the webcam
-    webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+    //webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+    webcam = new tmPose.Webcam(200, 200, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
     webCamAnimationID = window.requestAnimationFrame(loop);
@@ -444,6 +447,7 @@ function resumeWebCam() {
 function destroyWebCam() {
     console.log("Closing webcam window");
     //let topParent = webcamFrame.htmlElement.parentNode.parentNode;      
+    webCamCallback = null;
     window.cancelAnimationFrame(webCamAnimationID);
     if (webcamFrame !== null) {
         webcamFrame.closeFrame();  
@@ -458,10 +462,14 @@ function destroyWebCam() {
         webcam = null;
     }
 }
-  
-function loop() {
+
+webCamCallback = null;
+async function loop() {
     webcam.update(); // update the webcam frame
     //await predict();
+    if (webCamCallback !== null) {
+        await webCamCallback();
+    }
     webCamAnimationID = window.requestAnimationFrame(loop);
 }
 
@@ -486,6 +494,9 @@ Sk.builtins.getWebCamImage = function() {
     return new Sk.builtin.str(data);
 }
 ///////////////////////// exported helper functions //////////////////////////
+Sk.builtins.setWebCamCallback = function(f) {
+    webCamCallback = f;
+}
 
 Sk.builtins.clear = function() {
     clearConsole();

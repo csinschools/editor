@@ -406,8 +406,7 @@ function userLoadCode(event) {
 	stopEditor();
 }        
 
-function loadFromLocalStorage()
-{
+function loadFromLocalStorage() {
   if (filename == null || filename.length == 0)
   {
 	return;
@@ -425,8 +424,8 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function singleStep()
-{
+// wait for next button before resuming suspension
+function singleStep() {
 	return new Promise((resolve, reject) => {
 		nextButton.addEventListener('click', function(e) {
 			resolve(1);
@@ -438,9 +437,12 @@ function singleStep()
 	});
 }
 
+// traverses through hierarchy of $loc variables and populates the tracetable
+function populateTraceTable(susp) {
+}
+
 var prevLine = -1;
-async function nextlineStepper(susp)
-{
+async function nextlineStepper(susp) {
 	checkForStop();
 	try {
 		var child = susp.child;
@@ -472,10 +474,8 @@ async function nextlineStepper(susp)
 	}
 }
 
-
-
-async function lineStepper(susp)
-{
+// autostepper, 1 second delay per line run (slow-mo)
+async function lineStepper(susp) {
 	checkForStop();
 	try {
 		var child = susp.child;
