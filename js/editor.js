@@ -67,7 +67,7 @@ function hideErrorDialog() {
 function resetSnapURLButton() {    
     document.getElementById("codestoreURL").disabled = false;
     document.getElementById("codestoreURL").innerText = "🔗 Snapshot to URL";  
-    document.getElementById("codestoreURL").style.textAlign = "center";    
+    document.getElementById("codestoreURL").style.textAlign = "center";          
 	document.getElementById("copyToClip").innerText = "Copy URL";      
 }
 
@@ -76,7 +76,7 @@ function copyURLToClipboard() {
 	navigator.clipboard.writeText(codeurl);
 	document.getElementById("copyToClip").innerText = "Copied!";
 }
-
+  
 async function getCodestoreURL() {
     document.getElementById("codestoreURL").innerText = origMsg;    
     document.getElementById("codestoreURL").style.textAlign = "left";
@@ -445,13 +445,66 @@ function singleStep() {
 }
 
 // traverses through hierarchy of $loc variables and populates the tracetable
+function recursivePopulateTraceTable(susp, traces) {
+	if (susp.child == null) {
+		return traces;
+	}
+	traces = recursivePopulateTraceTable(susp.child, traces);
+	var child = susp.child;
+	if (child.hasOwnProperty("$loc")) {
+		var locals = child.$loc;
+		let temp_traces = [];
+		for (let property in locals) {
+			if (property.substring(0, 2) == property.substring(property.length - 2) && property.substring(0, 2) == "__") {
+				continue;
+			}
+			if (property.substring(0, 1) == "$") {
+				continue;
+			}
+			if (locals[property] !== undefined && "v" in locals[property]) {
+				temp_traces.push(property + ":" + locals[property].v);
+				//console.log(property + ":" + locals[property].v);
+			}
+		}
+		for (let i in temp_traces) {
+			traces.push(temp_traces[i]);
+		}	
+		
+	}
+	
+	if (child.hasOwnProperty("$tmps")) {
+		var temps = child.$tmps;
+		let temp_traces = [];
+		for (let property in temps) {
+			if (property.substring(0, 2) == property.substring(property.length - 2) &&  property.substring(0, 2) == "__") {
+				continue;
+			}		
+			if (property.substring(0, 1) == "$") {
+				continue;
+			}
+			if (temps[property] !== undefined && "v" in temps[property]) {
+				//console.log(property + ":" + temps[property].v);
+				temp_traces.push(property + ":" + temps[property].v);
+			}
+		}
+		for (let i in temp_traces) {
+			traces.push(temp_traces[i]);
+		}			
+	}	
+	return traces;
+}
+
 function populateTraceTable(susp) {
+	console.log("=======")
+	var traces = recursivePopulateTraceTable(susp, []);
+	console.log(traces);
 }
 
 var prevLine = -1;
 async function nextlineStepper(susp) {
 	checkForStop();
 	try {
+		populateTraceTable(susp);
 		var child = susp.child;
 		
 		// record the last child which was from <stdin.py> - this would be
@@ -665,6 +718,7 @@ function stopSkulpt() {
 	stopAllSounds();
 	hideSpinner();
 	destroyWebCam();
+
 	if (stepRun) {
 		// remove step highlighting
 		// need to check all stylesheets regardless of what the current theme is because user could have
