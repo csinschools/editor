@@ -45,6 +45,7 @@ function checkBrowser() {
 }
 
 function showURLDialog(msg) {
+	document.getElementById("copyToClip").style.display = "none"; 
     document.getElementById("urlContent").innerHTML = msg;
     document.getElementById("urlDialog").style.display = "block";      
 }
@@ -119,6 +120,7 @@ async function getCodestoreURL() {
             codeurl += "&id=" + xhr.responseText; 
             
             showURLDialog("The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.");
+			document.getElementById("copyToClip").style.display = "inline"; 
         }
 		window.cancelAnimationFrame(animID);
 	  }
