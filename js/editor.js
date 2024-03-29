@@ -1,4 +1,4 @@
-var storeURL = "https://codestore-348206.ts.r.appspot.com/";
+Sk.builtins.webServiceURL = new Sk.builtin.str("https://codestore-348206.ts.r.appspot.com/");
 
 var animID = null;
 
@@ -85,7 +85,7 @@ async function getCodestoreURL() {
 	animID = window.requestAnimationFrame(animateURL);
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", storeURL + 'put', true);
+	xhr.open("POST", Sk.builtins.webServiceURL.v + 'put', true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.timeout = 10000; // time in milliseconds
 
@@ -1072,12 +1072,23 @@ var piskelButton = document.getElementById("piskelButton");
 // e.g. project (filename) is needed opening the project (because localstore is queried on the name)
 urlParams = new URLSearchParams(window.location.search);
 
-// get URL button
+// piskel button
 piskelButton.style.display = "none";
 piskelButtonOn = urlParams.get('piskel')
 if (piskelButtonOn != null && piskelButtonOn.length > 0)
 {
 	piskelButton.style.display = "inline";
+}
+
+// alternate webservice URL (for testing purposes - can be replaced with http://localhost:3000 etc.)
+webserviceURLParam = urlParams.get('webservice')
+if (webserviceURLParam != null && webserviceURLParam.length > 0)
+{
+	// add trailing "/" if not already there
+	if (webserviceURLParam.slice(-1) != "/") {
+		webserviceURLParam += "/";
+	}
+	Sk.builtins.webServiceURL = new Sk.builtin.str(webserviceURLParam);
 }
 
 // training wheels
@@ -1178,7 +1189,7 @@ if (!(esc != null && esc.length > 0)) {
 		var editorDiv = document.getElementById("editor"); 
 		var consoleDiv = document.getElementById("console"); 
 
-		xhr2.open("GET", storeURL + 'get?id=' + id, true);
+		xhr2.open("GET", Sk.builtins.webServiceURL.v + 'get?id=' + id, true);
 
 		if (!headless) {
 			spinner.style.display = "block";
