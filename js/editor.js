@@ -5,6 +5,73 @@ var animID = null;
 var dots = 0;
 var origMsg = "🔗 Getting URL"
 var prevTime = null;
+
+function startBabylon() {
+	setDisplayMode("babylon");
+	var canvas = document.getElementById("babylonCanvas");
+
+	var startRenderLoop = function (engine, canvas) {
+		engine.runRenderLoop(function () {
+			if (sceneToRender && sceneToRender.activeCamera) {
+				sceneToRender.render();
+			}
+		});
+	}
+	var engine = null;
+	var scene = null;
+	var sceneToRender = null;
+	var createDefaultEngine = function() { 
+		return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); 
+	};
+	var createScene = async function () {
+	
+		var scene = new BABYLON.Scene(engine);
+		var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
+		camera.setTarget(new BABYLON.Vector3(0, 0, 10));
+		camera.attachControl(canvas, true);
+		var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+		light.intensity = 0.7;
+
+		var sphere1 = BABYLON.Mesh.CreateSphere("sphere1", 16, 5, scene);
+		sphere1.position.z = 10;
+		var sphere2 = BABYLON.Mesh.CreateSphere("sphere2", 16, 5, scene);
+		sphere2.position.z = -10;
+		
+		var sphere3 = BABYLON.Mesh.CreateSphere("sphere3", 16, 5, scene);
+		sphere3.position.x = 10;
+		var sphere4 = BABYLON.Mesh.CreateSphere("sphere4", 16, 5, scene);
+		sphere4.position.x = -10;
+	
+		const env = scene.createDefaultEnvironment();
+	
+		const xr = await scene.createDefaultXRExperienceAsync({
+			floorMeshes: [env.ground]
+		});        
+		return scene;
+	};
+	window.initFunction = async function() {
+		var asyncEngineCreation = async function() {
+			try {
+				return createDefaultEngine();
+			} catch(e) {
+				console.log("the available createEngine function failed. Creating the default engine instead");
+				return createDefaultEngine();
+			}
+		}
+		engine = await asyncEngineCreation();
+		if (!engine) throw 'engine should not be null.';
+		startRenderLoop(engine, canvas);
+		scene = createScene();
+	};
+
+	initFunction().then(() => {
+		scene.then(returnedScene => { sceneToRender = returnedScene; });                            
+	});
+	// Resize
+	window.addEventListener("resize", function () {
+		engine.resize();
+	});
+}
 function animateURL(timestamp) {    
     document.getElementById("codestoreURL").disabled = true;
 	if (prevTime == null) {
@@ -820,6 +887,8 @@ function setDisplayMode(mode, headless = false) {
 	prevDisplay = mode;
 	// FIXME: Setting display mode to non-canvas after it has been set to canvas causes issues
 	// we're in canvas demo mode
+	document.getElementById('babylonCanvas').style = "display:none";
+	document.getElementById('pyangelo').style = "display:none";
 	if (mode == "canvas")
 	{
 		if (headless) {
@@ -836,8 +905,6 @@ function setDisplayMode(mode, headless = false) {
 			split.removeChild(right);		
 			split.style = "height: 505px; display: block;text-align:center;";
 			pyangelo.style = "display:inline-block;";
-
-
 		}
 		else {			
 			document.getElementById('leftpane').appendChild(document.getElementById('editor'));
@@ -865,18 +932,59 @@ function setDisplayMode(mode, headless = false) {
 		document.getElementById('consoleWrapper').style = "height: 200px";
 		//document.getElementById('console').style = "height: 100%";
 
-		
+		// no step-run for canvas items
+		// TODO: implement optional immediate drawing mode to support this
+		nostep = "1";
+		stepButton.style.display = "none";
+	} else if (mode == "babylon")
+	{
+		if (headless) {
+			// headless inside canvas only
+			let split = document.getElementById('split');
+			let left = document.getElementById('leftpane');
+			let right = document.getElementById('rightpane');
+			let bottom = document.getElementById('bottompane');			
+			let babylonCanvas = document.getElementById('babylonCanvas');
+			split.appendChild(babylonCanvas);
+			bottom.appendChild(document.getElementById('consoleWrapper'));
+			bottom.style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
+			split.removeChild(left);		
+			split.removeChild(right);		
+			split.style = "height: 505px; display: block;text-align:center;";
+			babylonCanvas.style = "display:inline-block;";
+		}
+		else {			
+			document.getElementById('leftpane').appendChild(document.getElementById('editor'));
+			document.getElementById('rightpane').appendChild(document.getElementById('babylonCanvas'));
+			document.getElementById('bottompane').appendChild(document.getElementById('consoleWrapper'));
+
+			document.getElementById('bottompane').style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
+
+			//document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
+			document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
+			document.getElementById('rightpane').style = "width: 330px;"
+			document.getElementById('leftpane').style = "height: 500px; flex-grow: 1;";
+
+			//document.getElementById('editor').style.height = "100%";
+			document.getElementById('editor').style.height = "500px";
+			document.getElementById('babylonCanvas').style = "display:block";
+
+			new ResizeObserver(function(entries) {
+				// needed so that resizing the divider forces a resize on the window
+				// and thereby updating the ace code window properly
+				window.dispatchEvent(new Event('resize'));
+			}).observe(document.getElementById('leftpane'));			
+		}
+
+		document.getElementById('consoleWrapper').style = "height: 200px";
+		//document.getElementById('console').style = "height: 100%";
 
 		// no step-run for canvas items
 		// TODO: implement optional immediate drawing mode to support this
 		nostep = "1";
 		stepButton.style.display = "none";
-	}
-	else if (mode == "top")
-	{
+	} else if (mode == "top") {
 	   // editor on top, console at the bottom, splittable
-		document.getElementById('pyangelo').style = "display:none";
-
 		document.getElementById('split').style = "display: flex; flex-direction: column";
 		document.getElementById('split').style.width = "100%";
 		document.getElementById('split').style.height = prefixedCalc() + "(100% - 60px)";
@@ -905,8 +1013,6 @@ function setDisplayMode(mode, headless = false) {
 	else if (mode == "bottom")
 	{
 		// console on top, editor at the bottom, splittable
-		document.getElementById('pyangelo').style = "display:none";
-
 		document.getElementById('split').style = "display: flex; flex-direction: column";
 		document.getElementById('split').style.width = "100%";
 		document.getElementById('split').style.height = prefixedCalc() + "(100% - 60px)";
@@ -936,7 +1042,6 @@ function setDisplayMode(mode, headless = false) {
 	{
 		// "side" is the default
 		// standard editor mode: console to the right of the editor, no canvas - splittable view
-		document.getElementById('pyangelo').style = "display:none";
 		//document.getElementById('split').style.height = "100%";
 		document.getElementById('split').style.height = prefixedCalc() + "(100% - 80px)";
 		document.getElementById('editor').style.height = "100%";
@@ -1458,3 +1563,4 @@ if (!headless) {
 	window.history.replaceState(null, null, newURL);
 }
 // if we are in headless mode, then editor is not active anyway and the ID needs to be in the url for the user to restart via refresh
+
