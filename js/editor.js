@@ -29,18 +29,46 @@ function startBabylon() {
 		var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
 		camera.setTarget(new BABYLON.Vector3(0, 0, 10));
 		camera.attachControl(canvas, true);
-		var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-		light.intensity = 0.7;
+
+		scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+
+		var light = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(1, -1, 0), scene);
+		light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
+		light.specular = new BABYLON.Color3(1, 1, 1);		
+		//light.intensity = 0.7;
+
+		var redMat = new BABYLON.StandardMaterial("redMat", scene);
+		redMat.ambientColor = new BABYLON.Color3(1, 0, 0);
+		
+		var greenMat = new BABYLON.StandardMaterial("greenMat", scene);
+		greenMat.ambientColor = new BABYLON.Color3(0, 1, 0);
+		
+		var blueMat = new BABYLON.StandardMaterial("blueMat", scene);
+		blueMat.ambientColor = new BABYLON.Color3(0, 0, 1);		
+
+		var yellowMat = new BABYLON.StandardMaterial("yellowMat", scene);
+		yellowMat.ambientColor = new BABYLON.Color3(1, 1, 0);				
 
 		var sphere1 = BABYLON.Mesh.CreateSphere("sphere1", 16, 5, scene);
 		sphere1.position.z = 10;
-		var sphere2 = BABYLON.Mesh.CreateSphere("sphere2", 16, 5, scene);
-		sphere2.position.z = -10;
+		sphere1.material = redMat;
+
+		//var sphere2 = BABYLON.Mesh.CreateSphere("sphere2", 16, 5, scene);
+		const capsule = new BABYLON.MeshBuilder.CreateCapsule("capsule", {height: 4, radius: 1}, scene)
+		capsule.position.z = -10;
+		capsule.material = greenMat;
 		
-		var sphere3 = BABYLON.Mesh.CreateSphere("sphere3", 16, 5, scene);
-		sphere3.position.x = 10;
-		var sphere4 = BABYLON.Mesh.CreateSphere("sphere4", 16, 5, scene);
-		sphere4.position.x = -10;
+		//var sphere3 = BABYLON.Mesh.CreateSphere("sphere3", 16, 5, scene);
+		const box = BABYLON.MeshBuilder.CreateBox("box", {height: 4, width: 4, depth: 4}, scene);
+		box.position.x = 10;
+		box.rotation = new BABYLON.Vector3(0, 3.14159 / 4.0, 0);
+		box.material = blueMat;
+
+		//var sphere4 = BABYLON.Mesh.CreateSphere("sphere4", 16, 5, scene);
+		const torus = BABYLON.MeshBuilder.CreateTorus("torus", {diameter: 4, tessellation: 32});
+		torus.position.x = -10;
+		torus.material = yellowMat;
+		torus.rotation = new BABYLON.Vector3(-3.14159 / 4.0, 3.14159 / 8.0, -3.14159 / 4.0);
 	
 		const env = scene.createDefaultEnvironment();
 	

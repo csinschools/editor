@@ -397,7 +397,7 @@ async function createWebCam() {
     //Create window
     webcamFrame = jsFrame.create({
         title: 'Webcam View',
-        left: 200, top: 200, width: 200, height: 220,
+        left: 200, top: 200, width: 400, height: 400,
         movable: true,//Enable to be moved by mouse
         resizable: true,//Enable to be resized by mouse
         html: '<div id="webcam-container"></div>',   
@@ -405,7 +405,7 @@ async function createWebCam() {
     
     const flip = true; // whether to flip the webcam
     //webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-    webcam = new tmPose.Webcam(200, 200, flip); // width, height, flip
+    webcam = new tmPose.Webcam(400, 400, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
     webCamAnimationID = window.requestAnimationFrame(loop);
@@ -424,7 +424,7 @@ async function createWebCam() {
 async function printWebCam() {   
     const flip = true; // whether to flip the webcam
     //webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-    webcam = new tmPose.Webcam(200, 200, flip); // width, height, flip
+    webcam = new tmPose.Webcam(400, 400, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
     await webcam.play();
     webCamAnimationID = window.requestAnimationFrame(loop);
