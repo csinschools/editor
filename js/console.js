@@ -325,7 +325,8 @@ function showSpinner() {
     if (spinner.parentNode == pyConsole) {
         return;
     }
-    spinner.style.display = "block";
+    //spinner.style.display = "block";
+    spinner.style.display = "flex";
     pyConsole.appendChild(spinner);
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }

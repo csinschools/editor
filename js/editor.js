@@ -6,6 +6,50 @@ var dots = 0;
 var origMsg = "🔗 Getting URL"
 var prevTime = null;
 
+var _babylonObjects = {};
+var _runtimeObjects = {};
+
+function resetBabylon() {
+	_babylonObjects = {};
+	_runtimeObjects = {};
+}
+function addObject(bObj) {
+  // copy internal dict
+  var jsBObj = Sk.ffi.remapToJs(bObj.$d);
+  _babylonObjects[jsBObj.bObjName] = jsBObj;
+}
+
+function babylonCreateScene(scene) {
+	// pass 1: add objects to _runtimeObjects
+	for (bObjKey in _babylonObjects) {		
+		bObj = _babylonObjects[bObjKey];
+		let runtimeBObj = null;
+		if (bObj.bObjType == "Mesh" ) {
+			if (bObj.meshType == "sphere") {
+				runtimeBObj = BABYLON.Mesh.CreateSphere("sphere", bObj.segments, bObj.radius, scene);
+			}
+			runtimeBObj.position.x = bObj.position[0];
+			runtimeBObj.position.y = bObj.position[1];
+			runtimeBObj.position.z = bObj.position[2];
+		} else if (bObj.bObjType == "Material" ) {
+			runtimeBObj = new BABYLON.StandardMaterial("material", scene);
+			runtimeBObj.ambientColor = new BABYLON.Color3(bObj.ambientColour[0], bObj.ambientColour[1], bObj.ambientColour[2]);
+		}
+		_runtimeObjects[bObj.bObjName] = runtimeBObj;
+	}
+
+	// pass 2: adjust object references within objects
+	for (bObjKey in _babylonObjects) {		
+		bObj = _babylonObjects[bObjKey];
+		let runtimeBObj = _runtimeObjects[bObj.bObjName];
+		if (bObj.bObjType == "Mesh" ) {
+			if (bObj.material !== null && bObj.material in _runtimeObjects) {
+				runtimeBObj.material = _runtimeObjects[bObj.material];
+			}
+		}
+	}	
+}
+
 function startBabylon() {
 	setDisplayMode("babylon");
 	var canvas = document.getElementById("babylonCanvas");
@@ -27,7 +71,7 @@ function startBabylon() {
 	
 		var scene = new BABYLON.Scene(engine);
 		var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
-		camera.setTarget(new BABYLON.Vector3(0, 0, 10));
+		camera.setTarget(new BABYLON.Vector3(0, 0, 5));
 		camera.attachControl(canvas, true);
 
 		scene.ambientColor = new BABYLON.Color3(1, 1, 1);
@@ -36,6 +80,8 @@ function startBabylon() {
 		light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
 		light.specular = new BABYLON.Color3(1, 1, 1);		
 		//light.intensity = 0.7;
+
+		/*
 
 		var redMat = new BABYLON.StandardMaterial("redMat", scene);
 		redMat.ambientColor = new BABYLON.Color3(1, 0, 0);
@@ -49,6 +95,7 @@ function startBabylon() {
 		var yellowMat = new BABYLON.StandardMaterial("yellowMat", scene);
 		yellowMat.ambientColor = new BABYLON.Color3(1, 1, 0);				
 
+		
 		var sphere1 = BABYLON.Mesh.CreateSphere("sphere1", 16, 5, scene);
 		sphere1.position.z = 10;
 		sphere1.material = redMat;
@@ -69,6 +116,10 @@ function startBabylon() {
 		torus.position.x = -10;
 		torus.material = yellowMat;
 		torus.rotation = new BABYLON.Vector3(-3.14159 / 4.0, 3.14159 / 8.0, -3.14159 / 4.0);
+		*/
+
+		// instantiate all our meshes
+		babylonCreateScene(scene);
 	
 		const env = scene.createDefaultEnvironment();
 	
