@@ -254,7 +254,16 @@ async function getCodestoreURL() {
 		}
         else {
             codeurl = window.location.toString();
-            codeurl = codeurl.split('?')[0] + "?";
+
+			// TODO: fix to work with display mode (need save it out)
+			if (prevDisplay == "babylon") {
+				// genereate a url with the wrapper around the editor.html (the index.html file => ATM works for the XR overlay)
+				codeurl = codeurl.split('?')[0] + "?";
+				codeurl = codeurl.replace("editor.html", "")
+			} else {
+				codeurl = codeurl.split('?')[0] + "?";	
+			}
+            
             delimit = "";
 
             urlParams.forEach(function(value, key) {
@@ -266,6 +275,31 @@ async function getCodestoreURL() {
             codeurl += "&id=" + xhr.responseText; 
             
             showURLDialog("The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.");
+
+			// TODO: fix to work with display mode (need save it out)
+			// only display QR code if in babylon mode
+			if (prevDisplay == "babylon") {
+				let qrCode = document.createElement('div');
+				qrCode.id = "qrcode";
+				qrCode.style.marginTop = "10px";
+				qrCode.style.maxWidth = "fit-content";
+				qrCode.style.marginLeft = "auto";
+				qrCode.style.marginRight = "auto";
+				qrCode.style.width = "128px";
+				qrCode.style.height = "128px";
+						
+				document.getElementById("urlContent").appendChild(qrCode);
+
+				var qrCodeGenerator = new QRCode("qrcode", {
+					text: codeurl,
+					width: 128,
+					height: 128,
+					colorDark : "#000000",
+					colorLight : "#ffffff",
+					correctLevel : QRCode.CorrectLevel.H
+				});
+			}
+			
 			document.getElementById("copyToClip").style.display = "inline"; 
         }
 		window.cancelAnimationFrame(animID);
