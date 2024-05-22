@@ -13,6 +13,12 @@ function resetBabylon() {
 	_babylonObjects = {};
 	_runtimeObjects = {};
 }
+
+function stopBabylon() {
+	// TODO: doesn't really "stop" babylon, just hides the whole render canvas
+	setDisplayMode("side");
+}
+
 function addObject(bObj) {
   // copy internal dict
   var jsBObj = Sk.ffi.remapToJs(bObj.$d);
@@ -900,6 +906,7 @@ function stopSkulpt() {
 	stopAllSounds();
 	hideSpinner();
 	destroyWebCam();
+	stopBabylon();
 
 	if (stepRun) {
 		// remove step highlighting
