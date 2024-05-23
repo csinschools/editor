@@ -89,6 +89,8 @@ drawImage("https://i.imgur.com/AyVObiG.png", 0, 0, 0, 0)
 drawImage("https://i.imgur.com/77JDxe9.png", 0, 0, 0, 0)
 drawImage("https://i.imgur.com/F3E0rXn.png", 0, 0, 0, 0)
 drawImage("https://i.imgur.com/yfxTwfS.png", 0, 0, 0, 0)
+drawImage("samples/images/Dance tutorial 1.png", 0, 0, 0, 0)
+drawImage("samples/images/Dance tutorial 2.png", 0, 0, 0, 0)
 
 print(Colour.cyan + "Loading Pose model, this might take a while, please wait...")
 loadPoseModel("https://teachablemachine.withgoogle.com/models/HurEXJ_4P/")
@@ -168,9 +170,25 @@ poses = [   [0.0,    0, "https://i.imgur.com/AyVObiG.png"],
             [10.901,  0, "https://i.imgur.com/AyVObiG.png"],
             ]
 
+timeElapsed()
+
 label .start_game
 stopSound()
-timeElapsed()
+frame = 0
+countDown = 1
+while not isKeyReleased('Enter'):
+    clearScreen(WHITE)
+    drawImage("samples/images/Dance tutorial " + str(frame + 1) + ".png", 15, 100, 300, 300)
+    drawText(">> Dance Game <<", 40, 420, "30px Arial", RED)   
+    drawText("Copy the pose", 50, 80, "30px Arial", BLUE)   
+    drawText("on the screen!", 100, 50, "30px Arial", BLUE)   
+    drawText("Press [Enter] to start", 80, 10, "20px Arial", RED)   
+    getSkeletonFromWebCam()
+    countDown -= timeElapsed()
+    if countDown < 0:
+        frame = (frame + 1) % 2
+        countDown = 1
+
 countDown = 3
 countDown -= timeElapsed()
 while countDown > 0:
@@ -265,7 +283,7 @@ while True:
     
     
 score100 = int(round(score / maxScore, 2) * 100)
-while True:
+while not isKeyReleased('Enter'):
     
     clearScreen(0, 0, 0, 1)
     drawText("Well done!", 100, 340, "30px Arial", WHITE)   
@@ -274,9 +292,8 @@ while True:
     stars = score100 // 20
     starsString = (stars * "★") + ((5 - stars) * "⚝")
     drawText(starsString, 105, 220, "30px Arial", YELLOW)    
+    drawText("Press [Enter] to play again!", 50, 10, "20px Arial", WHITE) 
     getSkeletonFromWebCam()
-    if isKeyReleased('Enter'):
-        break
     
     
 goto .start_game
