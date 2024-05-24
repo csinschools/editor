@@ -407,19 +407,24 @@ async function createWebCam() {
     const flip = true; // whether to flip the webcam
     //webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
     webcam = new tmPose.Webcam(400, 400, flip); // width, height, flip
-    await webcam.setup(); // request access to the webcam
-    await webcam.play();
-    webCamAnimationID = window.requestAnimationFrame(loop);
+    try {
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        webCamAnimationID = window.requestAnimationFrame(loop);
 
-    // append elements to the DOM
-    webcamFrame.$('#webcam-container').appendChild(webcam.canvas); 
-    webcamFrame.htmlElement.parentNode.parentNode.style.zIndex=20;
-    toplevelFrame = webcamFrame.htmlElement.parentNode.parentNode;
+        // append elements to the DOM
+        webcamFrame.$('#webcam-container').appendChild(webcam.canvas); 
+        webcamFrame.htmlElement.parentNode.parentNode.style.zIndex=20;
+        toplevelFrame = webcamFrame.htmlElement.parentNode.parentNode;
 
-    webcamFrame.on('closeButton', 'click', (_frame, evt) => {
-        destroyWebCam();
-    });    
-    webcamFrame.show();     
+        webcamFrame.on('closeButton', 'click', (_frame, evt) => {
+            destroyWebCam();
+        });    
+        webcamFrame.show();     
+    }
+    catch (error) {
+        throw error;
+    }
 }
 
 async function printWebCam() {   
@@ -450,17 +455,23 @@ function destroyWebCam() {
     //let topParent = webcamFrame.htmlElement.parentNode.parentNode;      
     webCamCallback = null;
     window.cancelAnimationFrame(webCamAnimationID);
-    if (webcamFrame !== null) {
-        webcamFrame.closeFrame();  
-        webcamFrame = null;
-    }    
-    if (toplevelFrame !== null) {
-        toplevelFrame.remove();
-        toplevelFrame = null
-    }   
-    if (webcam !== null) {
-        webcam.stop();
-        webcam = null;
+
+    try {
+        if (webcamFrame !== null) {
+            webcamFrame.closeFrame();  
+            webcamFrame = null;
+        }    
+        if (toplevelFrame !== null) {
+            toplevelFrame.remove();
+            toplevelFrame = null
+        }   
+        if (webcam !== null) {
+            webcam.stop();
+            webcam = null;
+        }
+    }
+    catch (e) {
+        console.log("error trying to destroy webcam in destroyWebCam()")
     }
 }
 
