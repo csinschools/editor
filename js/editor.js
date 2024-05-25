@@ -140,22 +140,27 @@ function startBabylon() {
 		babylonCreateScene(scene);
 
 		//const env = scene.createDefaultEnvironment();
-			
-		const xr = await scene.createDefaultXRExperienceAsync({
-			//floorMeshes: [env.ground]
-		});     
+		
+		try {
+			const xr = await scene.createDefaultXRExperienceAsync({
+				//floorMeshes: [env.ground]
+			});     
 
-		xr.input.onControllerAddedObservable.add((inputSource) => {
-			xr.baseExperience.sessionManager.session.onselect = (inputSource) => {
-				// Note that this gets triggered by any selection, including those
-				// made with motion-controller buttons. If those buttons are
-				// dealt with elsewhere, you'll need top check for gaze here. Otherwise,
-				// the actOnButton function will get called twice.
-				xr.camera.position = new BABYLON.Vector3(0, 0, 0);
-				xr.camera.setTarget(new BABYLON.Vector3(0, 0, 5));		
+			xr.input.onControllerAddedObservable.add((inputSource) => {
+				xr.baseExperience.sessionManager.session.onselect = (inputSource) => {
+					// Note that this gets triggered by any selection, including those
+					// made with motion-controller buttons. If those buttons are
+					// dealt with elsewhere, you'll need top check for gaze here. Otherwise,
+					// the actOnButton function will get called twice.
+					xr.camera.position = new BABYLON.Vector3(0, 0, 0);
+					xr.camera.setTarget(new BABYLON.Vector3(0, 0, 5));		
 
-			};
-		});		
+				};
+			});		
+		}
+		catch(error) {
+			console.log("error creating XR scene");
+		}
 		
 
 		return scene;
