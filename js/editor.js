@@ -18,7 +18,10 @@ function resetBabylon() {
 
 function stopBabylon() {
 	setDisplayMode("side");
-	engine.dispose();
+	if (engine != null) {
+		engine.dispose();
+		engine = null;
+	}
 }
 
 function addObject(bObj) {
