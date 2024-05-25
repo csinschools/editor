@@ -184,6 +184,8 @@ while fade < 255:
 frame = 0
 countDown = 1
 timeElapsed()
+
+alpha = 1
 while not isKeyReleased('Enter'):
     clearScreen(WHITE)
     drawImage("samples/images/Dance tutorial " + str(frame + 1) + ".png", 15, 100, 300, 300)
@@ -196,6 +198,10 @@ while not isKeyReleased('Enter'):
     if countDown < 0:
         frame = (frame + 1) % 2
         countDown = 1
+    fillRect(0, 0, 330, 500, 255, 255, 255, alpha)
+    alpha -= 0.075
+    if alpha < 0:
+        alpha = 0
 
 countDown = 3
 countDown -= timeElapsed()
