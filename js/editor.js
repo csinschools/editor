@@ -8,15 +8,17 @@ var prevTime = null;
 
 var _babylonObjects = {};
 var _runtimeObjects = {};
-
+var engine = null;
+var scene = null;
+var sceneToRender = null;
 function resetBabylon() {
 	_babylonObjects = {};
 	_runtimeObjects = {};
 }
 
 function stopBabylon() {
-	// TODO: doesn't really "stop" babylon, just hides the whole render canvas
 	setDisplayMode("side");
+	engine.dispose();
 }
 
 function addObject(bObj) {
@@ -40,6 +42,14 @@ function babylonCreateScene(scene) {
 		} else if (bObj.bObjType == "Material" ) {
 			runtimeBObj = new BABYLON.StandardMaterial("material", scene);
 			runtimeBObj.ambientColor = new BABYLON.Color3(bObj.ambientColour[0], bObj.ambientColour[1], bObj.ambientColour[2]);
+		} else if (bObj.bObjType == "Skybox" ) {
+			let envTexture = new BABYLON.CubeTexture(bObj.texture, scene);
+			_runtimeObjects[bObj.bObjName + ".texture"] = envTexture;
+			runtimeBObj = scene.createDefaultSkybox(envTexture, true, bObj.size);
+		} else if (bObj.bObjType == "DirectionalLight" ) {
+			runtimeBObj = new BABYLON.DirectionalLight(bObj.oObjName, new BABYLON.Vector3(bObj.direction[0], bObj.direction[1], bObj.direction[2]), scene);
+			runtimeBObj.diffuse = new BABYLON.Color3(bObj.diffuse[0], bObj.diffuse[1], bObj.diffuse[2]);
+			runtimeBObj.specular = new BABYLON.Color3(bObj.specular[0], bObj.specular[1], bObj.specular[2]);
 		}
 		_runtimeObjects[bObj.bObjName] = runtimeBObj;
 	}
@@ -67,27 +77,26 @@ function startBabylon() {
 			}
 		});
 	}
-	var engine = null;
-	var scene = null;
-	var sceneToRender = null;
+
 	var createDefaultEngine = function() { 
 		return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); 
 	};
 	var createScene = async function () {
 	
 		var scene = new BABYLON.Scene(engine);
-		var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);
+		// Parameters: name, alpha, beta, radius, target position, scene
+		//const camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 8, new BABYLON.Vector3(0, 0, 0), scene);	
+		var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, 0), scene);		
 		camera.setTarget(new BABYLON.Vector3(0, 0, 5));
 		camera.attachControl(canvas, true);
 
 		scene.ambientColor = new BABYLON.Color3(1, 1, 1);
 
+		/*
 		var light = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(1, -1, 0), scene);
 		light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
-		light.specular = new BABYLON.Color3(1, 1, 1);		
+		light.specular = new BABYLON.Color3(1, 1, 1);	
 		//light.intensity = 0.7;
-
-		/*
 
 		var redMat = new BABYLON.StandardMaterial("redMat", scene);
 		redMat.ambientColor = new BABYLON.Color3(1, 0, 0);
@@ -126,12 +135,26 @@ function startBabylon() {
 
 		// instantiate all our meshes
 		babylonCreateScene(scene);
-	
-		const env = scene.createDefaultEnvironment();
-	
+
+		//const env = scene.createDefaultEnvironment();
+			
 		const xr = await scene.createDefaultXRExperienceAsync({
-			floorMeshes: [env.ground]
-		});        
+			//floorMeshes: [env.ground]
+		});     
+
+		xr.input.onControllerAddedObservable.add((inputSource) => {
+			xr.baseExperience.sessionManager.session.onselect = (inputSource) => {
+				// Note that this gets triggered by any selection, including those
+				// made with motion-controller buttons. If those buttons are
+				// dealt with elsewhere, you'll need top check for gaze here. Otherwise,
+				// the actOnButton function will get called twice.
+				xr.camera.position = new BABYLON.Vector3(0, 0, 0);
+				xr.camera.setTarget(new BABYLON.Vector3(0, 0, 5));		
+
+			};
+		});		
+		
+
 		return scene;
 	};
 	window.initFunction = async function() {
@@ -762,8 +785,11 @@ function getStyleSheet(unique_title) {
   }
 }
 
-function errToString(err) {
+function errToString(err) {	
 	let ret = err.tp$name;
+	if (!ret) {
+		return err;
+	}
 	ret += ": " + err.tp$str().v;
 	if (err.traceback.length !== 0) {
 		for (i = 0; i < err.traceback.length; i++) {

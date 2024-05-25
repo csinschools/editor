@@ -79,9 +79,10 @@ def leftHandRaised(skeleton):
     else:
         return 0
         
-showWebCam()
 
-
+clearScreen(0, 0, 0, 1)
+drawText("Loading Game...", 40, 420, "30px Arial", WHITE)   
+drawText("Please wait", 70, 360, "30px Arial", WHITE)   
 # preload images
 drawImage("https://i.imgur.com/eALijkc.png", 0, 0, 0, 0)
 drawImage("https://i.imgur.com/hSpp7He.png", 0, 0, 0, 0)
@@ -91,6 +92,9 @@ drawImage("https://i.imgur.com/F3E0rXn.png", 0, 0, 0, 0)
 drawImage("https://i.imgur.com/yfxTwfS.png", 0, 0, 0, 0)
 drawImage("samples/images/Dance tutorial 1.png", 0, 0, 0, 0)
 drawImage("samples/images/Dance tutorial 2.png", 0, 0, 0, 0)
+refresh()
+
+showWebCam()
 
 print(Colour.cyan + "Loading Pose model, this might take a while, please wait...")
 loadPoseModel("https://teachablemachine.withgoogle.com/models/HurEXJ_4P/")
@@ -170,12 +174,16 @@ poses = [   [0.0,    0, "https://i.imgur.com/AyVObiG.png"],
             [10.901,  0, "https://i.imgur.com/AyVObiG.png"],
             ]
 
-timeElapsed()
-
 label .start_game
 stopSound()
+fade = 0
+
+while fade < 255:
+    clearScreen(fade, fade, fade, 1)
+    fade += 0.0125
 frame = 0
 countDown = 1
+timeElapsed()
 while not isKeyReleased('Enter'):
     clearScreen(WHITE)
     drawImage("samples/images/Dance tutorial " + str(frame + 1) + ".png", 15, 100, 300, 300)
@@ -263,9 +271,7 @@ else:
     g = 255 + progress
     b = 255 + progress
 
-    
 while True:
-    
     clearScreen(r, g, b, 1)
     r -= 0.0125
     g -= 0.0125
@@ -277,7 +283,6 @@ while True:
         g = 0
     if b < 0:
         b = 0
-    
     if r == 0 and g == 0 and b == 0:
         break
     

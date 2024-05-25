@@ -1,5 +1,10 @@
 from babylon import *
 
+skybox = Skybox("babylon/textures/skybox")
+
+light = DirectionalLight()
+light.direction = [-0.25, -1, 0.25]
+
 sun = Sphere()
 sun.position = [0, 5, 0]
 sun.radius = 2
