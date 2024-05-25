@@ -52,12 +52,16 @@ earth = Sphere()
 earth.position = [0, -5, 0]
 earth.radius = 3
 
+
+woodTexture = Texture("babylon/textures/wood.jpg")
+
 redMaterial = Material()
 redMaterial.ambientColour = Colour.red
 yellowMaterial = Material()
 yellowMaterial.ambientColour = Colour.yellow
 greenMaterial = Material()
-greenMaterial.ambientColour = Colour.green
+greenMaterial.ambientColour = Colour.white
+greenMaterial.ambientTexture = woodTexture
 blueMaterial = Material()
 blueMaterial.ambientColour = Colour.blue
 magentaMaterial = Material()

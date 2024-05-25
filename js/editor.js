@@ -27,6 +27,8 @@ function stopBabylon() {
 function addObject(bObj) {
   // copy internal dict
   var jsBObj = Sk.ffi.remapToJs(bObj.$d);
+  // replace references with their object name
+  // for 2nd pass resolution
   _babylonObjects[jsBObj.bObjName] = jsBObj;
 }
 
@@ -53,6 +55,8 @@ function babylonCreateScene(scene) {
 			runtimeBObj = new BABYLON.DirectionalLight(bObj.oObjName, new BABYLON.Vector3(bObj.direction[0], bObj.direction[1], bObj.direction[2]), scene);
 			runtimeBObj.diffuse = new BABYLON.Color3(bObj.diffuse[0], bObj.diffuse[1], bObj.diffuse[2]);
 			runtimeBObj.specular = new BABYLON.Color3(bObj.specular[0], bObj.specular[1], bObj.specular[2]);
+		} else if (bObj.bObjType == "Texture") {
+			runtimeBObj = new BABYLON.Texture(bObj.url, scene);		
 		}
 		_runtimeObjects[bObj.bObjName] = runtimeBObj;
 	}
@@ -64,6 +68,10 @@ function babylonCreateScene(scene) {
 		if (bObj.bObjType == "Mesh" ) {
 			if (bObj.material !== null && bObj.material in _runtimeObjects) {
 				runtimeBObj.material = _runtimeObjects[bObj.material];
+			}
+		} else if (bObj.bObjType == "Material" ) {
+			if (bObj.ambientTexture !== null && bObj.ambientTexture in _runtimeObjects) {
+				runtimeBObj.ambientTexture  = _runtimeObjects[bObj.ambientTexture];
 			}
 		}
 	}	
