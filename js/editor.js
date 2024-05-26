@@ -1124,7 +1124,7 @@ function setDisplayMode(mode, headless = false) {
 
 			//document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
 			document.getElementById('split').style = "height: 505px; display: flex; flex-direction:row;";
-			document.getElementById('rightpane').style = "width: 330px;"
+			document.getElementById('rightpane').style = "width: 500px;"
 			document.getElementById('leftpane').style = "height: 500px; flex-grow: 1;";
 
 			//document.getElementById('editor').style.height = "100%";
