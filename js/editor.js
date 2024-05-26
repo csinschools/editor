@@ -11,6 +11,8 @@ var _runtimeObjects = {};
 var engine = null;
 var scene = null;
 var sceneToRender = null;
+var _functionQueue = [];
+
 function resetBabylon() {
 	_babylonObjects = {};
 	_runtimeObjects = {};
@@ -22,6 +24,48 @@ function stopBabylon() {
 		engine.dispose();
 		engine = null;
 	}
+	_functionQueue = [];
+}
+
+//////////////////////////////
+// Function wrapping code: from https://stackoverflow.com/questions/899102/how-do-i-store-javascript-functions-in-a-queue-for-them-to-be-executed-eventuall
+// fn - reference to function.
+// context - what you want "this" to be.
+// params - array of parameters to pass to function.
+var wrapFunction = function(fn, params) {
+    return function(scene) {
+        fn.apply(scene, params);
+    };
+}
+
+//////////////////////////////
+
+function _runtimeBeginAnimation(bObjName, startFrame, endFrame, loop, scene) {
+	bObj = _runtimeObjects[bObjName];
+	this.beginAnimation(bObj, startFrame, endFrame, loop);
+}
+
+function beginAnimation(bObjName, startFrame, endFrame, loop) {
+	// TODO: fix this .. it needs to run AFTER babylonCreateScene()
+	// just always specify endframe for now
+	/*
+	if (endFrame == -1) {
+		if (bObj.animations !== null) {
+			for (i = 0; i < bObj.animations.length; i++) {
+				let animation = bObj.animations[i];
+				for (j = 0; j < animation._keys.length; j++) {
+					if (animation._keys[j].frame > endFrame) {
+						endFrame = animation._keys[j].frame;
+					}
+				}
+			}
+		}
+	}
+	*/
+	//scene.beginAnimation(bObj, startFrame, endFrame, loop);
+
+	var beginAnimationFunc = wrapFunction(_runtimeBeginAnimation, [bObjName, startFrame, endFrame, loop]);
+	_functionQueue.push(beginAnimationFunc);
 }
 
 function addObject(bObj) {
@@ -52,11 +96,14 @@ function babylonCreateScene(scene) {
 			_runtimeObjects[bObj.bObjName + ".texture"] = envTexture;
 			runtimeBObj = scene.createDefaultSkybox(envTexture, true, bObj.size);
 		} else if (bObj.bObjType == "DirectionalLight" ) {
-			runtimeBObj = new BABYLON.DirectionalLight(bObj.oObjName, new BABYLON.Vector3(bObj.direction[0], bObj.direction[1], bObj.direction[2]), scene);
+			runtimeBObj = new BABYLON.DirectionalLight(bObj.bObjName, new BABYLON.Vector3(bObj.direction[0], bObj.direction[1], bObj.direction[2]), scene);
 			runtimeBObj.diffuse = new BABYLON.Color3(bObj.diffuse[0], bObj.diffuse[1], bObj.diffuse[2]);
 			runtimeBObj.specular = new BABYLON.Color3(bObj.specular[0], bObj.specular[1], bObj.specular[2]);
 		} else if (bObj.bObjType == "Texture") {
 			runtimeBObj = new BABYLON.Texture(bObj.url, scene);		
+		} else if (bObj.bObjType == "Animation") {
+			runtimeBObj = new BABYLON.Animation(bObj.bObjName, bObj.property, bObj.frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+			runtimeBObj.setKeys(bObj.keys);
 		}
 		_runtimeObjects[bObj.bObjName] = runtimeBObj;
 	}
@@ -73,7 +120,14 @@ function babylonCreateScene(scene) {
 			if (bObj.ambientTexture !== null && bObj.ambientTexture in _runtimeObjects) {
 				runtimeBObj.ambientTexture  = _runtimeObjects[bObj.ambientTexture];
 			}
-		}
+		} 	
+		
+		if (bObj._animations !== null) {
+			for (i = 0; i < bObj._animations.length; i++) {
+				let bAnimationObj = _runtimeObjects[bObj._animations[i]];					
+				runtimeBObj.animations.push(bAnimationObj);
+			}
+		}	
 	}	
 }
 
@@ -146,6 +200,11 @@ function startBabylon() {
 
 		// instantiate all our meshes
 		babylonCreateScene(scene);
+
+		// Remove and execute all functions in the array
+		while (_functionQueue.length > 0) {
+			(_functionQueue.shift())(scene);   
+		}		
 
 		//const env = scene.createDefaultEnvironment();
 		
