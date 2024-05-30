@@ -1091,7 +1091,7 @@ function checkForPyangelo(code) {
 	return (match != null ? true: false);
 }
 
-function setDisplayMode(mode, headless = false) {
+function setDisplayMode(mode) {
 	if (prevDisplay != null && prevDisplay == mode)
 	{
 		return;
@@ -1392,6 +1392,12 @@ var URLButton = document.getElementById("URLButton");
 var fsButton = document.getElementById("fullscreenButton");
 var piskelButton = document.getElementById("piskelButton");
 
+var just_run = false;
+var _stopped = false;
+var inputElement = null;
+
+resetCanvas();
+
 // grabbing the URL parameters and processing them
 // Order in which we process the URL params are IMPORTANT!
 // e.g. display is needed before project and id
@@ -1502,9 +1508,12 @@ else
 }
 // disable headless only if there is something in the localstorage but this is not from the codestore 
 // would occur when 
+// TESTME: never disabling headless
+/*
 if (localStorage.getItem(filename) !== null && !(id != null && id.length > 0) && !compiled && !(esc != null && esc.length > 0)) {
 	headless = false;
 }
+*/
 
 var codestring = "";
 // load code by id from codestore
@@ -1537,7 +1546,7 @@ if (!(esc != null && esc.length > 0)) {
 					// this is so users don't save to local storage and think the code is actually part of the codestore id in the URL		
 					codestring = xhr2.responseText;
 					usingPyangelo = checkForPyangelo(codestring);
-					setDisplayMode(usingPyangelo ? "canvas": display, headless);
+					setDisplayMode(usingPyangelo ? "canvas": display);
 
 					// TODO: untested line below - always populate the editor with the retrieved code
 					// needed for 'rerun' functionality
@@ -1595,7 +1604,7 @@ if (!(esc != null && esc.length > 0)) {
 					{
 						codestring = client.responseText;
 						usingPyangelo = checkForPyangelo(codestring);
-						setDisplayMode(usingPyangelo ? "canvas": display, headless);
+						setDisplayMode(usingPyangelo ? "canvas": display);
 						// TODO: untested line below - always populate the editor with the retrieved code
 						// needed for 'rerun' functionality
 						//editor.setValue(codestring, -1);						
@@ -1628,7 +1637,8 @@ if (!(esc != null && esc.length > 0)) {
 				usingPyangelo = checkForPyangelo(codestring);
 				editor.setValue(codestring, -1);
 				setDisplayMode(usingPyangelo ? "canvas": display);
-				if (autorun) {
+				// can now run headless from local storage
+				if (autorun || headless) {
 					runSkulpt(false, codestring);
 				}				
 			}
@@ -1636,13 +1646,17 @@ if (!(esc != null && esc.length > 0)) {
 	}
 	// no id, and no project, so let's load from local storage
 	else {
+		if (headless) {
+			setupHeadless();	
+		}
 		codestring = loadFromLocalStorage();
 		if (!(codestring === null || codestring == "")) {
 			usingPyangelo = checkForPyangelo(codestring);
 			editor.setValue(codestring, -1);
 			setDisplayMode(usingPyangelo ? "canvas": display);
 
-			if (autorun) {
+			// can now run headless from local storage
+			if (autorun || headless) {
 				runSkulpt(false, codestring);
 			}			
 		}	
@@ -1759,12 +1773,6 @@ if (nofs != null && nofs.length > 0)
 {
 	fsButton.style.display = "none";
 }
-
-var just_run = false;
-var _stopped = false;
-var inputElement = null;
-
-resetCanvas();
 
 var gutters = document.getElementsByClassName('gutter');
 if (gutters.length > 0 && gutters !== undefined)
