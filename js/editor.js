@@ -382,27 +382,27 @@ async function getCodestoreURL() {
 
 			// TODO: fix to work with display mode (need save it out)
 			// only display QR code if in babylon mode
-			if (prevDisplay == "babylon") {
-				let qrCode = document.createElement('div');
-				qrCode.id = "qrcode";
-				qrCode.style.marginTop = "10px";
-				qrCode.style.maxWidth = "fit-content";
-				qrCode.style.marginLeft = "auto";
-				qrCode.style.marginRight = "auto";
-				qrCode.style.width = "128px";
-				qrCode.style.height = "128px";
-						
-				document.getElementById("urlContent").appendChild(qrCode);
+			//if (prevDisplay == "babylon") {
+			let qrCode = document.createElement('div');
+			qrCode.id = "qrcode";
+			qrCode.style.marginTop = "10px";
+			qrCode.style.maxWidth = "fit-content";
+			qrCode.style.marginLeft = "auto";
+			qrCode.style.marginRight = "auto";
+			qrCode.style.width = "128px";
+			qrCode.style.height = "128px";
+					
+			document.getElementById("urlContent").appendChild(qrCode);
 
-				var qrCodeGenerator = new QRCode("qrcode", {
-					text: codeurl,
-					width: 128,
-					height: 128,
-					colorDark : "#000000",
-					colorLight : "#ffffff",
-					correctLevel : QRCode.CorrectLevel.H
-				});
-			}
+			var qrCodeGenerator = new QRCode("qrcode", {
+				text: codeurl,
+				width: 128,
+				height: 128,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.H
+			});
+			//}
 			
 			document.getElementById("copyToClip").style.display = "inline"; 
         }
