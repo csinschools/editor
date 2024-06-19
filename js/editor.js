@@ -901,6 +901,10 @@ function runSkulpt(stepMode, code = "") {
 		code = replacePrintConcatenationWithArgs(code);
 		code = pygmify(code);
 	}
+
+	// testing pyangelo integration
+	//Sk.PyAngelo.preparePage();
+
 	usingPyangelo = checkForPyangelo(code);
 	setDisplayMode(usingPyangelo ? "canvas": display);
 	if (usingPyangelo) document.getElementById("pyangelo").focus();
