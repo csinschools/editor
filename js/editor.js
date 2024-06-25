@@ -848,7 +848,9 @@ function checkForStop() {
 
 function logError(text)
 {
-	outputf(Sk.builtins.RESET + Sk.builtins.RED + text + "\n" + Sk.builtins.RESET);
+	// replacing sk.builtin constants with string literals to avoid name class with builtins_pyangelo.js
+	//outputf(Sk.builtins.RESET + Sk.builtins.RED + text + "\n" + Sk.builtins.RESET);
+	outputf("\u001b[ 0;2;0;0;0 m" + "\u001b[ 38;2;255;0;0 m" + text + "\n" + "\u001b[ 0;2;0;0;0 m");
 }
 
 function getStyleSheet(unique_title) {
@@ -903,7 +905,7 @@ function runSkulpt(stepMode, code = "") {
 	}
 
 	// testing pyangelo integration
-	//Sk.PyAngelo.preparePage();
+	//createPyangeloFrame();
 
 	usingPyangelo = checkForPyangelo(code);
 	setDisplayMode(usingPyangelo ? "canvas": display);
@@ -921,11 +923,13 @@ function runSkulpt(stepMode, code = "") {
 
 	resetConsole();
 
+	let usingPyangeloBuiltin = checkForBuiltinPyangelo(code);
+
 	Sk.configure({
 		output: outputf,
 		inputfun: inputf,
 		inputfunTakesPrompt: false,
-		debugging: true, //stepRun ? true : false,
+		debugging: usingPyangeloBuiltin ? false : true,
 		killableWhile: true,
 		//breakpoints: function() { return true; },
 		__future__: Sk.python3
@@ -1011,7 +1015,16 @@ function stopSkulpt() {
 	stopAllSounds();
 	hideSpinner();
 	destroyWebCam();
+	// stop the keylisteners for pyangelo
+	Sk.PyAngelo.stopPyangelo();
+	// Don't always destroy pyangelo frame - leave hanging for any one-off images
+	// destroyPyangeloFrame();
+
 	stopBabylon();
+	// if stop button pressed then kill pyangelo frame
+	if (_stopped) {
+		destroyPyangeloFrame();
+	}
 
 	if (stepRun) {
 		// remove step highlighting
@@ -1091,6 +1104,12 @@ function stopEditor() {
 }
 function checkForPyangelo(code) {
 	var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)$/gm;
+	var match = code.match(pyangeloPattern);
+	return (match != null ? true: false);
+}
+
+function checkForBuiltinPyangelo(code) {
+	var pyangeloPattern = /^(?:\s*setCanvasSize)/gm;
 	var match = code.match(pyangeloPattern);
 	return (match != null ? true: false);
 }

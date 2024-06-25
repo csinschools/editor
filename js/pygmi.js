@@ -77,7 +77,7 @@ function run_lexer(code) {
             pretokens = [];
             posttokens = [];
             tokens = pretokens;
-        } else if (token.text == "=") {
+        } else if (token.text == "=" && tokens !== posttokens) {
             tokens = posttokens;
         } else {
             tokens.push(token);

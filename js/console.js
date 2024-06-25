@@ -36,8 +36,7 @@ function outputf(n) {
     var underlined;
                   
     i = 0;
-    while (n.length > 0)
-    {
+    while (n.length > 0) {
         if (n[0] == "\u001b") {
             i++;
             if (text.length > 0)
@@ -47,8 +46,7 @@ function outputf(n) {
             var escPattern = /\[ (\d+);2;(\d+);(\d+);(\d+) m/;                          
             var match = n.match(escPattern);
             
-            if (typeof(match) !== 'undefined')
-            {
+            if (typeof(match) !== 'undefined') {
                 code = parseInt(match[1]);
                 if (code == 0) {
                     // reset
@@ -80,14 +78,14 @@ function outputf(n) {
             }
             n = n.substring(i);
         }
-        else
-        {
+        else {
             text += n[0];
             n = n.substring(1);
         }                
     }
-    if (text.length > 0)
+    if (text.length > 0) {
         pyConsole.appendChild(createColouredTextSpanElement(text, color, bgcolor, italics, bold, underlined));                           
+    }
     
     // force scroll to bottom
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
@@ -148,32 +146,26 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
         fontBgColour = bgcolor;
     }    
     if (typeof(italics) !== 'undefined') {
-        if (italics)
-        {
+        if (italics) {
             fontItalics = "italic";
         }
-        else
-        {
+        else {
             fontItalics = "normal";
         }            
     }    
     if (typeof(bold) !== 'undefined') {
-        if (bold)
-        {
+        if (bold) {
             fontBold = "bold";
         }
-        else
-        {
+        else {
             fontBold = "normal";
         }    
     }    
     if (typeof(underlined) !== 'undefined') {
-        if (underlined)
-        {
+        if (underlined) {
             fontUnderlined = "underline";
         }
-        else
-        {
+        else {
             fontUnderlined = "none";
         }    
     }  
@@ -362,6 +354,91 @@ function createTurtleCanvas() {
 
     // scroll to bottom
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
+}
+
+///////////////////////// canvas (pyangelo) functions//////////////////////////
+
+var pyangeloFrame = null;
+let pyangeloFrameParent1 = null;
+let pyangeloFrameParent2 = null;
+
+// hijacking setCanvasSize to pop out new jsFrame
+Sk.builtin.setCanvasSize = function setCanvasSize(w, h, yAxisMode) {
+    Sk.builtin.pyCheckArgsLen("setCanvasSize", arguments.length, 2, 3);
+    Sk.builtin.pyCheckType("w", "integer", Sk.builtin.checkInt(w));
+    Sk.builtin.pyCheckType("h", "integer", Sk.builtin.checkInt(h));
+    Sk.builtin.pyCheckType("yAxisMode", "integer", Sk.builtin.checkInt(yAxisMode));
+
+    if (pyangeloFrame === null) {
+        //Sk.PyAngelo.preparePage();
+        createPyangeloFrame(w, h);
+    }
+
+    Sk.builtin._setCanvasSize(w, h, yAxisMode);
+};
+
+Sk.builtins["setCanvasSize"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.setCanvasSize,
+        $name: "setCanvasSize",
+        $flags: {
+            NamedArgs: [null, null, "yAxisMode"],
+            Defaults: [1],
+        },
+        $textsig: "($module, w, h, yAxisMode /)",
+        $doc:
+            "Sets the size of the canvas that all drawings are written to. The first parameter specifies the width in pixels and the second the height. The thrid parameter specifies the direction of the y axis. The constant CARTESIAN can be used to specify the y axis acts like a regular cartesian plane in maths, and JAVASCRIPT can be used to specify a traditional javascript y-axis that moves down the screen. The default value for yAxisMode is CARTESIAN.",
+    },
+    null,
+    "builtins"
+);
+
+async function createPyangeloFrame(w, h) {
+    if (pyangeloFrame !== null) {
+        pyangeloFrame.closeFrame();  
+        pyangeloFrame = null;
+    }
+    jsFrame = new JSFrame(); 
+    //Create window
+    pyangeloFrame = jsFrame.create({
+        title: 'Pyangelo',
+        left: 200, top: 200, width: w, height: h,
+        movable: true,//Enable to be moved by mouse
+        resizable: true,//Enable to be resized by mouse
+        html: '<canvas id="canvas" width="' + w + '" height="' + h + '"></div>',   
+    });
+
+    //Event handler for buttons on the title bar.
+    pyangeloFrame.on('closeButton', 'click', (_frame, evt) => {
+        destroyPyangeloFrame();
+        stopEditor();
+    });
+
+    pyangeloFrame.htmlElement.parentElement.parentElement.style.zIndex = 99;
+    //pyangeloFrame.parentElement.style.zIndex = 99;
+    pyangeloFrame.show();
+    pyangeloFrame.requestFocus();
+
+    pyangeloFrameParent1 = pyangeloFrame.htmlElement.parentElement;
+    pyangeloFrameParent2 = pyangeloFrame.htmlElement.parentElement.parentElement;    
+
+    Sk.PyAngelo.preparePage();
+}
+
+function destroyPyangeloFrame() {
+    try {
+        if (pyangeloFrame !== null) {
+            pyangeloFrame.closeFrame();  
+            pyangeloFrame.htmlElement.remove();
+            pyangeloFrame = null;
+
+            pyangeloFrameParent1.remove();
+            pyangeloFrameParent2.remove();
+        }    
+    }
+    catch (e) {
+        console.log("error destroyPyangeloFrame()");
+    }
 }
 
 ///////////////////////// web cam functions //////////////////////////
