@@ -393,6 +393,30 @@ Sk.builtins["setCanvasSize"] = new Sk.builtin.sk_method(
     "builtins"
 );
 
+// hijacking setCanvasSize to pop out new jsFrame
+Sk.builtin.setConsoleFontSize = function setConsoleFontSize(size) {
+    Sk.builtin.pyCheckArgsLen("setConsoleFontSize", arguments.length, 1, 1);
+    Sk.builtin.pyCheckType("size", "integer", Sk.builtin.checkInt(size));
+
+    fontSize = size + 'pt';
+};
+
+Sk.builtins["setConsoleFontSize"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.setConsoleFontSize,
+        $name: "setConsoleFontSize",
+        $flags: {
+            NamedArgs: [null],
+            Defaults: [14],
+        },
+        $textsig: "($module, size /)",
+        $doc:
+            "Sets the size font in the console window in 'pts'.",
+    },
+    null,
+    "builtins"
+);
+
 async function createPyangeloFrame(w, h) {
     if (pyangeloFrame !== null) {
         pyangeloFrame.closeFrame();  
