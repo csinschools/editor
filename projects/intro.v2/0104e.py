@@ -20,7 +20,7 @@ drawRect(18, 35, \
 if gameState == 'intro':
     if progress >= 0:
         font = str(blockSize * 1.5) + "px consolas"
-        drawText("YOU DIED!", 85, 310, font, RED)
+        drawText("YOU LOST!", 85, 310, font, RED)
     font = str(blockSize) + "px consolas"
     drawText("Controls:", 105, 270, font, WHITE)
     drawText("'W' moves up", 75, 235, font, WHITE)

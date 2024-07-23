@@ -1,21 +1,5 @@
-# Complete the code below to display the second hedgehog.
-
-print("     .|||||||||.     ")
-print("    |||||||||||||    ")
-print("   /. `|||||||||||   ")
-print("  o__,_||||||||||'   ") 
-
-# Type the code below that waits for the user to press the [ENTER] key.
-# Hint: You will need to use the input() command!
-
-input("Press [ENTER] to continue!")
-
-# Print the second hedgehog by copying the code above 
-# and changing the symbols in your first hedgehog so that 
-# your second hedgehog has fuzzy fur.
-# Hint: You will need to change this character "|" to ":"!
-
-print("     .:::::::::.     ")
-print("    :::::::::::::    ")
-print("   /. `:::::::::::   ")
-print("  o__,_::::::::::'   ") 
+print("Facts about Australia!")
+input("Press [Enter] to display a fact")
+print("Australia is the only country which is also a continent.")
+input("Press [Enter] to display another fact")
+print("The word 'selfie' was invented in Australia!")

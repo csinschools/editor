@@ -2,7 +2,7 @@
 # Colour it in so that the duck is yellow and the water is blue!
 # HINT: start off by using print statements to display the duck
 
-from csinsc import *
+from goddies import *
 
     __
   <(o )___
