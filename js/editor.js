@@ -1709,39 +1709,38 @@ nextButton.style.display = "none";
 
 // allows save (and load)
 nosave = urlParams.get('nosave')
-if (nosave != null && nosave.length > 0)
-{
+if (nosave != null && nosave.length > 0) {
 	saveButton.style.display = "none";
 	loadButton.style.display = "none";
-}
-else
-{
+} else {
 	saveButton.style.display = "inline";
 	loadButton.style.display = "inline";
 }
 
 // disable step-run button
 nostep = urlParams.get('nostep')
-if (nostep != null && nostep.length > 0)
-{
+if (nostep != null && nostep.length > 0) {
 	stepButton.style.display = "none";
 	stopButton.style.width = "72px";
-}
-else
-{
+} else {
 	stepButton.style.display = "inline";
+}
+
+// disable codestore button
+nosnap = urlParams.get('nosnap')
+if (nosnap != null && nosnap.length > 0) {
+	codestoreURL.style.display = "none";
+} else {
+	codestoreURL.style.display = "inline";
 }
 
 // disable run button
 norun = urlParams.get('norun')
-if (norun != null && norun.length > 0)
-{
+if (norun != null && norun.length > 0) {
 	runButton.style.display = "none";
 	stopButton.style.width = "72px";
 	stepButton.innerHTML = "👣 Step";
-}
-else
-{
+} else {
 	// this was turning the runButton on when loading from ID as autorun
 	// do an explicit check for autorun first
 	if (!autorun) {
@@ -1770,20 +1769,16 @@ autodelay = urlParams.get('autodelay')
 // get URL button
 URLButton.style.display = "none";
 urlButtonOn = urlParams.get('url')
-if (urlButtonOn != null && urlButtonOn.length > 0)
-{
+if (urlButtonOn != null && urlButtonOn.length > 0) {
 	URLButton.style.display = "inline";
-}
-else
-{
+} else {
 	URLButton.style.display = "none";
 }
 
 
 // hides the drawing canvas
 nocanvas = urlParams.get('nocanvas')
-if (nocanvas != null && nocanvas.length > 0)
-{
+if (nocanvas != null && nocanvas.length > 0) {
 	var rightpane = document.getElementById("rightpane");
 	rightpane.style.display = "none";
 	var leftpane = document.getElementById("leftpane");
@@ -1792,8 +1787,7 @@ if (nocanvas != null && nocanvas.length > 0)
 
 // no full screen (if unsupported by other widgets etc.)
 nofs = urlParams.get('nofs')
-if (nofs != null && nofs.length > 0)
-{
+if (nofs != null && nofs.length > 0) {
 	fsButton.style.display = "none";
 }
 

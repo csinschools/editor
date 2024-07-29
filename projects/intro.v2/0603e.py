@@ -1,6 +1,15 @@
-# Write a program that asks the user for a planet
-# and then displays a fact about that planet.
-# 
-# Keep asking for planets until the user types "quit"!
-
-from csinsc import *
+____________________
+print("Type '1' to say Hi in Italian")
+____________________
+____________________
+____________________
+if ____________________
+    print("Ciao!")
+    ____________________
+if ____________________
+    ____________________
+    ____________________
+if choice == "3":
+    quit()
+print(____________________)
+____________________

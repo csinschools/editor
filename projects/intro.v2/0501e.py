@@ -1,11 +1,7 @@
-# Fill in the blanks below so that IF the user types in 
-# "coding", the program displays "Hey, fellow programmer!"
+colours = input("How many colours are there in the Aboriginal Australian flag?")
 
-from csinsc import *
+if ________________________________
 
-________ = input("Enter your favourite subject: ")
+    print ________________________________
 
-if subject ____ "coding":
-  print("Hey, fellow programmer!")
-  
-print(Colour.red + "A" + Colour.cyan + "r" + Colour.green + "t" + Colour.reset + " is my favourite subject!")
+print ________________________________

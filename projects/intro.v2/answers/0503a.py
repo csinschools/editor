@@ -1,13 +1,8 @@
-# Write a program that asks a quiz question, and if the user gets
-# it correct, the program displays "Correct!" in green text
+from goodies import Colour
+album = input("What was the name of Taylor Swift's first album? ")
 
-from csinsc import *
+if album == "Taylor Swift":
 
-print("Question: how many legs does a goat have?")
+    print(Colour.green + "Yes, you are correct!" + Colour.reset)
 
-answer = input("Enter your answer: ")
-
-if answer == "4":
-    print(Colour.green + "Correct! Yay!" + Colour.reset)
-
-print("Bye now!")
+print("Taylor Swift was the debut studio album by Taylor Swift. It was released in North America in 2006.")

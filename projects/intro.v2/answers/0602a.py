@@ -1,34 +1,15 @@
-# Fill in the blanks below to make a virtual pet.
-#
-# When the user enters:
-#   "1" - the program displays "Munch.. munch.. munch!"
-#   "2" - the program displays "Pat.. pat.. pat!"
-#   "3" - the program quits
-
-from csinsc import *
-
 label .menu
 
-print("What would you like to do?")
-print("1. Feed me")
-print("2. Pet me")
-print("3. Quit")
+print("Type '1' to get the current temperature")
+print("Type '2' to get the chance of rain")
+print("Type anything else to quit")
 
-choice = input("Make youre choice: ")
+option = input("Enter your choice:")
 
-if choice == "1":
-  print("Munch.. munch.. munch!")
-  goto .menu
+if option  == "1":
+    print("It is currently 18 degrees.")
+    goto .menu
+if option  == "2":
+    print("There is a 80% chance of rain.")
+    goto .menu
 
-if choice == "2":
-  print("Pat.. pat.. pat!")
-  goto .menu
-
-if choice == "3":
-  goto .end
-
-print ("Not a valid choice!")
-goto .menu
-
-label .end
-print("Have a nice day!")

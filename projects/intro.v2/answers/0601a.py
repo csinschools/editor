@@ -1,13 +1,9 @@
-# Fill in the blanks below to make the easiest game in the world!
-# The user should type in "w" to win, and if they don't, they lose!
+label .play
 
-from csinsc import *
+print("You won!")
+answer = input("Type 'p' to play again, anything else to quit: ")
+if answer == "p":
 
-label .again
+    goto .play
 
-answer = input("Type 'w' to win: ")
-if answer == "w":
-  print("You win!")
-  goto .again
-
-print("Game over!")
+print("Thanks for playing!")

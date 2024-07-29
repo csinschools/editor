@@ -1,11 +1,7 @@
-# Fill in the blanks so that IF the user types in the age 
-# "14", the program will display "Heya twin!"
+year = input("What year did World War 1 start?")
 
-print("Hi there!")
+if year == "1914":
 
-age = input("How old are you? ")
+    print("1914 is right!")
 
-if age == "14":
-  print("We could be twins!")
-
-print("See ya later!")
+print("World War 1 started in 1914 and lasted until 1918.")
