@@ -356,6 +356,48 @@ function createTurtleCanvas() {
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }
 
+/////////////////////////// watch table functions /////////////////////////////
+var watchTableFrame = null;
+
+
+async function createWatchTableFrame(w, h) {
+    if (watchTableFrame !== null) {
+        watchTableFrame.closeFrame();  
+        watchTableFrame = null;
+    }
+    jsFrame = new JSFrame(); 
+    //Create window
+    watchTableFrame = jsFrame.create({
+        title: 'Variables Watch Table',
+        left: 600, top: 100, width: w, height: h,
+        movable: true,//Enable to be moved by mouse
+        resizable: true,//Enable to be resized by mouse
+        html: '<div id = "watch-table"></div>',   
+    });
+
+    //Event handler for buttons on the title bar.
+    watchTableFrame.on('closeButton', 'click', (_frame, evt) => {
+        destroyWatchTableFrame();
+    });
+
+    watchTableFrame.htmlElement.parentElement.parentElement.style.zIndex = 99;
+    watchTableFrame.show();
+}
+
+function destroyWatchTableFrame() {
+    try {
+        if (watchTableFrame !== null) {
+            watchTableFrame.closeFrame();  
+            watchTableFrame.htmlElement.remove();
+            watchTableFrame = null;
+        }    
+    }
+    catch (e) {
+        console.log("error in destroyWatchTableFrame()");
+    }
+}
+
+
 ///////////////////////// canvas (pyangelo) functions//////////////////////////
 
 var pyangeloFrame = null;

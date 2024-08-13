@@ -748,7 +748,8 @@ function recursivePopulateTraceTable(susp, traces) {
 				continue;
 			}
 			if (locals[property] !== undefined && "v" in locals[property]) {
-				temp_traces.push(property + ":" + locals[property].v);
+				temp_traces.push([property, locals[property].v]);
+				//temp_traces.push(property + ":" + locals[property].v);
 				//console.log(property + ":" + locals[property].v);
 			}
 		}
@@ -770,7 +771,8 @@ function recursivePopulateTraceTable(susp, traces) {
 			}
 			if (temps[property] !== undefined && "v" in temps[property]) {
 				//console.log(property + ":" + temps[property].v);
-				temp_traces.push(property + ":" + temps[property].v);
+				//temp_traces.push(property + ":" + temps[property].v);
+				temp_traces.push([property, temps[property].v]);
 			}
 		}
 		for (let i in temp_traces) {
@@ -780,10 +782,78 @@ function recursivePopulateTraceTable(susp, traces) {
 	return traces;
 }
 
+var prevTraces = null;
 function populateTraceTable(susp) {
+	if (document.getElementById("watch-table") === null) {
+		return;
+	}
 	console.log("=======")
 	var traces = recursivePopulateTraceTable(susp, []);
+	var watchTable = null;
+	//define some sample data
+
+	var tabledata = [];
+	for (n = 0; n < traces.length; n++) {
+		if (prevTraces != null) {
+
+		}
+		tabledata.push({id: n, name: traces[n][0], value: traces[n][1]});
+	}
+
+	/*
+	var tabledata = [
+		{id:1, name:"Oli Bob", age:"12", col:"red", dob:""},
+		{id:2, name:"Mary May", age:"1", col:"blue", dob:"14/05/1982"},
+	]; */
+
+	//create Tabulator on DOM element with id "example-table"
+	var table = new Tabulator("#watch-table", {
+		height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+		data:tabledata, //assign data to table
+		layout:"fitColumns", //fit columns to width of table (optional)
+		columns:[ //Define Table Columns
+			{title:"Name", field:"name", width:100, formatter:function(cell, formatterParams, onRendered){
+				let name = cell.getValue();
+				if (prevTraces == null || !(name in prevTraces)) {
+					return "<span style='color:red; font-weight: bold;'>" + cell.getValue() + "</span>"
+				}
+				else {
+					return cell.getValue();
+				}
+			}},
+			{title:"Value", field:"value", hozAlign:"right", width:100, formatter:function(cell, formatterParams, onRendered){
+				let name = cell.getRow().getCells()[0].getValue();
+				let value = cell.getValue();
+				if (prevTraces == null || !(name in prevTraces) || (prevTraces[name] != value)) {
+					return "<span style='color:red; font-weight: bold;'>" + cell.getValue() + "</span>"
+				}
+				else {
+					return cell.getValue();
+				}
+			}},
+		],
+	});
+
+	table.on("tableBuilt", function() {	
+		prevTraces = {};
+		for (n = 0; n < traces.length; n++) {
+			prevTraces[traces[n][0]] = traces[n][1];
+	}});
+
+/*
+    watchTable = new Tabulator("#watch-table", {
+    });    
+    var tableData = [
+        {id:1, name:"Billy Bob", age:"12", gender:"male", height:1, col:"red", dob:"", cheese:1},
+        {id:2, name:"Mary May", age:"1", gender:"female", height:2, col:"blue", dob:"14/05/1982", cheese:true},
+    ]    
+    watchTable.setData(tableData);   
+	*/
+
 	console.log(traces);
+
+
+
 }
 
 var prevLine = -1;
@@ -942,6 +1012,13 @@ function runSkulpt(stepMode, code = "") {
 	handlers["*"] = checkForStop;
 	if (stepRun) {
 		prevLine = 0;
+
+
+		// TODO: OOP all of this and make this a member variable NOT Globals!!
+		prevTraces = null;
+
+		// display watch table frame
+		createWatchTableFrame(200, 100);
 		// set readOnly for step mode
 		editor.setReadOnly(true);
 	
@@ -1015,6 +1092,7 @@ function stopSkulpt() {
 	stopAllSounds();
 	hideSpinner();
 	destroyWebCam();
+	destroyWatchTableFrame();
 	// stop the keylisteners for pyangelo
 	Sk.PyAngelo.stopPyangelo();
 	// Don't always destroy pyangelo frame - leave hanging for any one-off images
@@ -1022,6 +1100,7 @@ function stopSkulpt() {
 
 	stopBabylon();
 	// if stop button pressed then kill pyangelo frame
+	// otherwise leave it up after the program ends
 	if (_stopped) {
 		destroyPyangeloFrame();
 	}
