@@ -1,24 +1,27 @@
-print("Who dares approach the gates of doom! ")
-password = input("Speak the password: ")
+from goodies import Colour
 
-if password == "0p3nSe5@m3":
+print("Who dares approach the Gates of Doom?? ")
+print(Colour.purple + "      ______")
+print("   ,-' ;  ! `-.")
+print("  / :  !  :  . \ ")
+print(" |_ ;   __:  ;  |")
+print(" )| .  :)(.  !  |")
+print(" |~    (##)  :  |")
+print(" |  :  ;`'   .  (")
+print(" |  :  :  .  |  |")
+print(" |___.------.___|" + Colour.reset)
+print()
+secret = input("Speak the password: ")
+
+if secret == "0p3nSe5@m3":
   print("You are correct!")
-  print("You may enter, friend.")
-if password != "0p3nSe5@m3":
-  print("    ******    ")
-  print("   *      **   ")
-  print("   **       *  ")
-  print("    **       * ")
-  print("     **  **  * ")
-  print("      *      * ")
-  print("  *   *      * ")
-  print("  *****     *  ")
-  print("***        ****")
-  print("  *         *  ")
-  print("  *          * ")
-  print("   * ******* * ")
-  print("   * *      *  ")
-  print("    *          ")
-  print("The horrible (but cute) monster gobbles you up!")
+  sleep(1)
+  print(Colour.yellow + "You may enter and enjoy the riches within." + Colour.reset)
+  sleep(1.5)
 
-print("THE END!")
+print("The gates slams close.")
+sleep(1)
+print("Forever!")
+
+sleep(1)
+print(Colour.red + "THE END")

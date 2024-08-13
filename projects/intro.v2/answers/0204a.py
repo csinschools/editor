@@ -1,3 +1,13 @@
-print("Login Screen")
-input("Type in your password, then press [Enter]:")
-print("Welcome to my online store!")
+print("     .|||||||||.     ")
+print("    |||||||||||||    ")
+print("   /. `|||||||||||   ")
+print("  o__,_||||||||||'   ")
+
+input("Press [Enter] to fuzz!")
+
+clear()
+
+print("     .#########.     ")
+print("    #############    ")
+print("   /. `###########   ")
+print("  o__,_##########'   ")

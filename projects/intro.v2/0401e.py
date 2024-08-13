@@ -1,7 +1,4 @@
-# Fill in the blank below so the program tells you your year level
-# is the best!
+print("Welcome to NetFlicks!")
+input("What movie would you like to watch? ")
 
-level = input("Enter your year level: ")
-
-# Fill in the blank below to make this program work!
-print("Year " ________ " is the most amazing year level!")
+print("Now playing: ")

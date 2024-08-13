@@ -4,7 +4,7 @@
 
 from goddies import *
 
-    __
-  <(o )___
-   ( ._> /
-~~~~`---'~~~~
+print("    __")
+print("  <(o )___")
+print("   ( ._> /")
+print("~~~~`---'~~~~")

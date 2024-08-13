@@ -1,8 +1,5 @@
-# Fill in the blanks to make a program that asks the user
-# for a greeting, then greets them.
+print("Welcome to my Top Fashion shop!")
+clothes = input("Enter the name of the clothes item: ")
+cost = input("Enter the price of the clothes item: ")
 
-# Fill in the blank below to prompt the user to enter a greeting
-greeting = input("Enter a greeting: ")
-
-# Fill in the blank below so the program repeats the greeting entered
-print(greeting + " to you!")
+print(clothes + " is currently on sale for $" + cost)
