@@ -782,6 +782,15 @@ function recursivePopulateTraceTable(susp, traces) {
 	return traces;
 }
 
+function sanitiseTraceName(name) {
+	// checking if variable are reserved words in skulpt (reserved words have _$rw$ appended to it)
+	if (name.substr(-5) == "_$rw$") {
+		// if so, remove postfix from name in trace table
+		name = name.substr(0, name.length - 5);
+	}
+	return name;
+}
+
 var prevTraces = null;
 function populateTraceTable(susp) {
 	if (document.getElementById("watch-table") === null) {
@@ -789,8 +798,6 @@ function populateTraceTable(susp) {
 	}
 	console.log("=======")
 	var traces = recursivePopulateTraceTable(susp, []);
-	var watchTable = null;
-	//define some sample data
 
 	var tabledata = [];
 	for (n = 0; n < traces.length; n++) {
@@ -799,12 +806,6 @@ function populateTraceTable(susp) {
 		}
 		tabledata.push({id: n, name: traces[n][0], value: traces[n][1]});
 	}
-
-	/*
-	var tabledata = [
-		{id:1, name:"Oli Bob", age:"12", col:"red", dob:""},
-		{id:2, name:"Mary May", age:"1", col:"blue", dob:"14/05/1982"},
-	]; */
 
 	//create Tabulator on DOM element with id "example-table"
 	var table = new Tabulator("#watch-table", {
@@ -815,10 +816,10 @@ function populateTraceTable(susp) {
 			{title:"Name", field:"name", width:100, formatter:function(cell, formatterParams, onRendered){
 				let name = cell.getValue();
 				if (prevTraces == null || !(name in prevTraces)) {
-					return "<span style='color:red; font-weight: bold;'>" + cell.getValue() + "</span>"
+					return "<span style='color:red; font-weight: bold;'>" + sanitiseTraceName(cell.getValue()) + "</span>"
 				}
 				else {
-					return cell.getValue();
+					return sanitiseTraceName(cell.getValue());
 				}
 			}},
 			{title:"Value", field:"value", hozAlign:"right", width:100, formatter:function(cell, formatterParams, onRendered){
@@ -840,20 +841,7 @@ function populateTraceTable(susp) {
 			prevTraces[traces[n][0]] = traces[n][1];
 	}});
 
-/*
-    watchTable = new Tabulator("#watch-table", {
-    });    
-    var tableData = [
-        {id:1, name:"Billy Bob", age:"12", gender:"male", height:1, col:"red", dob:"", cheese:1},
-        {id:2, name:"Mary May", age:"1", gender:"female", height:2, col:"blue", dob:"14/05/1982", cheese:true},
-    ]    
-    watchTable.setData(tableData);   
-	*/
-
 	console.log(traces);
-
-
-
 }
 
 var prevLine = -1;
