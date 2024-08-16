@@ -180,6 +180,61 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
     e.appendChild(t);        
     return e;
 }
+/////////////////////// Tone js functions //////////////////////////
+var toneSynth = null;
+var toneNow = null;
+function sanitiseDuration(duration) {
+    if (duration == "n") {
+        duration = "1n";
+    }
+    return duration;
+}
+function tone_start() {
+    try {
+        if (toneSynth === null) {
+            toneSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+        }    
+        toneNow = Tone.now();
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+function tone_play(note, duration, time) {
+    duration = sanitiseDuration(duration);
+    try {
+        if (toneSynth === null) {
+            toneSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+        }
+        if (time < 0) {
+            toneSynth.triggerAttackRelease(note, duration, Tone.now());
+        } else {
+            toneSynth.triggerAttackRelease(note, duration, toneNow + time);
+        }
+    } catch (error) {
+        throw error;
+    }    
+}
+
+function tone_sleep(duration) {
+    duration = sanitiseDuration(duration);
+    try {
+        const time = Tone.Time(duration).toSeconds();
+        if (isNaN(time)) {
+            throw new Error("Invalid duration " + duration);
+        }
+        return time;
+    } catch (error) {
+        throw error;
+    }        
+}
+
+function tone_stop() {
+    toneSynth.dispose();
+    toneSynth = null;
+}
+
 
 /////////////////////// image functions //////////////////////////
 
