@@ -1,13 +1,5 @@
-print("     .|||||||||.     ")
-print("    |||||||||||||    ")
-print("   /. `|||||||||||   ")
-print("  o__,_||||||||||'   ")
-
-input("Press [Enter] to fuzz!")
-
-clear()
-
-print("     .#########.     ")
-print("    #############    ")
-print("   /. `###########   ")
-print("  o__,_##########'   ")
+print("Welcome to TokTik!")
+input("Enter your password: ")
+print("Your profile:")
+print("Following: 100")
+print("Followers: 1k")

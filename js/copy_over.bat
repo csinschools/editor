@@ -1,1 +1,1 @@
-copy D:\skulpt-pingskills\skulpt\dist\*.* .
+copy ..\..\skulpt\dist\*.* .

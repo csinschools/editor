@@ -1,5 +1,3 @@
-print("Welcome to TokTik!")
-input("Enter your password: ")
-print("Your profile:")
-print("Following: 100")
-print("Followers: 1k")
+print("Your shopping cart total is : $99.95")
+input("Press [Enter] to confirm your purchase")
+print("Your credit card has been successfully charged. Thank you for your purchase!")

@@ -1,18 +1,11 @@
 ____________
 
-print("Type '1' to get the current temperature")
-print("Type '2' to get the chance of rain")
-print("Type anything else to quit")
+________ = _________("What is the 2nd element in the periodic table?")
 
-option = input("Enter your choice:")
+if ______________ "Helium":
 
-if option  == "1":
-    print("It is currently 18 degrees.")
-    ___________________
+    print("That's not correct, try again!")
+
+    ____________
     
-if __________________
-
-    ____________________
-
-    ____________________
-
+print("Correct!")

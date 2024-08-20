@@ -1,15 +1,18 @@
-____________________
-print("Type '1' to say Hi in Italian")
-____________________
-____________________
-____________________
-if ____________________
-    print("Ciao!")
+____________
+
+print("Type '1' to get the current temperature")
+print("Type '2' to get the chance of rain")
+print("Type anything else to quit")
+
+option = input("Enter your choice:")
+
+if option  == "1":
+    print("It is currently 18 degrees.")
+    ___________________
+    
+if __________________
+
     ____________________
-if ____________________
+
     ____________________
-    ____________________
-if choice == "3":
-    quit()
-print(____________________)
-____________________
+

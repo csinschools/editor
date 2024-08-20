@@ -1,3 +1,6 @@
-_______("Your shopping cart total is : $99.95")
-_______("Press [Enter] to confirm your purchase")
-_______("Your credit card has been successfully charged. Thank you for your purchase!")
+print("First Fig by Edna St. Vincent Millay")
+print()
+sleep(2)
+print("   My candle burns at both ends;")
+print()
+# finish the code here
