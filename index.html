@@ -106,8 +106,8 @@ CS in Schools Python Editor
         }
     </script>
 </head>
-<body onload="enableEditor()">
-<div style="width:100%">
+<body onload="enableEditor()" onresize="resize()">
+<div style="width:100%; height:100%;" id = "wrapper">
     <div class = "titlebar">
         <div style="display:flex; align-items: center; justify-content: center; margin: 5px auto">
             <img class="logo-image" src = "images/robot.gif"/>
@@ -122,10 +122,13 @@ CS in Schools Python Editor
       <div class="sk-chase-dot"></div>
       <div class="sk-chase-dot"></div>
     </div>
-    <iframe id = "editor" class = "editorframe" width = "80%" height = 680 allow='clipboard-write' allowFullScreen style="display:none;"></iframe>
+    <iframe id = "editor" class = "editorframe" width = "80%" height = "90%" allow='clipboard-write' allowFullScreen style="display:none;"></iframe>
 </div>
 <script>
-	document.getElementById("editor").height = Math.max(screen.height - 270, 580) + "px";
+  function resize() {
+	  document.getElementById("editor").height = Math.max(document.getElementById("wrapper").clientHeight - 100, 580) + "px";
+  }
+  resize();
 </script>
 </body>
 </html>
