@@ -1151,6 +1151,7 @@ function stopSkulpt() {
 		document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 	}
 	stepRun = false;
+	setDisplayMode(display);
 }
 
 function stopEditor() {
