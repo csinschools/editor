@@ -1,7 +1,18 @@
-from _________ import _______________
+from _____________ import _______________________
 
-print("The Flag of the Netherlands:")
+print("STOP!")
+
+print("     ")
+
+
+print(Colour.reset + "The Flag of the Netherlands:")
 
 
 
-print("The Flag of Nigeria:")
+
+
+print(Colour.reset + "The Flag of Nigeria:")
+
+
+
+
