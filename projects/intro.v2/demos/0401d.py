@@ -6,5 +6,5 @@ adj = input("Enter an adjective: ")
 
 # now insert them into our story!
 print("In " + subject + " class yesterday, our teacher")
-print("was wearing a " + colour, obj + ". She looked " + adj + ".")
-print("Now I want a " + colour, obj + " to wear too!")
+print("was wearing a " + colour + " " + obj + ". She looked " + adj + ".")
+print("Now I want a " + colour + " " + obj + " to wear too!")

@@ -15,7 +15,7 @@ secret = input("Speak the password: ")
 
 if secret == "0p3nSe5@m3":
   print("You are correct!")
-  sleep(1)
+  sleep(0.5)
   print(Colour.yellow + "You may enter and enjoy the riches within." + Colour.reset)
   sleep(1.5)
 
