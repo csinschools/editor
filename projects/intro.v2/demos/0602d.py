@@ -170,6 +170,7 @@ if option == "3":
     print(Colour.green + "Thanks for playing with me!")
     goto .end
 print("Invalid option, try again.")  
+sleep(2)
 goto .menu
 
 label .end
