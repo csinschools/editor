@@ -295,7 +295,12 @@ function createAudioElement(url, loop, onload, onerror) {
     audioElement.id = (Math.random() + 1).toString(36).substring(7);
     audioElement.loop = loop;
     audioElement.oncanplaythrough = onAudioCanPlaythrough;
-    audioElement.addEventListener("canplaythrough", onload);
+    audioElement.oncanplay = onAudioCanPlaythrough;
+    // using the first timeupdate event to unblock the playSound function when the sound actually starts playing!
+    // onload, oncanplay, onplaying etc. is inconsistent in determining when the 
+    // actual sound starts to play because it depends on device running codec etc.
+    // TODO: only fire this once! at the moment the blocking flag is unset on every timeupdate event
+    audioElement.addEventListener("timeupdate", onload);
     audioElement.addEventListener("afterDialogClose", onerror);    
     audioElement.onerror = onAudioError; 
     document.getElementById("errDialog").setAttribute("source", audioElement.id);  

@@ -34,6 +34,7 @@ input("Her laugh is high-pitched and aggravating")
 
 #The intro, with some elaboration on the backstory
 clear()
+setConsoleFontSize(8)
 print(Colour.cyan+r'''
 
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -67,7 +68,7 @@ print(Colour.cyan+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
 ''')
-
+setConsoleFontSize(14)
 print(Colour.reset+"Suddenly, you are in a maze full of traps, threats, and chests")
 print("Escape to win the Blue Miracle Mushroom")
 print("If Brit gets out before you, the opening will close and you will be trapped forever.")
@@ -80,6 +81,7 @@ input("Press [ENTER] to start: ")
 #Scene1
 label gobackone
 clear()
+setConsoleFontSize(8)
 print(Colour.green+r'''
 ⢻⣿⣿⣿⣿⡛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠻⣿⣿⣿⣿⡟⣶
 ⢾⣿⣿⣿⡿⡧⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣼⢿⢿⣿⣿⡷⣿
@@ -105,6 +107,7 @@ print(Colour.green+r'''
 ⣾⣿⢿⠯⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣷⣷⣴⣴⣴⣦⣮⣦⣦⣤⣤⣴⣴⣴⣴⣴⣦⣾⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠯⠯⢿⡧⣿
 ⣸⣻⠶⡴⢤⣤⡤⣤⣤⣤⣤⠤⣤⣤⣴⣳⣦⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣬⣏⡦⠤⢤⣤⣤⣤⣤⣤⣤⣤⠤⣴⣶⣟⣇⣿
 '''+Colour.reset)
+setConsoleFontSize(14)
 print("You have the option to go straight or right. The right seems to have a")
 print("small chest, and straight ahead seems to be a mystery figure.")
 one = input("Where do you go? straight/right ")
@@ -113,6 +116,7 @@ label twoone
 clear()
 if one == 'straight':
     print("The mystery figure turned out to be the Grim Reaper.")
+    setConsoleFontSize(8)
     
     input(Colour.grey+r'''
 '''+Colour.white+'''   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'''+Colour.grey+'''
@@ -143,6 +147,7 @@ if one == 'straight':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡏⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠻⠿⠿⠇⣿⣿⣿⢹⣿⣿⡿⠟⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     '''+Colour.reset)
+    setConsoleFontSize(14)
     
     label oneone
     if sword == False:
@@ -150,7 +155,7 @@ if one == 'straight':
         if grimreaperfight == 'fight':
             input(Colour.reset+"Without a weapon, the Grim Reaper easily defeats you")
             goto slayeddeath
-        if grimreaperfight == 'run':
+        elif grimreaperfight == 'run':
             print("You should know better. This never works.")
             input("The Grim Reaper calmly glides over to you and defeats you")
             goto slayeddeath
@@ -158,18 +163,18 @@ if one == 'straight':
             input ("That is not a valid answer, please try again")
             goto oneone
         
-    if sword == True:
+    elif sword == True:
         grimreaperswordfight = input(Colour.reset+"Now that you have a sword, you can try fight with the sword, with your hands, or run. sword/hands/run ")
         if grimreaperswordfight == 'sword':
             print(Colour.reset+"After a long, hard fight, the Grim Reaper finally fades away, however")
             input("the sword breaks since it wasn't very durable.")
             sword = False;
             goto gobacktwo
-        if grimreaperswordfight == 'hands':
+        elif grimreaperswordfight == 'hands':
             print("Did you really think that would work? Really?")
             input("The Reaper defeats you without effort.")
             goto slayeddeath
-        if grimreaperswordfight == 'run':
+        elif grimreaperswordfight == 'run':
             print("You should know better. This never works.")
             input("The Grim Reaper calmly glides over to you and defeats you")
             goto slayeddeath
@@ -180,6 +185,7 @@ if one == 'straight':
         
 if one == 'right':
     label threeone
+    setConsoleFontSize(8)
     print(Colour.orange+r'''
     ⠀⠀⠀⣠⣾⣿⣿⣿⣿⣾⡿⠿⣿⣿⢿⣿⣷⣶⣶⣾⣶⣷⣷⣾⣶⣾⣾⣿⡿⣿⣿⣷⣶⣶⣶⣶⣶⣾⣿⣿⣷⣤⠀⠀⠀
 ⠀⠀⣼⣥⣿⣿⣣⢤⣬⣥⣽⣿⣿⣾⣿⣇⣌⣭⣹⣿⣿⣿⣿⣿⣿⣟⣛⣓⣍⣽⣷⣤⣷⡿⢿⡿⠿⢶⠞⣿⣧⣼⣧⡀⠀
@@ -199,6 +205,7 @@ if one == 'right':
 ⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⣻⣿⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣛⣻⣿⣿⣿⣿⠀⠀
 ⠀⠘⠟⠿⠿⠿⠿⠿⠿⠟⠛⠟⠻⠿⠛⠛⠛⠿⠻⠛⠿⠛⠛⠛⠛⠛⠛⠛⠟⠻⠿⠿⠻⠟⠟⠿⠛⠛⠛⠻⠿⠿⠿⠆⠀
     '''+Colour.reset)
+    setConsoleFontSize(14)
     if sword == False:
         chestone = input(Colour.reset+"A long chest lays on the floor temptingly. Do you open it? yes/no ")
         if chestone == 'yes':
@@ -217,7 +224,7 @@ if one == 'right':
                 sword = True;
                 goto aftersword
             
-            if takesword == 'no':
+            elif takesword == 'no':
                 input("You turn back since there is nothing else to do")
                 goto gobackone
             
@@ -235,7 +242,8 @@ if one == 'right':
             input ("That is not a valid answer, please try again")
             goto threeone
             
-    if sword == True:
+    elif sword == True:
+        setConsoleFontSize(8)
         print(Colour.grey+r'''
 ⠓⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠴⠉⠀⠀⠀⠀⠀⢀⡠⠖⠉
 ⠀⠀⠈⢻⢍⡉⠀⠀⠀⠀⠀⠰⡀⠀⠀⠀⠈⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⡩⠟⠉⠉⠉⠉⠉⠁⠀⠀⠀⠈⣁⠜⠋⠁⠀⠀⠀
@@ -263,6 +271,7 @@ if one == 'right':
 ⡠⠎⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢄⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙
 '''+Colour.reset)
+        setConsoleFontSize(14)
         input("There is nothing but an empty chest in a dead end now. You turn back.")
         goto gobackone
 
@@ -274,6 +283,7 @@ else:
 #Scene2
 label gobacktwo
 clear()
+setConsoleFontSize(8)
 print(r'''
            '''+Colour.red+'''   __
              '''+Colour.red+'''(  )
@@ -283,14 +293,17 @@ print(r'''
        /____________\
        \____________/'''+Colour.reset+'''~~~.
        ''')
+setConsoleFontSize(14)
 print("With the Grim Reaper gone, you focus on your task: getting out")
 print("You can only go right, so you go there, already stiffening slightly in anticipation")
 print("There seems to be a lever and a wall with double doors in an arch. After many attempts to")
 print("open the door without using the lever you slump in thought.")
+setConsoleFontSize(14)
 two = input("Do you pull the lever, or do you simply wait and hope Brit isn't too ahead? pull/wait ")
 if two == 'pull':
     label onetwo
     clear()
+    setConsoleFontSize(8)
     print(Colour.orange+r'''
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⠤⠶⠶⠶⠶⠶⠦⢤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠶⢛⣩⣥⣶⢶⣶⣿⣿⣿⣿⣶⢶⣦⣬⣙⠓⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -323,13 +336,14 @@ if two == 'pull':
 ⢸⡟⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⣿⣽
 ⠀⠷⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⡾⠸
     '''+Colour.reset)
+    setConsoleFontSize(14)
     print("")
     print("The lever was safe. The doors safely open.")
     leverdoor = input("Do you just go through, or do you throw a broken bit of the lever through it? go/throw ")
     if leverdoor == 'go':
         input("You happily walk through")
         goto gobackthree
-    if leverdoor == 'throw':
+    elif leverdoor == 'throw':
         print("There was really no need, but after a bit of struggling, you throw it through")
         print("Nothing happens")
         input("You go through, feeling slightly foolish")
@@ -340,6 +354,7 @@ if two == 'pull':
 if two == 'wait':
     label clock
     clear()
+    setConsoleFontSize(8)
     print(r'''
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠖⠒⠛⠩⢉⠉⠉⠈⠉⠍⠍⠙⣓⠲⠤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -363,11 +378,12 @@ if two == 'wait':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⢷⣦⣤⣠⠈⡉⠙⠛⠚⠒⠛⠛⠛⠋⠉⣁⣠⣤⣶⣾⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠛⠿⠷⠿⣶⣿⣶⣿⠾⠿⠿⠿⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     ''')
+    setConsoleFontSize(14)
     leverwait = input("How long do you intend to wait? 1min/5min ")
     if leverwait == '5min':
         input("Wrong answer. A timer was set, and after waiting for a while, a gas is released. You pass out")
         goto gassed
-    if leverwait == '1min':
+    elif leverwait == '1min':
         print("You wait for a bit, then a small hum starts coming out of the floor")
         print("")
         goto clocktwo
@@ -379,7 +395,7 @@ if two == 'wait':
         if leverwaittwo == 'wait':
             input("Wrong answer. A timer was set, and after waiting for a while, a gas is released. You pass out")
             goto gassed
-        if leverwaittwo == 'pull':
+        elif leverwaittwo == 'pull':
             print("The doors open safely. Why'd you waste so much time?")
             print("")
         else:
@@ -390,7 +406,7 @@ if two == 'wait':
             if leverdoortwo == 'go':
                 input("You happily walk through")
                 goto gobackthree
-            if leverdoortwo == 'throw':
+            elif leverdoortwo == 'throw':
                 print("")
                 print("There was really no need, but after a bit of struggling, you throw it through")
                 print("Nothing happens")
@@ -407,6 +423,7 @@ else:
 #Scene3
 label gobackthree
 clear()
+setConsoleFontSize(8)
 print(Colour.grey+r'''
 
  IIIIIIII
@@ -418,6 +435,7 @@ print(Colour.grey+r'''
  IIIIIIII       IIIIIIIIIIIIIIIIII
 
 '''+Colour.reset)
+setConsoleFontSize(14)
 
 print("After you walk through the doors, you turn left, walking a while")
 print("until you see two silhouettes in the distance. one is")
@@ -426,6 +444,7 @@ three = input("Do you go to the long one or the wide one? long/wide ")
 if three == 'wide':
     label lionchoice
     clear()
+    setConsoleFontSize(8)
     print(Colour.orange+r'''
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠄⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠛⠉⠁⠀⣀⣴⠄⠀⠀⡀⠀⢀⠊⠀⠛⢀⠠⠀⠉⠛⠟⠻⣁⠈⣷⡀⠉⠉⢃⠘⠿⣟⡠⣍⠛⡿⡟⢰⣴⣶⡆⣶⣴⠃⣴⠂⠀⡠⠀⠀⠀⠀⠀⠀⠀⠀⣟⣷⠀⠹⡄⠀⠀⠀⠒⡄⠂⠌⢣⢉⡝⡹⣛⠿⡿⣿⣿⣷⣦⣀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠀⠠⠀⠀⠀⠀⡈⠚⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⡀⢤⡾⠋⡡⠀⣰⡿⢁⣴⣿⣷⣄⡀⠀⠁⠀⠀⠀⣴⠆⠘⢧⠀⠠⠀⠀⠀⠀⠁⠘⣅⠻⡆⢳⡹⢸⣿⠇⣰⣿⠛⢢⠟⣠⣾⣷⢊⠄⠀⠀⠀⠀⣴⣷⣯⣿⡧⠀⠁⠀⠀⠀⠁⠜⡠⠀⢂⠡⡈⠅⡄⢣⡔⢬⣳⣛⡟⣧⣦⣀
@@ -468,10 +487,12 @@ if three == 'wide':
 ⠀⠀⠀⠀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠐⣿⣶⣶⠉⢱⣆⣲⣤⣤⣀⡀⠀⢠⣘⣻⢿⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⣰⡌⢿⡀⢀⢻⣿⡾⣿⣿⣿⣧⠡⠴⠦⠚⢀⣠⣤⠴⠅⠃⣀⣤⣶⣿⣿⣿
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠊⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⠿⣿⣿⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⢻⣤⣼⣿⣷⣬⡿⠿⢿⣣⡄⣶⣷⠦⣤⣤⣤⣴⣾⣿⣿⣿⣿⣿⣿
   '''+Colour.reset)
+    setConsoleFontSize(14)
     print("The 'silhouette' turned out to be a lion. You just awoke it")
     lion = input("Do you run or pet it? run/pet ")
     if lion == 'run':
         clear()
+        setConsoleFontSize(8)
         print(Colour.orange+r'''
   ⠀⠀⠀⠀⠀⠀⢠⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⠞⠛⠛⠒⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⡤⠶⠚⠁⠀⠀⠀⠀⠀⠀⠉⠙⠉⠓⠲⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -523,15 +544,17 @@ if three == 'wide':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢮⡇⠀⠀⠈⠓⠃⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
 '''+Colour.reset)
+        setConsoleFontSize(14)
         input("The lion is too fast. It catches up to you in no time.")
         goto animaldeath
-    if lion == 'pet':
+    elif lion == 'pet':
         label liontake
         clear()
         print("You successfully befriended the lion before it ate you.")
         print("well done.")
         print("Sadly, you cannot ride the lion since it is in too poor of a condition, however")
         print("It gives you a key that it was guarding and small gun with one bullet.")
+        setConsoleFontSize(8)
         input(r'''
  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -553,6 +576,7 @@ if three == 'wide':
 ⠀⠀⣿⣿⣻⣯⡿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠈⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
   ''' + Colour.reset)
+        setConsoleFontSize(14)
         gunandkey = input(Colour.reset+"Do you take these? yes/no/only the gun and bullet/only the key ")
         if gunandkey == 'yes':
             input(Colour.reset+"Congrats! You now have one shot, and a key")
@@ -560,16 +584,16 @@ if three == 'wide':
             key = True;
             bullet = True;
             goto gobackfour
-        if gunandkey == 'no':
+        elif gunandkey == 'no':
             print(Colour.reset+"Really? Better to be cautious I guess...")
             input("")
             input("Or not. The lion gets angry and eats you")
             goto animaldeath
-        if gunandkey == 'only the gun and bullet':
+        elif gunandkey == 'only the gun and bullet':
             print(Colour.reset+"The lion gets mad and eats you")
             input("Next time, just take everything")
             goto animaldeath
-        if gunandkey == 'only the key':
+        elif gunandkey == 'only the key':
             print(Colour.reset+"The lion gets mad and eats you")
             input("Next time, just take everything")
             goto animaldeath
@@ -581,9 +605,10 @@ if three == 'wide':
         input(Colour.reset+"That is not a valid answer, please try again")
         goto lionchoice
         
-if three == 'long':
+elif three == 'long':
     label portalchoice
     clear()
+    setConsoleFontSize(8)
     print(Colour.orange+r'''
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣷⡄⣠⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -630,6 +655,7 @@ if three == 'long':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⢿⣿⢃⣿⣿⡿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 '''+Colour.reset)
+    setConsoleFontSize(14)
     print("The silhouette was that of a glowing portal")
     print("This could go anywhere")
     portal = input("Do you go through? yes/no ")
@@ -637,10 +663,11 @@ if three == 'long':
         print ("The portal lead to the start of the maze")
         print("Brit is starting to get ahead, be quick!")
         goto gobackone
-    if portal == 'no':
+    elif portal == 'no':
         clear()
         label onethree
         print("You step tentatively around the portal, avoiding it...")
+        setConsoleFontSize(8)
         print(Colour.green+r'''
                     ⣀⣤⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠉⠀⠀⠈⠙⠆⢀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -661,6 +688,7 @@ if three == 'long':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠳⢦⣤⣀⠤⠙⣦⡀⠀⠀⠀⠀⣠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠒⠚⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         '''+Colour.reset)
+        setConsoleFontSize(14)
         print("")
         print("Gas starts to seep out. In a panicked frenzy, you rush away from it")
         print("with the intent of turning back, only to find that the portal is also")
@@ -672,11 +700,11 @@ if three == 'long':
             print("The gas was flammable. Very flammable. Also, you missed")
             input("The gas explodes in an instant")
             goto fireorbombdeath
-        if portalgass == 'not shoot':
+        elif portalgass == 'not shoot':
             print("Everything goes fully dark and you pass out.")
             input("At least you're not dead (yet)")
             goto gassed
-        if portalgass == 'move then shoot':
+        elif portalgass == 'move then shoot':
             label portalkeything
             print("That gas was flammable, but you were only slightly burnt. You")
             input("stopped it in time, well done")
@@ -687,7 +715,7 @@ if three == 'long':
                 key = True;
                 goto gobackfour
                 
-            if portalkey == 'no':
+            elif portalkey == 'no':
                 input("Ok... It wasn't trapped but it's too late now")
                 goto gobackfour
             
@@ -712,6 +740,7 @@ else:
 #Scene4
 label gobackfour
 clear()
+setConsoleFontSize(8)
 print(Colour.orange+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⡉⣯⣷⣶⣶⣒⠾⢿⣉⣉⣩⠯⠿⣍⣛⠋⠹⠶⠶⢶⣦⣤⢤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -726,6 +755,7 @@ print(Colour.orange+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠿⣭⣹⣿⣿⣿⣶⣼⠾⡀⠀⠀⠀⠀⠙⠛⠷⠽⠯⠭⠥⠤⠤⠤⠜⠃⠀⠀⠀⠀⣀⣠⠤⠴⠒⠋⠉⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠁⠐⠒⠒⠒⠲⠦⠶⠦⠤⢀⣀⣀⠀⠠⠤⠤⠤⠴⠖⠒⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 '''+Colour.reset)
+setConsoleFontSize(14)
 print(Colour.reset+"You walk forward for a bit, before  coming to a fork.")
 print("You can go right, or you can go straight. If you go straight, then you'd have to turn right")
 print("and if you turn right, there seems to be a pit or something and a hissing noise")
@@ -740,9 +770,10 @@ if four == 'straight':
     >>>>>>>                                          /.-'
     ''')
     goto shot
-if four == 'right':
+elif four == 'right':
     label scorpionchoice
     clear()
+    setConsoleFontSize(8)
     print(Colour.red+r'''
     
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣴⣶⣶⣶⣶⣶⣶⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -777,6 +808,7 @@ if four == 'right':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠁⠀⠀⠀⠀⠙⠛⠿⠿⠿⠿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
     '''+Colour.reset)
+    setConsoleFontSize(14)
     print("A pit of scorpions stand in your way.")
     print("Above the pit, there is a small button. You could shoot that with your only bullet")
     print("There is also a bucket, but you can't see what it is. If you shoot the rope holding it")
@@ -790,15 +822,16 @@ if four == 'right':
         input("They sting you with fatal venom.")
         bullet = False;
         goto death
-    if scorpion == 'bucket':
+    elif scorpion == 'bucket':
         print("Inside the bucket was sand. It falls to the ground and allows the scorpions to climb out")
         print("with ease.")
         input("They sting you with fatal venom.")
         bullet = False;
         goto death
-    if scorpion == 'run':
+    elif scorpion == 'run':
         label scorpionrun
         clear()
+        setConsoleFontSize(8)
         print(Colour.orange+'''
 ⠀⢀⣀⣠⠤⠔⢶⠉⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⣼⣏⢱⠈⠣⡀⠀⠱⡀⠈⠣⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -816,6 +849,7 @@ if four == 'right':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠢⣾⠳⣤⡤⡗⢽⡷⠒⠉⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⡾⠒⠋⠁⠀⠀⠀⠀
         '''+Colour.reset)
+        setConsoleFontSize(14)
         print("You barely make it in time. Once you make it across, you see the scorpions are using")
         print("the wood to climb out.")
         subscorpion = input("Do you shoot the plank down, or just run? shoot/run ")
@@ -825,7 +859,7 @@ if four == 'right':
             input("You did lose your bullet though")
             bullet = False;
             goto gobackfive
-        if subscorpion == 'run':
+        elif subscorpion == 'run':
             print("")
             print("Why? Just why?")
             input("The scorpions catch up to you and sting you fast. Their venom is fatal.")
@@ -843,6 +877,7 @@ else:
 #Scene5
 label gobackfive
 clear()
+setConsoleFontSize(8)
 print(r'''
  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -858,6 +893,7 @@ print(r'''
 '''+Colour.red+'''⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠿⡿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀'''+Colour.blue+'''⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     '''+Colour.reset)
+setConsoleFontSize(14)
 print("Walking a bit more, you come across two chests. One is bright red, and the other is")
 print("a deep blue.")
 if key == True:
@@ -870,6 +906,7 @@ if key == True:
         label memorisethemap
         if whichchest == 'red':
             clear()
+            setConsoleFontSize(8)
             print(r'''
         ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡴⠶⠶⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⣼⠛⠉⠛⢿⡿⠿⠶⠶⢤⣤⣠⣠⡤⠤⠶⠚⠉⠀⠀⠀⠀⠀⠉⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'''+Colour.grey+'''⠀⠀⠀⢀⣀⣀⣤⣶⣄⣀⡀⠀⠀⠀⠀⠀⠀'''+Colour.reset+'''
@@ -900,6 +937,7 @@ if key == True:
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             ''')
+            setConsoleFontSize(14)
             print("Inside the chest, you find a scroll and a pen.")
             print("It is a map of the maze. You use the pen to map out the route.")
             print("It is also in bad condition and crumbling, like everything else in the maze.")
@@ -908,14 +946,14 @@ if key == True:
                 input("you quickly memorise the route. From now on, you will take the right route")
                 route = True;
                 goto gobacksix
-            if mapmemorisation == 'chances':
+            elif mapmemorisation == 'chances':
                 label mapmemo
                 mapmem = input("Are you sure? It's about to crumble. memorise/take chances ")
                 if mapmem == 'memorise':
                     input("You memorise it quickly before it crumbles")
                     route = True;
                     goto gobacksix
-                if mapmem == 'take chances':
+                elif mapmem == 'take chances':
                     input("It crumbles in your hands. You have no key and no map. Great job.")
                     goto gobacksix
                 else:
@@ -929,6 +967,7 @@ if key == True:
         if whichchest == 'blue':
             label dontpullsword
             clear()
+            setConsoleFontSize(8)
             print(Colour.grey+r'''
                         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                          ⠀⠀  ⠀⠀⣠⡔⠓⠺⢦⡤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⡏⠁⠀⠀⠀⠀⢶⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -968,6 +1007,7 @@ if key == True:
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠈⠳⠗⢇⡀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠛⠻⠟⣦⡦⢠⣄⣀⣀⣀⣀⣤⢤⠜⠗⠞⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             '''+Colour.reset)
+            setConsoleFontSize(14)
             print("There is a small sword stuck in a skull.")
             skullsword = input("Do you pull it out? yes/no ")
             if skullsword == 'yes':
@@ -990,7 +1030,7 @@ if key == True:
                         input("The skull splits in half and the sword falls to the floor. You obtain a fancy sword")
                         sword = True;
                         goto gobacksix
-                    if skullswordthree == 'no':
+                    elif skullswordthree == 'no':
                         input("You leave without the sword")
                         goto gobacksix
                     else:
@@ -1029,6 +1069,7 @@ if key == False:
 #Scene6
 label gobacksix
 clear()
+setConsoleFontSize(8)
 print(Colour.grey+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣶⣶⣶⣶⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠶⠶⣾⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠲⠦⢤⣤⣶⣤⣤⣤⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠐⠶⠶⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣠⣴⣿⣃⣠⣤⣭⠟⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1069,6 +1110,7 @@ print(Colour.grey+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣷⣶⣾⣿⣿⣶⢶⡶⣶⣾⣷⣶⣶⢿⣿⡀⣴⣶⣶⣶⣶⢶⠀⡦⠘⣿⢛⣿⣟⣻⣿⡿⣯⣽⣧⣾⣿⣿⣟⡿⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣋⡙⠘⠉⠉⠙⠉⠉⠋⠁⠉⠉⠉⠉⠙⠋⠉⠛⠈⠋⠙⠙⠘⠈⠀⠀⠈⠉⠙⠉⠙⠋⠈⠉⠛⠉⠉⠉⠁⠘⠙⣛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 '''+Colour.reset)
+setConsoleFontSize(14)
 
 print("You walk forward for a bit, and come across yet another turn. You could turn left then walk a bit")
 print("and go right, or you can turn left and then turn right straight away")
@@ -1078,6 +1120,7 @@ six = input("You can't see what either path leads to. Do you walk more or less? 
 if six == 'less':
     label hibrit
     clear()
+    setConsoleFontSize(8)
     print(r'''
     ⠀⠀⠀⠀⠀⠀⠀⠐⠒ ⠒⠻⡒⠒⠒⠒⠒⢲⣴⡒⣒⣶⡞⠛⠛⠛⢶⠒⢒⡖⠒⣆⡀⠀⡖⢲⢂⣀⢀⣠⠤⠤⡤⠀⠀⠀⠐⠲⣖⡒⠒⠒⠒⠒⠀⠀⠐⠒⠒⠐⠢
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⢁⣀⣀⡀⣳⡀⠀⣠⣄⠀⡗⠉⠉⢿⢧⠀⠀⠀⠈⢷⡞⠀⣰⣧⡭⣿⡷⢻⡉⠈⢻⠀⠀⣰⢃⣠⠴⠒⢦⡀⠀⠙⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1113,6 +1156,7 @@ if six == 'less':
 ⠀⠀⡀⢀⡀⢸⡿⠀⠀⢰⣿⣿⠋⠀⠀⣠⠟⠀⠀⢠⣏⠴⣞⡀⠀⠀⠀⠀⠀⠀⠉⣳⣆⣶⡋⠁⠀⠀⠀⠀⠀⠀⣹⡦⣤⣧⠀⠀⠈⢧⡀⠀⠈⢻⣿⣧⠀⠀⠸⣿⠀⣀⠀⡀⠀
 ⠀⠀⠹⣼⡿⢾⣃⣀⣀⣘⣉⣁⣀⣀⣴⣃⣀⣀⣴⣿⣿⠔⣋⣸⡀⠀⠀⠀⢀⣠⣴⣡⣤⣄⣵⣤⣀⠀⠀⠀⣀⣸⢀⡑⢾⣿⣷⣄⣀⣀⣳⣄⣀⣀⣈⣙⣀⣀⣀⣻⢾⣿⡜⠁⠀
     ''')
+    setConsoleFontSize(14)
     print("It's Brit")
     britone = input("Do you fight or do you work together and hope she doesn't betray you? fight/work together ")
     if britone == 'fight':
@@ -1123,7 +1167,7 @@ if six == 'less':
             input("She makes quick work of you and takes your sword")
             sword = False;
             goto slayeddeath
-        if sword == False:
+        elif sword == False:
             print("You have nothing to fight with except your fists, while she has a sharp sword")
             input("It wasn't even a fair fight")
             goto slayeddeath
@@ -1141,7 +1185,7 @@ if six == 'less':
             sleep(1)
             input("Brit kills you.")
             goto Britdeath
-        if brittwo == 'colleagues':
+        elif brittwo == 'colleagues':
             print("'Ok. Fine. But don't expect anything from me. I will")
             print("take any chance I can to be rid of you'")
             input("You sigh in relief")
@@ -1159,6 +1203,7 @@ if six == 'less':
 if six == 'more':
     label arrogantsword
     clear()
+    setConsoleFontSize(8)
     print(r'''
 '''+Colour.yellow+'''    ⠀⠀⠀⠀⢀⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 '''+Colour.yellow+'''⠀⣀⠀⠀⠀⠀⢀⣾⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1196,6 +1241,7 @@ if six == 'more':
 ⠀⠀⠀⠀⠀⠘⢷⣂⣀⣀⣀⣍⣳⣶⣾⣿⠿⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠙⠛⠻⠿⠿⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     '''+ Colour.reset)
+    setConsoleFontSize(14)
     print("An arrogant skeleton stands in your way, holding up a small dart")
     print("A metal dart whooshes past you, missing by half a millimetre.")
     print("'COME IF YOU DARE FOR I AM THE MIGHTY-'")
@@ -1209,7 +1255,7 @@ if six == 'more':
             print("You manage one punch before a sharp pain erupts from your back and everything")
             input("goes dark")
             goto slayeddeath
-        if skeletonfight == 'sword':
+        elif skeletonfight == 'sword':
             input("He's pretty weak, so it only takes one slash before he's gone")
             goto gobackseven
         else:
@@ -1223,7 +1269,7 @@ if six == 'more':
         if skeletonchoice == 'run':
             input("Good choice. He attempts to chase you, but cannot go much further than the area he is confined to")
             goto gobackseven
-        if skeletonchoice == 'flatter':
+        elif skeletonchoice == 'flatter':
             print("")
             print("It works at first until...")
             print("'FINALLY. A SMART MORTAL. NOW, SACRIFICE YOUR LIFE TO ME'")
@@ -1241,11 +1287,11 @@ if six == 'more':
             print("You are too tired to do a good punch.")
             input("He defeats you with ease")
             goto slayeddeath
-        if skeletondeath == 'run':
+        elif skeletondeath == 'run':
             print("You are tired and you run slowly.")
             input("He walks over to you and defeats you")
             goto slayeddeath
-        if skeletondeath == 'anger':
+        elif skeletondeath == 'anger':
             print("He just cuts you. You just die")
             input("He got too angry")
             goto slayeddeath
@@ -1259,6 +1305,7 @@ else:
 #Scene 6.5 so not really a full scene unless you count it
 label gobacksixfive
 clear()
+setConsoleFontSize(8)
 print(Colour.red+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1279,6 +1326,7 @@ print(Colour.red+r'''
 ⠀⠀⠀⠀⠀⠀⠉⠛⠿⣦⣼⣿⣶⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⢷⣾⣿⡄
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠁
 ''')
+setConsoleFontSize(14)
 if route == True:
     print("According to the map, you shouldn't turn")
 deadendturn = input("You come across a path where you could keep going straight or turn right to a chest. Where do you go? straight/right ")
@@ -1295,7 +1343,7 @@ if deadendturn == 'right':
             print("'Nothing. It's empty.")
             print("You walk a bit more, before she suddenly whispers for you to stop, fear creasing her eyes")
             goto someonedies
-        if rightchest == 'no':
+        elif rightchest == 'no':
             print("'That's alright. I'm not stupid'")
             print("'SHHHHH' Brit whispers, motioning for you to stop")
             goto someonedies
@@ -1320,7 +1368,7 @@ if deadendturn == 'right':
             print("next to the chest, you crouch down and feel overwhelming waves")
             print("of dread, as if all the alarms in your head are blaring.")
             goto cheststillbad
-        if rightchest == 'no':
+        elif rightchest == 'no':
             input("You almost sprint back, going straight instead")
             goto gobackseven
         else:
@@ -1331,6 +1379,7 @@ if deadendturn == 'right':
             rightchesttwo = input("Do you open the chest despite the knot in your stomach? yes/no ")
             if rightchesttwo == 'yes':
                 clear()
+                setConsoleFontSize(8)
                 print(r'''
                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⢸⣿⣷⣿⣷⣶⡶⣦⣶⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣴⣶⣶⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1424,6 +1473,7 @@ if deadendturn == 'right':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠊⠉⠁⠀⠀⠀⠀⠀⠖⠋⠉⠁⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⢀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⠛⠛⠉⠉⠉⠀⠀⠀⠀⠀⠉⠙⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⢾⣿⣶⣾⣭⡿⠃⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                 ''')
+                setConsoleFontSize(14)
                 print("The ghosts of lost, dead pirates shoot out, along with a handful of gold coins")
                 print("Before you can react, they all come at you, daggers and swords first")
                 input("The last thing you hear before pain explodes everywhere is 'PROTECT THE TREASURE'")
@@ -1446,7 +1496,7 @@ if deadendturn == 'straight':
         print("Thank god you didn't turn")
         input("Wondering what awaits you, you continue down the road")
         goto gobackseven
-    if Brit == True:
+    elif Brit == True:
         print("'You feel it too right?' These are the first words Brit has said to you")
         print("since you joined together, and these are said just as you pass the turn")
         print("that you decided not to go to.")
@@ -1467,11 +1517,12 @@ if deadendturn == 'straight':
             print("creeping over her face.")
             input(Style.bold+"'You shouldn't have trusted me for so long'"+ Colour.reset)
             goto Britdeath
-        if britdeath == 'no':
+        elif britdeath == 'no':
             input("Brit suddenly collapses")
             print("An arrow from nowhere narrowly misses you and pierces Brit's heart")
             input("As she bleeds out, you hear a small sob escape her and all too soon, her body goes limp")
             clear()
+            setConsoleFontSize(8)
             print(Colour.grey+r'''
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠖⠶⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡶⠤⣤⣀⡀⢠⠏⠀⡄⠀⢹⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1507,6 +1558,7 @@ if deadendturn == 'straight':
 ⠀⠀⠉⠀⠀⠀⠀⠙⠷⠌⠀⠀⠀⠤⠖⠛⠛⠷⢄⣠⠖⠛⠛⠛⠻⣶⡟⠉⠉⠙⠛⠷⠦⠀⠀⠀⣙⡿⠵⠿⢾⣦⣂⡈⢫⡷⠽⠾⢷⣽⣤⣟⣁⡀⠀⠉⠛⠓⣂⣀⣀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⠃⠀⠀⠀⠀⠀⠙⠻⠋⠀⠀⠀⠀⠀⠿⠋⠉⠻⠷⠤⢞⢉⡉⠉⠉
             '''+Colour.reset)
+            setConsoleFontSize(14)
             print("You didn't particularly like her, but are sad to see a human life taken so easily regardless")
             input("After a few respectful gestures, you leave her and continue your journey")
             Brit = False;
@@ -1522,6 +1574,7 @@ else:
 #Scene 7 - notetoself: if they don't escape, kill them, not enough time, door is portal so it looks weird
 label gobackseven
 clear()
+setConsoleFontSize(8)
 print(Colour.orange+r'''
 ⢰⣖⠚⠿⠿⠿⠿⢶⣶⣶⣶⢶⣶⣶⡶⠶⣿⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⠶⢶⠶⢶⣶⣶⠶⣶⣾⣿⠷⠿⠿⠿⠿⠗⠒⠒⠒⠖⠺⢷⡇
 ⠸⢧⣤⣼⣷⣶⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣴⣿⣧⣤⣤⣤⣤⣤⣤⣤⡼⡇
@@ -1551,6 +1604,7 @@ print(Colour.orange+r'''
 ⣿⠀⠀⠀⠀⠀⢸⣿⢋⣩⣭⣭⠭⠭⠿⠭⠭⠯⠭⠭⢭⣭⣍⣹⣿⣿⣿⡿⢉⣉⣉⣭⣭⣭⣭⣭⣭⣭⣭⣉⣉⣉⡉⣿⡟⠀⠀⠀⠀⠸⣿
 ⠿⠶⠶⠶⠶⠶⠾⠿⠾⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠷⠾⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠷⠿⠷⠶⠶⠶⠶⠾⠿
 '''+Colour.reset)
+setConsoleFontSize(14)
 print("After some walking, you encounter another choice. You can go right, through a giant")
 print("set of double doors, or left, which seems to lead ton a whole array of new paths")
 print("The door to your right has a ring of light at the bottom, and the paths look unnaturally glossy")
@@ -1559,6 +1613,7 @@ if route == True:
 finaldecision = input("Do you go through the door to your right or turn left to the wide expanse of hallways? right/left ")
 if finaldecision == 'right':
     clear()
+    setConsoleFontSize(8)
     print(Colour.yellow+r'''
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⣀⣀⣀⣠⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣴⣶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢰⣿⡟⠛⠛⠛⠛⣻⠛⠛⠛⠉⠉⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⢹⣿⣀⣀⣀⣀⠀⠀⠀⠀⠀
@@ -1582,6 +1637,7 @@ if finaldecision == 'right':
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠿⠿⠿⠟⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀  
     '''+Colour.reset)
+    setConsoleFontSize(14)
     print("You won! Congratulations!")
     print("The door led to a small room with a pedestal")
     print("")
@@ -1599,7 +1655,7 @@ if finaldecision == 'right':
             if mushroombite == 'yes':
                 input("It was a fake. It was poison. You die")
                 goto poisondeath
-            if mushroombite == 'no':
+            elif mushroombite == 'no':
                 print("You pocket the mushroom for later")
                 input("Probably a good thing, you can savour it later")
                 goto doctorwalk
@@ -1632,7 +1688,7 @@ if finaldecision == 'right':
         if realmush == 'yes':
             input("You take a giant bite, feeling the power flow into you almost instantly")
             goto victory
-        if realmush == 'no':
+        elif realmush == 'no':
             input("You pocket it for later")
             goto victory
         else:
@@ -1649,6 +1705,7 @@ if finaldecision == 'right':
 if finaldecision == 'left':
     label fifteen
     clear()
+    setConsoleFontSize(8)
     print(Colour.red+r'''
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠤⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠉⣀⡤⠶⠤⠤⠤⠂
@@ -1672,12 +1729,13 @@ if finaldecision == 'left':
 ⠀⠀⠙⢶⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⡸⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠈⠛⠳⠶⠶⠴⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     '''+Colour.reset)
+    setConsoleFontSize(14)
     print("You turn left, but a door starts closing behind you.")
     lastdoor = input("Do you try to rush back, or do you keep going? The smell of oil is filling the room... back/keep going")
     if lastdoor == 'back':
         input("You run wayyy back, sliding under the door with ease, thanks to the layer of oil coating the floor")
         goto gobackseven
-    if lastdoor == 'keep going':
+    elif lastdoor == 'keep going':
         print("It's risky, but you keep going.")
         print("All of a sudden, when the doors are closed, oil sprays out from the roof, soaking everything")
         print("A spark from the roof hits the oil, and you realise a second too late.")
@@ -1735,6 +1793,7 @@ input("You should've waited")
 goto death
 
 label death
+setConsoleFontSize(8)
 print(Colour.red+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣤⣤⣴⣴⣤⣤⣤⣤⣤⣄⣀⣀⡀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣾⣿⣿⣿⣿⡿⠿⠿⠿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣶⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1758,10 +1817,12 @@ print(Colour.red+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠛⠋⠁⠙⠻⠿⠟⠋⠈⠛⠿⠿⠛⠋⠙⠛⠿⠟⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
              
     '''+Colour.reset)
+setConsoleFontSize(14)
 input("You failed")
 goto end
 
 label slow
+setConsoleFontSize(8)
 print(Colour.orange+r'''
 
 
@@ -1798,6 +1859,7 @@ print(Colour.orange+r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
  '''+Colour.reset)
+setConsoleFontSize(14)
 input("TOO SLOW")
 goto end
 
@@ -1824,6 +1886,7 @@ goto start
 
 label victory
 clear()
+setConsoleFontSize(8)
 print(r'''
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣾⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⠟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1851,6 +1914,7 @@ print(r'''
 ⢱⡀⠀⠀⠀⠀⠙⠻⣿⣿⣿⠿⠗⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠑⠤⣀⣀⣠⠤⠒⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ''')
+setConsoleFontSize(14)
 print("YOU WON")
 input("Smiling, you walk back home, ready for a nice long sleep")
 print("")
