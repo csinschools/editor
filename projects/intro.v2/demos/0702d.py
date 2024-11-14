@@ -3,7 +3,8 @@ from csinsc import *
 # https://www.pinterest.com.au/pin/425379127305166322/
 
 label .play_game
-print(r'''
+clear()
+print(Colour.yellow + r'''
    _.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._
  ,'_.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._`.
 ( (                                                         ) )
@@ -12,7 +13,7 @@ print(r'''
  ) )                                                       ( (
 ( (_.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._) )
  `._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._,'
-''')
+''' + Colour.reset)
 print("This short quiz will help you identify your spirit animal.")
 print()
 
@@ -126,20 +127,20 @@ goto .procrastinate
 
 label .rabbit
 print("Your spirit animal is....")
-print(r'''
+print(Colour.yellow + r'''
                ((`\
             ___ \\ '--._
          .'`   `'    o  )
         /    \   '. __.'
        _|    /_  \ \_\_
 jgs   {_\______\-'\__\_\
-''')
+''' + Colour.reset)
 print("A rabbit!")
 goto .game_over
 
 label .turtle
 print("Your spirit animal is....")
-print(r'''
+print(Colour.green + r'''
                      .-.-.-._
                    .~\ /~\_/ \.
                  .~\_/~\_/ \_/~\.
@@ -152,13 +153,13 @@ print(r'''
               /~/"""| |"""""| |'"\~\
    jgs      _/ /   _| |    _| |   \ \
            (___|  (___|   (___|  (___|
-''')
+''' + Colour.reset)
 print("A turtle!")
 goto .game_over
 
 label .wolf
 print("Your spirit animal is....")
-print(r'''
+print(Colour.orange + r'''
                         ,     ,
                         |\---/|
                        /  , , |
@@ -174,13 +175,13 @@ print(r'''
      | /|.'       '.l \\_
 snd  || ||             '-'
      '-''-'
-''')
+''' + Colour.reset)
 print("A wolf!")
 goto .game_over
 
 label .eagle
 print("Your spirit animal is....")
-print(r'''
+print(Colour.yellow + r'''
        .---.        .-----------
       /     \  __  /    ------
      / /     \(  )/    -----
@@ -192,13 +193,13 @@ print(r'''
             '//||\\`
               ''``
           Daron Brewood
-''')
+''' + Colour.reset)
 print("An eagle!")
 goto .game_over
 
 label .flamingo
 print("Your spirit animal is....")
-print(r'''
+print(Colour.pink + r'''
     ___
   ,'   `.
  /_. _,. \
@@ -226,26 +227,26 @@ print(r'''
                /||
                `||-
              __,';     SSt
-''')
+''' + Colour.reset)
 print("A flamingo!")
 goto .game_over
 
 label .dog
 print("Your spirit animal is....")
-print(r'''
+print(Colour.brown + r'''
     ___
  __/_  `.  .-"""-.
  \_,` | \-'  /   )`-')
   "") `"`    \  ((`"`
  ___Y  ,    .'7 /|
 (_,___/...-` (_/_/ sk
-''')
+''' + Colour.reset)
 print("A dog!")
 goto .game_over
 
 label .cat
 print("Your spirit animal is....")
-print(r'''
+print(Colour.orange + r'''
        ,
        \`-._           __
         \\  `-..____,.'  `.
@@ -274,13 +275,13 @@ print(r'''
 .-'. _.'\      / `;      \,__:      \
 `---'    `----'   ;      /    \,.,,,/
                    `----`              fsc
-''')
+''' + Colour.reset)
 print("A cat!")
 goto .game_over
 
 label .dolphin
 print("Your spirit animal is....")
-print(r'''
+print(Colour.cyan + r'''
                                _.-~  )
                     _..--~~~~,'   ,-/     _
                  .-'. . . .'   ,-','    ,' )
@@ -295,7 +296,7 @@ print(r'''
       .  . . |  _____..---.._/ _____
 ~---~~~~----~~~~             ~~
 
-''')
+''' + Colour.reset)
 print("A dolphin!")
 goto .game_over
 

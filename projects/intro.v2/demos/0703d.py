@@ -1,6 +1,6 @@
 # Details and information adapted from here:
 # https://www.allaboutlean.com/amazon-fulfillment-2/
-from csinsc import *
+from goodies import *
 
 print(">>> The " + Colour.green + "S" + Colour.red + "p" + Colour.yellow + "e" + Colour.grey + "c" + Colour.pink + "i" + Colour.orange + "a" + Colour.cyan + "l" + Colour.reset + " Delivery <<<")
 print()

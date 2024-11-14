@@ -1,4 +1,4 @@
-from csinsc import *
+from goodies import *
 
 label .again
 
