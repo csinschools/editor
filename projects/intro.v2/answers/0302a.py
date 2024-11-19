@@ -1,8 +1,7 @@
 from goodies import Colour, Highlight
 
-print(Highlight.red + Colour.yellow + "STOP!")
-
-print(Highlight.blue + "     ")
+print(Highlight.red + Colour.yellow + "Let's draw some flags!")
+print(Highlight.orange + "                      ")
 
 print()
 print(Colour.reset + "The Flag of the Netherlands:")
