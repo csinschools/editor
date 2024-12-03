@@ -741,3 +741,42 @@ Sk.builtins.showTurtle = function() {
     createTurtleCanvas();
 }
 
+//////////////////////////// input number ////////////////////////////////
+
+Sk.builtin.inputnumber = function inputnumber(prompt) {
+    var lprompt = prompt ? prompt : "";
+
+    return Sk.misceval.chain(Sk.importModule("sys", false, true), function (sys) {
+        if (Sk.inputfunTakesPrompt) {
+            return Sk.builtin.file.$readline(sys["$d"]["stdin"], null, lprompt);
+        } else {
+            return Sk.misceval.chain(
+                undefined,
+                function () {
+                    return Sk.misceval.callsimOrSuspendArray(sys["$d"]["stdout"]["write"], [sys["$d"]["stdout"], new Sk.builtin.str(lprompt)]);
+                },
+                function () {
+                    return Sk.misceval.callsimOrSuspendArray(sys["$d"]["stdin"]["readlineasfloat"], [sys["$d"]["stdin"]]);
+                }
+            );
+        }
+    });
+};
+
+Sk.builtins["inputnumber"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.inputnumber,
+        $name: "inputnumber",
+        $textsig: "($module, prompt /)",
+        $doc:
+            "Prompts for user to type in a number",
+    },
+    null,
+    "builtins"
+);
+// synonymns
+Sk.builtins["input_number"] = Sk.builtins["inputnumber"]
+Sk.builtins["inputNumber"] = Sk.builtins["inputnumber"]
+Sk.builtins["inputnum"] = Sk.builtins["inputnumber"]
+Sk.builtins["input_num"] = Sk.builtins["inputnumber"]
+Sk.builtins["inputNum"] = Sk.builtins["inputnumber"]
