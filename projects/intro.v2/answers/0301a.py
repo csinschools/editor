@@ -3,7 +3,7 @@
 # Click run - the fist 3 have been done for you.
 # Continue the pattern so the rainbow has an arch.
 
-from csinsc import *
+from goodies import *
 
 print(Colour.red        + "RAINBOW")
 print(Colour.orange     + "  RAINBOW")
