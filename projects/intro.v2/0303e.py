@@ -2,7 +2,7 @@
 # Colour it in so that the duck is yellow and the water is blue!
 # HINT: start off by using print statements to display the duck
 
-from goddies import *
+from goodies import *
 
 print("    __")
 print("  <(o )___")
