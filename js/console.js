@@ -301,7 +301,7 @@ function createButtonElement(id, text, width, height, x, y, width, height, oncli
 
 function addButton(id, text, width, height, x, y, width, height, onclick) {
     var newButton = createButtonElement(id, text, width, height, x, y, width, height, onclick);
-    newButton.style.position = "absolute";
+    newButton.style.position = "relative";
     if (x !== null || y !== null) {
         newButton.style.position = "absolute";
     }
