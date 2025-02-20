@@ -238,17 +238,31 @@ function tone_stop() {
 
 /////////////////////// image functions //////////////////////////
 
-function createImageElement(url, width, height, onload, onerror) {
+function createImageElement(url, width, height, x, y, onload, onerror) {
     let e = document.createElement("img");  
     e.id = (Math.random() + 1).toString(36).substring(7);
     e.src = url;
     e.style.display = "none";
+
+    // setting the width and height of the image element if specified
     if (width !== null) {
         e.width = width;
     }
     if (height !== null) {
         e.height = height;
     }
+
+    // setting the position of the image element if x and y were specified
+    if (x !== null || y !== null) {
+        e.style.position = "absolute";
+    }
+    if (x !== null) {
+        e.style.left = x + "px";
+    }
+    if (y !== null) {
+        e.style.top = y + "px";
+    }
+
     e.onload = onImageLoaded;
     e.addEventListener("load", onload);
     e.onerror = onImageError;
@@ -260,9 +274,9 @@ function createImageElement(url, width, height, onload, onerror) {
     return e ;
 }
 
-function addImage(url, width, height, onload, onerror) {
+function addImage(url, width, height, x, y, onload, onerror) {
     showSpinner();
-    pyConsole.appendChild(createImageElement(url, width, height, onload, onerror));      
+    pyConsole.appendChild(createImageElement(url, width, height, x, y, onload, onerror));      
 }
 
 function onImageLoaded() {
@@ -273,6 +287,42 @@ function onImageLoaded() {
 
 function onImageError() {
     showErrorDialog("There was an error loading: " + this.src, hideSpinner);    
+}
+
+/////////////////////// UI functions /////////////////////////////
+
+function createButtonElement(id, text, width, height, x, y, width, height, onclick) {
+    let e = document.createElement("button");
+    e.id = id;
+    e.textContent = text;
+    e.addEventListener("click", onclick);
+    return e;    
+}
+
+function addButton(id, text, width, height, x, y, width, height, onclick) {
+    var newButton = createButtonElement(id, text, width, height, x, y, width, height, onclick);
+    newButton.style.position = "absolute";
+    if (x !== null || y !== null) {
+        newButton.style.position = "absolute";
+    }
+    if (x !== null) {
+        newButton.style.left = x + "px";
+    }
+    if (y !== null) {
+        newButton.style.top = y + "px";
+    }    
+
+    // setting the width and height of the image element if specified
+    if (width !== null) {
+        newButton.style.width = width;
+    }
+    if (height !== null) {
+        newButton.style.height = height;
+    }
+
+    newButton.display = "block";
+    
+    pyConsole.appendChild(newButton);
 }
 
 /////////////////////// audio functions //////////////////////////
