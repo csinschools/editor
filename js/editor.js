@@ -1584,16 +1584,21 @@ var id = urlParams.get('id');
 // only works when hosted on web server (no filesystem mode)
 project = urlParams.get('project');
 var filename = null;
-if (project != null && project.length > 0)
-{
-	filename = project;
-}
-else
-{
-	// default file name (for saving)
-	filename = urlParams.get('name')
+filename = urlParams.get('name');
+// is there a project?
+if (project != null && project.length > 0) {
+	// if there is a project but no filename, use the project as the filename
 	if (filename == null || filename.length == 0)
 	{
+		filename = project;
+	}
+	// if there is a project AND a filename, then the filename takes precedence
+}
+else {
+	// no project and no filename? use a default value		
+	if (filename == null || filename.length == 0)
+	{
+		// default file name (for saving)
 		filename = "my_code";
 	}
 }
