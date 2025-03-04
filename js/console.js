@@ -325,6 +325,46 @@ function addButton(id, text, width, height, x, y, width, height, onclick) {
     pyConsole.appendChild(newButton);
 }
 
+function createTextboxElement(id, text, width, height, x, y, width, height, onchanged) {
+    let e = document.createElement("input");
+    e.type = "text";
+    e.id = id;
+    e.value = text;
+    e.addEventListener("input", onchanged);
+    e.style.color = "gray";
+    // clear on first click
+    e.addEventListener("click", () => { e.value = ""; e.onclick = null; e.style.color = "black"; });
+    return e;    
+}
+
+function addTextbox(id, text, width, height, x, y, width, height, onchanged) {
+    var newTextbox = createTextboxElement(id, text, width, height, x, y, width, height, onchanged);
+    newTextbox.style.position = "relative";
+    if (x !== null || y !== null) {
+        newTextbox.style.position = "absolute";
+    }
+    if (x !== null) {
+        newTextbox.style.left = x + "px";
+    }
+    if (y !== null) {
+        newTextbox.style.top = y + "px";
+    }    
+
+    // setting the width and height of the image element if specified
+    if (width !== null) {
+        newTextbox.style.width = width;
+    }
+    if (height !== null) {
+        newTextbox.style.height = height;
+    }
+
+    newTextbox.display = "block";
+    
+    pyConsole.appendChild(newTextbox);
+
+    return newTextbox;
+}
+
 /////////////////////// audio functions //////////////////////////
 var audioElement = null;
 function stopSound() {
