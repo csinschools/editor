@@ -164,13 +164,13 @@ while True:
         fillRect(rightGuard, y, rightGrass - rightGuard, blocksize, guardColour)
         
         # draw the road
-        fillRect(leftGuard, y, rightGuard - leftGuard, blocksize, GREY)
+        fillRect(leftGuard, y, rightGuard - leftGuard, blocksize, LIGHT_GREY)
         
         # draw the lane
         laneColouring = sin(60.0 * (1.0 - perspective)**3 + distance * 0.1)
         laneColour = WHITE
         if laneColouring < 0:
-            laneColour = GREY      
+            laneColour = LIGHT_GREY      
         fillRect(leftLane, y, rightLane - leftLane, blocksize, laneColour)
         
         # how far are we to the finishing line?
