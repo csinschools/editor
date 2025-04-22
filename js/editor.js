@@ -1461,12 +1461,102 @@ var pyConsole = document.getElementById("console");
 
 var editor = ace.edit("editor");
 var darkTheme = true;
+ace.require("ace/ext/language_tools");
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setOptions({
   fontSize: "12pt"
 });
 editor.setHighlightActiveLine(true);
+
+// code here to define custom strings?
+
+Sk.configure({
+	__future__: Sk.python3
+});
+
+// expanding the default size of the autocompleter
+// TODO: adjust this on the fly based on the length of the autocompletions: https://stackoverflow.com/questions/47708044/changing-the-width-of-autocompleter
+document.styleSheets[0].insertRule(`
+	.ace_editor.ace_autocomplete {
+		width: 420px !important;
+	}`, 0);
+
+// Create custom completer
+var customCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+		let ast = Sk.parse("<stdin>.py", ace.edit("editor").getValue());
+		// TODO: check for goodies imported as a module
+		// currently it just checks to see if goodies is a name in the sym table (could be a variable, function etc. not guaranteed to be the imported module)
+        
+		//let astNode = Sk.astFromParse(ast.cst);
+        
+		if ('goodies' in ast.cst.used_names) {
+			/*
+			// TODO: bring this back after improving the formating of the doc text, also investigate optional parameters
+			var wordList = [
+				{					
+					caption: 'printImage(url, width, height, x, y)',
+					snippet: "printImage(${1:url}, ${2:width}, ${3:height}, ${4:x}, ${5:y})$0",
+					//value: 'printImage(url, width, height, x, y)',
+					meta: 'function',
+					docText: 'Displays an image at the URL with the width and height and at the x and y coordinates', 
+					parameters: ['url', 'width', 'height', 'x', 'y'],
+				},
+				{
+					caption: 'printButton(text, x, y)',
+					snippet: "printButton(${1:text}, ${2:x}, ${3:y})$0",
+					//value: 'printButton(text, x, y)',
+					meta: 'function',
+					docText: 'Displays a button with the text at the x and y coordinates', 
+					parameters: ['text', 'x', 'y'],
+				},
+				{
+					caption: 'waitForButtonClick()',
+					value: 'waitForButtonClick()',
+					meta: 'function',
+					docText: 'Waits until any button is clicked', 
+
+				}
+				// Add more completions as needed
+			];
+			*/
+			var wordList = [
+				{					
+					caption: 'printImage(url, width, height, x, y)',
+					value: 'printImage()',
+					meta: 'function',
+				},
+				{
+					caption: 'printButton(text, x, y)',
+					value: 'printButton()',
+					meta: 'function',
+				},
+				{
+					caption: 'waitForButtonClick()',
+					value: 'waitForButtonClick()',
+					meta: 'function',
+				}
+				// Add more completions as needed
+			];			
+			callback(null, wordList);
+		}
+    }
+};
+
+// Add the custom completer to editor's completers
+// disable completers for now
+// autocompletions for ace editor
+
+/*
+editor.setOptions({
+	enableBasicAutocompletion: true,
+	enableSnippets: true,
+	enableLiveAutocompletion: true
+});
+editor.completers = [customCompleter];
+*/
+
 
 document.getElementById('file-input').addEventListener('change', userLoadCode, false);
 
