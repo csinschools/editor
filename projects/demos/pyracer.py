@@ -12,10 +12,10 @@ playSound("https://csinschools.io/editor/samples/music/Turbo_Outrun_01.mp3", Tru
 
 # track and scenery are drawn as blocked rectangles for speed (not individually plotting pixels)
 blocksize = 4
-screenWidth = 83 * blocksize
-screenHeight = 125 * blocksize
+sceneWidth = 83 * blocksize
+sceneHeight = 80 * blocksize
 
-#setCanvasSize(screenWidth, screenHeight)
+screenHeight = 500
 
 # the distance travelled from the first segment
 distance = 0
@@ -23,6 +23,7 @@ speed = 0
 
 # track segments
 # first element is the curvature (0 = straight, -1 = full left, 1 = full right)
+# second element is the length of the segment
 track = []
 track.append([0, 10])
 track.append([0, 200])
@@ -30,10 +31,13 @@ track.append([0.25, 400])
 track.append([0, 400])
 track.append([-1, 100])
 track.append([0, 200])
-track.append([-1, 200])
+track.append([-1, 400])
 track.append([1, 200])
 track.append([0, 200])
 track.append([0, 200])
+
+# speed
+speedMultiplier = 30
 
 # finish line
 finishLine = 200
@@ -56,17 +60,18 @@ fastestLap = 100
 laps = 0
 lapRecord = False
 
-deltaTime = time()
+prevTime = time()
 
 # lap timer
 timer = time()
 
 while True:
-    # hardcoding deltaTime for speed (and because framerate is on animationFrame)
-    deltaTime = 8 * 0.0167
+    currentTime = time()
+    deltaTime = currentTime - prevTime
+    prevTime = currentTime
     
-    if isKeyPressed('c'):
-        print(playerCurvature)
+    # deltaTime speed multiplier
+    deltaTime *= speedMultiplier
     
     if isKeyPressed('w'):
         speed += 0.1 * deltaTime
@@ -79,15 +84,15 @@ while True:
     if isKeyPressed('d'):
         playerCurvature += 0.7 * deltaTime * 0.05
         
-    # so player doesn't steer off the screen
-    if playerCurvature > 0.7:
-        playerCurvature = 0.7
-    elif playerCurvature < -0.7:
-        playerCurvature = -0.7
-        
     # has player steered off the road?
     if abs(playerCurvature - trackCurvature) >= 0.4:
         speed -= 0.15 * deltaTime
+        
+    # so player doesn't steer off the screen
+    if playerCurvature - trackCurvature > 0.7:
+        playerCurvature = 0.7 + trackCurvature
+    elif playerCurvature - trackCurvature < -0.7:
+        playerCurvature = trackCurvature - 0.7        
         
     # clamping speed
     if speed > 2.0:
@@ -118,17 +123,18 @@ while True:
     # accumulating track curvature across whole track
     trackCurvature += curvature * deltaTime * speed * 0.04
     
+    clearScreen(BLACK)
+    
     # draw sky
-    clearScreen(BLUE)
-    fillRect(0, screenHeight * 0.80, screenWidth, screenHeight * 0.20, LIGHT_BLUE)
+    fillRect(0, sceneHeight * 0.5, sceneWidth, sceneHeight * 0.3, BLUE)
+    fillRect(0, sceneHeight * 0.80, sceneWidth, sceneHeight * 0.20, LIGHT_BLUE)
+    fillRect(0, sceneHeight * 0.95, sceneWidth, sceneHeight * 0.05, DARK_BLUE)
     
-  
-    fillRect(0, screenHeight * 0.95, screenWidth, screenHeight * 0.05, DARK_BLUE)
     
-    for y in range(0, screenHeight // 2, blocksize):
+    for y in range(0, sceneHeight // 2, blocksize):
         # scaling factor for perspective
         # max at bottom of screen, min at horizon (screenHeight / 2)
-        perspective = 1.0 - (float(y) / (screenHeight // 2))
+        perspective = 1.0 - (float(y) / (sceneHeight // 2))
 
         carPos = playerCurvature - trackCurvature
 
@@ -142,17 +148,17 @@ while True:
         
         # redefining roadwidth to mid screen
         roadWidth *= 0.5
-        leftGrass = (midPoint - roadWidth - guardWidth) * screenWidth
-        rightGrass = (midPoint + roadWidth + guardWidth) * screenWidth
-        leftGuard = (midPoint - roadWidth) * screenWidth
-        rightGuard = (midPoint + roadWidth) * screenWidth
+        leftGrass = (midPoint - roadWidth - guardWidth) * sceneWidth
+        rightGrass = (midPoint + roadWidth + guardWidth) * sceneWidth
+        leftGuard = (midPoint - roadWidth) * sceneWidth
+        rightGuard = (midPoint + roadWidth) * sceneWidth
         
-        leftLane =  (midPoint - laneWidth) * screenWidth
-        rightLane =  (midPoint + laneWidth) * screenWidth
+        leftLane =  (midPoint - laneWidth) * sceneWidth
+        rightLane =  (midPoint + laneWidth) * sceneWidth
         
         # draw the grass
         fillRect(0, y, leftGrass, blocksize, GREEN)
-        fillRect(rightGrass, y, screenWidth - rightGrass, blocksize, GREEN)
+        fillRect(rightGrass, y, sceneWidth - rightGrass, blocksize, GREEN)
         
         # draw the guards
         # using this sine function to simulate perspective banding
@@ -178,7 +184,7 @@ while True:
         if distanceToLine >= 0 and distanceToLine <= 150:
             # draw the finish line, with perspective
             linePerspective = 1 - (distanceToLine / 150)
-            fillRect(leftGuard, screenHeight // 2 - linePerspective * screenHeight // 2, rightGuard - leftGuard, blocksize, WHITE)  
+            fillRect(leftGuard, sceneHeight // 2 - linePerspective * screenHeight // 2, rightGuard - leftGuard, blocksize, WHITE)  
             
         # lap times
         if distanceToLine <= 0 and not finishedLap:
@@ -196,23 +202,23 @@ while True:
             laps += 1
             
     # draw hills (it's just a sine wave)
-    for x in range(0, screenWidth, blocksize):
+    for x in range(0, sceneWidth, blocksize):
         hillHeight = int(abs((sin(x * 0.005 + (trackCurvature * 5) + 1) + 0.3) * 16))
-        fillRect(x, screenHeight//2, blocksize, hillHeight * blocksize, ORANGE)\
-        
+        fillRect(x, sceneHeight//2, blocksize, hillHeight * blocksize, ORANGE)\
+
+    drawText('PYRACER', 60, screenHeight - 80, '40px arial', RED)
+    
     if laps == 0:
-        drawText('PYRACER', 60, screenHeight - 80, '40px arial', RED)
         drawText('Press WASD keys', 40, screenHeight - 140, '30px arial', WHITE)
         drawText('to Drive!!!', 90, screenHeight - 180, '30px arial', WHITE)
-        
     # display lap times
     if distanceToLine < 0 and distanceToLine > -600:
         if laps <= 1:
-            drawText('LET\'S GO!!!', 55, screenHeight - 120, '40px arial', YELLOW)
+            drawText('LET\'S GO!!!', 85, sceneHeight - 120, '30px arial', YELLOW)
         elif lapRecord:
-            drawText('LAP RECORD!', 30, screenHeight - 120, '40px arial', RED)
+            drawText('LAP RECORD!', 60, sceneHeight - 120, '30px arial', YELLOW)
         else:
-            drawText('LAP!', 120, screenHeight - 120, '40px arial', WHITE)
+            drawText('LAP!', 140, sceneHeight - 120, '30px arial', WHITE)
     if laps >= 2:
-        drawText("Lap time: " + str(round(lapTime, 2)), 10, screenHeight - 30, '20px arial', WHITE)
-        drawText("Fastest lap: " + str(round(fastestLap,2)), 170, screenHeight - 30, '20px arial', WHITE)    
+        drawText("Lap time:{:0.2f}".format(lapTime), 10, screenHeight - 120, '20px arial', WHITE)
+        drawText("Fastest lap:{:0.2f}".format(fastestLap), 170, screenHeight - 120, '20px arial', WHITE)    
