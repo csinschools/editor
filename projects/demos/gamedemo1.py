@@ -8,11 +8,11 @@ printImage("https://csinschools.io/editor/samples/images/forest.png", 300, 450)
 print("You are in a forest.")
 print("Birds are chirping and the wind rustles through the trees.")
 printButton("Follow the path", 80, 270)
-printButton("Go east", 30, 420)
+printButton("Go west", 30, 420)
 waitForButtonClick()
 if isButtonClicked("Follow the path"):
     goto .cave
-if isButtonClicked("Go east"):
+if isButtonClicked("Go west"):
     goto .castle
     
 label .cave
@@ -31,7 +31,7 @@ clear()
 printImage("https://csinschools.io/editor/samples/images/castle.png", 450, 450)
 print("You standing by a giant castle.")
 print("The flags are fluttering in the wind.")
-printButton("Go west", 380, 420)
+printButton("Go east", 380, 420)
 waitForButtonClick()
-if isButtonClicked("Go west"):
+if isButtonClicked("Go east"):
     goto .forest  

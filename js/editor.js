@@ -1465,7 +1465,10 @@ ace.require("ace/ext/language_tools");
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setOptions({
-  fontSize: "12pt"
+  fontSize: "12pt",
+  fixedWidthGutter: true,
+  showPrintMargin: false,
+  scrollPastEnd: 0.5
 });
 editor.setHighlightActiveLine(true);
 

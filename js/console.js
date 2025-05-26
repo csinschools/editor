@@ -547,6 +547,35 @@ function destroyWatchTableFrame() {
     }
 }
 
+///////////////////////// URL param functions /////////////////////////
+
+Sk.builtin.getURLParam = function getURLParam(param) {
+    Sk.builtin.pyCheckArgsLen("getURLParam", arguments.length, 1, 1);
+    Sk.builtin.pyCheckType("param","str",Sk.builtin.checkString(param));
+    
+    // Get all parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const data = urlParams.get(param);
+    return new Sk.builtin.str(data);
+};
+
+Sk.builtins["getURLParam"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.getURLParam,
+        $name: "getURLParam",
+        $flags: {
+            NamedArgs: [null],
+            Defaults: [14],
+        },
+        $textsig: "($module, size /)",
+        $doc:
+            "Returns the value of the URL param, None if it doesn't exist.",
+    },
+    null,
+    "builtins"
+);
+
 
 ///////////////////////// canvas (pyangelo) functions//////////////////////////
 
