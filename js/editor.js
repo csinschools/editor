@@ -965,7 +965,9 @@ function runSkulpt(stepMode, code = "") {
 	// testing pyangelo integration
 	//createPyangeloFrame();
 
-	usingPyangelo = checkForPyangelo(code);
+	if (code !== "") {
+		usingPyangelo = checkForPyangelo(code);
+	}
 	setDisplayMode(usingPyangelo ? "canvas": display);
 	if (usingPyangelo) document.getElementById("pyangelo").focus();
 
@@ -1171,7 +1173,8 @@ function stopEditor() {
 	}
 }
 function checkForPyangelo(code) {
-	var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)$/gm;
+	//var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)$/gm;
+	var pyangeloPattern = /^(?:\s*import\s+pyangelo.*)|(?:\s*from\s+pyangelo\s+import.*)|(?:Sk\.builtin\.__import__\('pyangelo'.*)$/gm;
 	var match = code.match(pyangeloPattern);
 	return (match != null ? true: false);
 }
