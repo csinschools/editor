@@ -91,28 +91,36 @@ function outputf(n) {
     document.getElementById("consoleWrapper").scrollTop = document.getElementById("consoleWrapper").scrollHeight;
 }
 
-function inputf(n) {
-    inputPromise = new Promise((function(n, e) {                    
-                inputElement = document.createElement("span");
-                inputElement.setAttribute("contenteditable", "true");
-                inputElement.setAttribute("autocapitalize", "off");
-                inputElement.style.color = "rgb(255,255,255)";
-                inputElement.style.fontSize = "14pt";
-                inputElement.style.outlineStyle = "none";
-                pyConsole.appendChild(inputElement);
-                inputElement.focus();
-                inputElement.addEventListener("keyup", (function(e) {
-                    e.preventDefault();
-                    if (e.key ==="Enter") {
-                        userResponse = this.innerText.replace(/\n+$/, "");
-                        this.remove();
-                        outputf(userResponse);
-                        outputf("\n");
-                        n(userResponse);
-                    }
-                }))
-            }));
-    return inputPromise;
+function inputf(promptStr) {
+    if (!usingPyangelo) {
+        inputPromise = new Promise((function(n, e) {                    
+                    inputElement = document.createElement("span");
+                    inputElement.setAttribute("contenteditable", "true");
+                    inputElement.setAttribute("autocapitalize", "off");
+                    inputElement.style.color = "rgb(255,255,255)";
+                    inputElement.style.fontSize = "14pt";
+                    inputElement.style.outlineStyle = "none";
+                    pyConsole.appendChild(inputElement);
+                    inputElement.focus();
+                    inputElement.addEventListener("keyup", (function(e) {
+                        e.preventDefault();
+                        if (e.key ==="Enter") {
+                            userResponse = this.innerText.replace(/\n+$/, "");
+                            this.remove();
+                            outputf(userResponse);
+                            outputf("\n");
+                            n(userResponse);
+                        }
+                    }))
+                }));
+        return inputPromise;
+    } else {
+        inputPromise = new Promise((function(n, e) {  
+            userResponse = prompt(promptStr);
+            n(userResponse);
+        }));
+        return inputPromise;
+    }
 }
     
 var fontColour = "rgba(255, 255, 255, 1)";

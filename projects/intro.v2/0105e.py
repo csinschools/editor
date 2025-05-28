@@ -46,16 +46,16 @@ if gameState == 'intro':
         progress = 0     
 elif gameState == 'play':
     # check for keys
-    if isKeyPressed('d'):
+    if isKeyPressed('d') or isKeyPressed('ArrowRight'):
         dx = 1
         dy = 0
-    elif isKeyPressed('a'):
+    elif isKeyPressed('a') or isKeyPressed('ArrowLeft'):
         dx = -1
         dy = 0
-    elif isKeyPressed('s'):
+    elif isKeyPressed('s') or isKeyPressed('ArrowDown'):
         dx = 0
         dy = -1
-    elif isKeyPressed('w'):
+    elif isKeyPressed('w') or isKeyPressed('ArrowUp'):
         dx = 0
         dy = 1
 

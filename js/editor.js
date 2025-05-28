@@ -986,7 +986,7 @@ function runSkulpt(stepMode, code = "") {
 	Sk.configure({
 		output: outputf,
 		inputfun: inputf,
-		inputfunTakesPrompt: false,
+		inputfunTakesPrompt: usingPyangelo ? true : false,
 		debugging: usingPyangeloBuiltin ? false : true,
 		killableWhile: true,
 		//breakpoints: function() { return true; },
@@ -1210,9 +1210,11 @@ function setDisplayMode(mode) {
 			let right = document.getElementById('rightpane');
 			let bottom = document.getElementById('bottompane');
 			let pyangelo = document.getElementById('pyangelo');
+			let console = document.getElementById('consoleWrapper');
 			split.appendChild(pyangelo);
-			bottom.appendChild(document.getElementById('consoleWrapper'));
-			bottom.style = "display:block; height: " + prefixedCalc() + "(100% - 580px);";
+			bottom.appendChild(console);
+			bottom.style = "display:flex; height: " + prefixedCalc() + "(100% - 580px); justify-content: center;";
+			console.style.width = "330px";
 			split.removeChild(left);		
 			split.removeChild(right);		
 			split.style = "height: 505px; display: block;text-align:center;";
@@ -1241,7 +1243,7 @@ function setDisplayMode(mode) {
 			}).observe(document.getElementById('leftpane'));			
 		}
 
-		document.getElementById('consoleWrapper').style = "height: 200px";
+		document.getElementById('consoleWrapper').style.height = "200px";
 		//document.getElementById('console').style = "height: 100%";
 
 		// no step-run for canvas items
