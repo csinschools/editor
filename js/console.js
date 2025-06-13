@@ -928,4 +928,122 @@ Sk.builtins.huelight = function(light, on) {
     .catch(err => console.error("Request failed:", err));
 }
 
+Sk.builtins.getlight = function(light) {
+    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
+    const bridgeIP = "192.168.0.17"; // your bridge IP
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+
+
+    susp = new Sk.misceval.Suspension();
+    susp.resume = function () {
+        if (susp.data["error"]) {
+            throw new Sk.builtin.IOError(susp.data["error"].message);
+        }
+        return susp.data.result;
+    };
+    susp.data = {
+        type: "Sk.promise",
+        promise: new Promise(function (resolve, reject) {
+            // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
+
+            fetch(`https://${bridgeIP}/api/${username}/lights/${light}`, {
+                //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+                method: "GET"
+                })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Light turned on:", data);
+                resolve(Sk.ffi.remapToPy(data));
+            })
+            .catch(err => {
+                console.error("Request failed:", err);
+                reject(Error("getlight Request failed:", err));
+            });
+        })
+    };
+    return susp;    
+}
+
+Sk.builtins.getButton = function(button) {
+    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
+    const bridgeIP = "192.168.0.17"; // your bridge IP
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+
+
+    susp = new Sk.misceval.Suspension();
+    susp.resume = function () {
+        if (susp.data["error"]) {
+            throw new Sk.builtin.IOError(susp.data["error"].message);
+        }
+        return susp.data.result;
+    };
+    susp.data = {
+        type: "Sk.promise",
+        promise: new Promise(function (resolve, reject) {
+            // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
+
+            fetch(`https://${bridgeIP}/api/${username}/sensors/${button}`, {
+                //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+                method: "GET"
+                })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Button event:", data.state.buttonevent);
+                resolve(Sk.ffi.remapToPy(data.state.buttonevent));
+            })
+            .catch(err => {
+                console.error("Request failed:", err);
+                reject(Error("getButton Request failed:", err));
+            });
+        })
+    };
+    return susp;    
+}
+
+Sk.builtins.waitForSmartButtonClick = function(button) {
+    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
+    const bridgeIP = "192.168.0.17"; // your bridge IP
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+    const pollDelay = 800;
+
+
+    susp = new Sk.misceval.Suspension();
+    susp.resume = function () {
+        if (susp.data["error"]) {
+            throw new Sk.builtin.IOError(susp.data["error"].message);
+        }
+        return susp.data.result;
+    };
+    susp.data = {
+        type: "Sk.promise",
+        promise: new Promise(function (resolve, reject) {
+
+            const intervalID = setInterval(() => {
+                // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
+
+                fetch(`https://${bridgeIP}/api/${username}/sensors/${button}`, {
+                    //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+                    method: "GET"
+                    })
+                .then(res => res.json())
+                .then(data => {
+
+                    console.log("Button event:", data.state.buttonevent);
+                    if (data.state.buttonevent !== null && data.state.buttonevent !== 1002 && data.state.buttonevent !== 1003) {
+                        // not button releases .. i.e. button press
+                        clearInterval(intervalID);
+                        resolve(Sk.ffi.remapToPy(data.state.buttonevent));
+                    }
+                })
+                .catch(err => {
+                    console.error("Request failed:", err);
+                    clearInterval(intervalID);
+                    reject(Error("getButton Request failed:", err));
+                });
+            }, pollDelay);
+        })
+    };
+    return susp;    
+}
+
 
