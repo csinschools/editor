@@ -909,17 +909,19 @@ Sk.builtins["input_num"] = Sk.builtins["inputnumber"]
 Sk.builtins["inputNum"] = Sk.builtins["inputnumber"]
 
 //////////////////////////// test phillips hue light API //////////////////////////////
-Sk.builtins.phillipslight = function(url) {
+Sk.builtins.huelight = function(light, on) {
     // Only works in permissive environments (e.g., file:// or localhost with HTTP)
-    const bridgeIP = "192.168.1.100"; // your bridge IP
-    const username = "your-username"; // obtained by pressing button + POST /api
-    const lightID = "1"; // numeric ID
+    const bridgeIP = "192.168.0.17"; // your bridge IP
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+
+    const lightOn = Sk.ffi.remapToJs(on);
 
     // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-    //fetch(`http://${bridgeIP}/api/${username}/lights/${lightID}/state`, {
-    fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
-    method: "GET"
+    fetch(`http://${bridgeIP}/api/${username}/lights/${light}/state`, {
+    //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+    method: "PUT",
+    body: JSON.stringify({ on: lightOn })
     })
     .then(res => res.json())
     .then(data => console.log("Light turned on:", data))
