@@ -907,3 +907,23 @@ Sk.builtins["inputNumber"] = Sk.builtins["inputnumber"]
 Sk.builtins["inputnum"] = Sk.builtins["inputnumber"]
 Sk.builtins["input_num"] = Sk.builtins["inputnumber"]
 Sk.builtins["inputNum"] = Sk.builtins["inputnumber"]
+
+//////////////////////////// test phillips hue light API //////////////////////////////
+Sk.builtins.phillipslight = function(url) {
+    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
+    const bridgeIP = "192.168.1.100"; // your bridge IP
+    const username = "your-username"; // obtained by pressing button + POST /api
+    const lightID = "1"; // numeric ID
+
+    // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
+
+    //fetch(`http://${bridgeIP}/api/${username}/lights/${lightID}/state`, {
+    fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+    method: "GET"
+    })
+    .then(res => res.json())
+    .then(data => console.log("Light turned on:", data))
+    .catch(err => console.error("Request failed:", err));
+}
+
+
