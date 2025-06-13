@@ -918,7 +918,7 @@ Sk.builtins.huelight = function(light, on) {
 
     // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-    fetch(`http://${bridgeIP}/api/${username}/lights/${light}/state`, {
+    fetch(`https://${bridgeIP}/api/${username}/lights/${light}/state`, {
     //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
     method: "PUT",
     body: JSON.stringify({ on: lightOn })
