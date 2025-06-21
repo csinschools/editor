@@ -928,6 +928,48 @@ Sk.builtins.huelight = function(light, on) {
     .catch(err => console.error("Request failed:", err));
 }
 
+Sk.builtins.huebright = function(light, brightness) {
+    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
+    const bridgeIP = "192.168.0.17"; // your bridge IP
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+
+    const bri = Sk.ffi.remapToJs(brightness);
+
+    // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
+
+    fetch(`https://${bridgeIP}/api/${username}/lights/${light}/state`, {
+    //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+    method: "PUT",
+    body: JSON.stringify({ bri: bri })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Light brightness:", data))
+    .catch(err => console.error("Request failed:", err));
+}
+
+Sk.builtins.huecolour = function(light, x, y) {
+    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
+    const bridgeIP = "192.168.0.17"; // your bridge IP
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+
+    const lightx = Sk.ffi.remapToJs(x);
+    const lighty = Sk.ffi.remapToJs(y);
+
+    // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
+
+    fetch(`https://${bridgeIP}/api/${username}/lights/${light}/state`, {
+    //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
+    method: "PUT",
+    body: JSON.stringify(
+        {xy: [lightx, lighty],
+        colormode: "xy" 
+        })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Light colour change:", data))
+    .catch(err => console.error("Request failed:", err));
+}
+
 Sk.builtins.getlight = function(light) {
     // Only works in permissive environments (e.g., file:// or localhost with HTTP)
     const bridgeIP = "192.168.0.17"; // your bridge IP
