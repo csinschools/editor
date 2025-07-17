@@ -1445,6 +1445,7 @@ function setupHeadless() {
 }
 
 function stopAllSounds() {
+	window.speechSynthesis.cancel();
     document.querySelectorAll('audio').forEach(element => {
         element.pause();
 		// don't trigger the original error handlers

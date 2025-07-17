@@ -98,7 +98,7 @@ function inputf(promptStr) {
                     inputElement.setAttribute("contenteditable", "true");
                     inputElement.setAttribute("autocapitalize", "off");
                     inputElement.style.color = "rgb(255,255,255)";
-                    inputElement.style.fontSize = "14pt";
+                    inputElement.style.fontSize = fontSize;
                     inputElement.style.outlineStyle = "none";
                     pyConsole.appendChild(inputElement);
                     inputElement.focus();
