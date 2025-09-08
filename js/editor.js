@@ -1445,7 +1445,9 @@ function setupHeadless() {
 }
 
 function stopAllSounds() {
-	window.speechSynthesis.cancel();
+	// cancelling speech synthesis means any queues speech will stop, this means a program with a say function on it's own will not speak (because it immediately terminates)
+	// HOWEVER, this does mean that a program with a lot of speech will keep speaking even if the user presses STOP.
+	//window.speechSynthesis.cancel();
     document.querySelectorAll('audio').forEach(element => {
         element.pause();
 		// don't trigger the original error handlers

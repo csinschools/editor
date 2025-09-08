@@ -287,6 +287,50 @@ function addImage(url, width, height, x, y, onload, onerror) {
     pyConsole.appendChild(createImageElement(url, width, height, x, y, onload, onerror));      
 }
 
+function createYoutubeElement(videoId, width, height, x, y, onload, onerror) {
+    const iframe = document.createElement('iframe');
+
+    // setting the width and height of the image element if specified
+    if (width !== null) {
+        iframe.setAttribute('width', width);
+    }
+    if (height !== null) {
+        iframe.setAttribute('height', height);
+    }    
+  
+    iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`);
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+  
+    iframe.id = (Math.random() + 1).toString(36).substring(7);
+    iframe.style.display = "none";
+
+    // setting the position of the image element if x and y were specified
+    if (x !== null || y !== null) {
+        iframe.style.position = "absolute";
+    }
+    if (x !== null) {
+        iframe.style.left = x + "px";
+    }
+    if (y !== null) {
+        iframe.style.top = y + "px";
+    }
+
+    iframe.onload = onImageLoaded;
+    iframe.addEventListener("load", onload);
+
+    iframe.onerror = onImageError;
+    iframe.addEventListener("afterDialogClose", onerror);
+
+    return iframe;
+}
+
+function addYoutube(id, width, height, x, y, onload, onerror) {
+    showSpinner();
+    pyConsole.appendChild(createYoutubeElement(id, width, height, x, y, onload, onerror));      
+}
+
 function onImageLoaded() {
     this.style.display = "block";
     // hide the spinner after image has loaded

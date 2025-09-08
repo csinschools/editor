@@ -1,4 +1,4 @@
-from csinsc import *
+from goodies import *
 
 '''
 A map of the locations in this game:
