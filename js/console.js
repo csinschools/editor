@@ -954,20 +954,165 @@ Sk.builtins["inputNum"] = Sk.builtins["inputnumber"]
 
 //////////////////////////// test phillips hue light API //////////////////////////////
 var hueBridgeIP = "192.168.1.100";
-Sk.builtins.setHueBridgeIP = function(IP) {
-    hueBridgeIP = IP;
+var useHTTPS = true;
+
+var hueCommands = [];
+var hueTimer = 0;
+var hueCommandInterval = 100;
+var hueInterval = null;
+
+class HueCommand {
+    constructor(command, data, time) {
+        this.command = command;
+        // time is supplied in seconds, convert to milliseconds to match hueCommandInterval
+        this.time = time * 1000;
+        this.data = data;
+    }
+    execute() {
+        switch (this.command) {
+            case "on":
+                Sk.builtins.huelight(this.data["light"], this.data["on"]);
+                break;
+            case "bright":
+                Sk.builtins.huebright(this.data["light"], this.data["bright"]);
+                break;                
+            case "colour":
+                Sk.builtins.huecolour(this.data["light"], this.data["x"], this.data["y"]);
+                break;
+        }
+    }
 }
 
-Sk.builtins.huelight = function(light, on) {
-    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
-    const bridgeIP = "192.168.0.17"; // your bridge IP
+
+
+function stopAllHue() {
+    if (hueInterval !== null) {
+        clearInterval(hueInterval);
+        hueInterval = null;
+    }
+    hueTimer = 0;
+    hueCommands = [];        
+}
+
+Sk.builtins.executeHueCommands = function executeHueCommands(loopTimes = 1) {
+    let loops = Sk.ffi.remapToJs(loopTimes);
+    let commandIndex = 0;
+    hueTimer = 0;
+    // sort all commands by their trigger time
+    hueCommands.sort((a, b) => a.time - b.time);
+
+    hueInterval = setInterval(() => {
+        hueTimer +=hueCommandInterval;
+        while (commandIndex < hueCommands.length && hueCommands[commandIndex].time <= hueTimer) {
+            let command = hueCommands[commandIndex];
+            commandIndex++;
+            command.execute();            
+        }
+        if (commandIndex == hueCommands.length) {
+            // if loopTimes is 0 or negative, loop forever
+            if (loops <= 0) {
+                // go again
+                commandIndex = 0;
+                hueTimer = 0;
+            } else {
+                loops--;
+                if (loops == 0) {
+                    // all done. Note that loopTimes == 0 check here is different to the check above - this one checks if loopTimes was positive and was decremented to 0. The above one checks if loopTimes was 0 or negative to begin with.
+                    clearInterval(hueInterval);
+                    hueInterval = null;
+                } else {
+                    // go again
+                    commandIndex = 0;
+                    hueTimer = 0;                    
+                }
+            }
+        }
+    }, hueCommandInterval);    
+}
+// synonymn
+Sk.builtins["runHueCommands"] = Sk.builtins["executeHueCommands"]
+
+Sk.builtins.queueHueCommand = function queueHueCommand(time, light, on = -1, bright = -1, colourx = -1, coloury = -1) {
+    let t = Sk.ffi.remapToJs(time);
+    let l = Sk.ffi.remapToJs(light);
+    if (on !== -1) {
+        let o = Sk.ffi.remapToJs(on);
+        hueCommands.push(new HueCommand("on", {"light": l, "on": o}, t));
+    }
+    if (bright !== -1) {
+        let b = Sk.ffi.remapToJs(bright);
+        hueCommands.push(new HueCommand("bright", {"light": l, "bright": b}, t));
+    }
+    if (colourx !== -1 && coloury !== -1) {
+        let cx = Sk.ffi.remapToJs(colourx);
+        let cy = Sk.ffi.remapToJs(coloury);
+        hueCommands.push(new HueCommand("colour", {"light": l, "x": cx, "y": cy}, t));
+    }
+}
+// synonymn
+Sk.builtins["setHueCommand"] = Sk.builtins["queueHueCommand"]
+
+Sk.builtins.setHueBridgeIP = function setHueBridgeIP(IP, user, useHttps = true) {
+    var codestoreURL = Sk.builtins.webServiceURL.v;
+
+    const hueuser = "cloud_" + Sk.ffi.remapToJs(user);
+    const school = "school_huebridge";
+    
+    susp = new Sk.misceval.Suspension();
+    susp.resume = function () {
+        if (susp.data["error"]) {
+            throw new Sk.builtin.IOError(susp.data["error"].message);
+        }
+        return susp.data.result;
+    };
+    susp.data = {
+        type: "Sk.promise",
+        promise: new Promise(function (resolve, reject) {
+            
+            const requestURL =  `${codestoreURL}cloudvars/get?name=${school + "_" + hueuser}&school=${school}`;
+
+            fetch(requestURL, {
+                method: "GET"
+                })
+            .then(res => res.json())
+            .then(data => {
+                hideSpinner();
+                console.log("cloud variable data:", data);
+                if (data.status === 418) {
+                    reject(Error("User not enabled:"+user));    
+                } else if (data.status !== 200) {
+                    console.error("Cloud variable error in setHueBrideIP:", err);
+                    reject(Error("Error with school code for setting the Hue Bridge IP", err));                    
+                } else if (data.value === 'False') {
+                    reject(Error("User not enabled:"+user));  
+                }
+                hueBridgeIP = IP;
+                useHTTPS = Sk.ffi.remapToJs(useHttps);                        
+                resolve();
+            })
+            .catch(err => {
+                hideSpinner();
+                console.error("Request failed:",err);
+                reject(Error("Error with school code for setting the Hue Bridge IP", err));
+            });
+        })
+    };
+    showSpinner();
+    return susp;        
+}
+
+function getHueBridgeURL() {
+    return `${useHTTPS ? "https" : "http"}://${hueBridgeIP}`;
+}
+
+Sk.builtins.huelight = function huelight(light, on) {
     const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
 
     const lightOn = Sk.ffi.remapToJs(on);
 
     // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-    fetch(`https://${hueBridgeIP}/api/${username}/lights/${light}/state`, {
+    fetch(`${getHueBridgeURL()}/api/${username}/lights/${light}/state`, {
     //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
     method: "PUT",
     body: JSON.stringify({ on: lightOn })
@@ -978,15 +1123,13 @@ Sk.builtins.huelight = function(light, on) {
 }
 
 Sk.builtins.huebright = function(light, brightness) {
-    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
-    const bridgeIP = "192.168.0.17"; // your bridge IP
     const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
 
     const bri = Sk.ffi.remapToJs(brightness);
 
     // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-    fetch(`https://${hueBridgeIP}/api/${username}/lights/${light}/state`, {
+    fetch(`${getHueBridgeURL()}/api/${username}/lights/${light}/state`, {
     //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
     method: "PUT",
     body: JSON.stringify({ bri: bri })
@@ -997,8 +1140,6 @@ Sk.builtins.huebright = function(light, brightness) {
 }
 
 Sk.builtins.huecolour = function(light, x, y) {
-    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
-    const bridgeIP = "192.168.0.17"; // your bridge IP
     const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
 
     const lightx = Sk.ffi.remapToJs(x);
@@ -1006,7 +1147,7 @@ Sk.builtins.huecolour = function(light, x, y) {
 
     // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-    fetch(`https://${hueBridgeIP}/api/${username}/lights/${light}/state`, {
+    fetch(`${getHueBridgeURL()}/api/${username}/lights/${light}/state`, {
     //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
     method: "PUT",
     body: JSON.stringify(
@@ -1037,7 +1178,7 @@ Sk.builtins.getlight = function(light) {
         promise: new Promise(function (resolve, reject) {
             // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-            fetch(`https://${hueBridgeIP}/api/${username}/lights/${light}`, {
+            fetch(`${getHueBridgeURL()}/api/${username}/lights/${light}`, {
                 //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
                 method: "GET"
                 })
@@ -1056,8 +1197,6 @@ Sk.builtins.getlight = function(light) {
 }
 
 Sk.builtins.getButton = function(button) {
-    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
-    const bridgeIP = "192.168.0.17"; // your bridge IP
     const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
 
 
@@ -1073,7 +1212,7 @@ Sk.builtins.getButton = function(button) {
         promise: new Promise(function (resolve, reject) {
             // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-            fetch(`https://${hueBridgeIP}/api/${username}/sensors/${button}`, {
+            fetch(`${getHueBridgeURL()}/api/${username}/sensors/${button}`, {
                 //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
                 method: "GET"
                 })
@@ -1092,8 +1231,6 @@ Sk.builtins.getButton = function(button) {
 }
 
 Sk.builtins.waitForSmartButtonClick = function(button) {
-    // Only works in permissive environments (e.g., file:// or localhost with HTTP)
-    const bridgeIP = "192.168.0.17"; // your bridge IP
     const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
     const pollDelay = 800;
 
@@ -1112,7 +1249,7 @@ Sk.builtins.waitForSmartButtonClick = function(button) {
             const intervalID = setInterval(() => {
                 // https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights
 
-                fetch(`https://${hueBridgeIP}/api/${username}/sensors/${button}`, {
+                fetch(`${getHueBridgeURL()}/api/${username}/sensors/${button}`, {
                     //fetch(`https://192.168.0.17/api/3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP/lights`, {
                     method: "GET"
                     })

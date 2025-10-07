@@ -1080,6 +1080,7 @@ function runSkulpt(stepMode, code = "") {
 function stopSkulpt() {
 	editor.setReadOnly(false);
 	stopAllSounds();
+	stopAllHue();
 	hideSpinner();
 	destroyWebCam();
 	destroyWatchTableFrame();
