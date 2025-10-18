@@ -326,6 +326,11 @@ var codeurl;
 function copyURLToClipboard() {
 	navigator.clipboard.writeText(codeurl);
 	document.getElementById("copyToClip").innerText = "Copied!";
+
+	setTimeout(function() {
+		document.getElementById("copyToClip").innerText = "Copy URL";
+	}, 3000);
+	
 }
   
 async function getCodestoreURL() {
@@ -377,33 +382,23 @@ async function getCodestoreURL() {
             });
             
             codeurl += "&id=" + xhr.responseText; 
-            
-            showURLDialog("The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.");
 
-			// TODO: fix to work with display mode (need save it out)
-			// only display QR code if in babylon mode
-			//if (prevDisplay == "babylon") {
-			let qrCode = document.createElement('div');
-			qrCode.id = "qrcode";
-			qrCode.style.marginTop = "10px";
-			qrCode.style.maxWidth = "fit-content";
-			qrCode.style.marginLeft = "auto";
-			qrCode.style.marginRight = "auto";
-			qrCode.style.width = "128px";
-			qrCode.style.height = "128px";
-					
-			document.getElementById("urlContent").appendChild(qrCode);
+            showURLDialog(generateURLMsg(codeurl));
+			genereateQRCode(codeurl);
 
-			var qrCodeGenerator = new QRCode("qrcode", {
-				text: codeurl,
-				width: 128,
-				height: 128,
-				colorDark : "#000000",
-				colorLight : "#ffffff",
-				correctLevel : QRCode.CorrectLevel.H
-			});
-			//}
-			
+			// handling the headless checkbox
+			document.getElementById("headlessURL").checked = false;
+			document.getElementById("headlessURL").onchange = () => {
+				// regenerate URL message and QR code
+				if (document.getElementById("headlessURL").checked) {
+					showURLDialog(generateURLMsg(codeurl + "&headless=1"));					
+					genereateQRCode(codeurl + "&headless=1");
+				} else {
+					showURLDialog(generateURLMsg(codeurl));				
+					genereateQRCode(codeurl);				
+				}
+			};
+
 			document.getElementById("copyToClip").style.display = "inline"; 
         }
 		window.cancelAnimationFrame(animID);
@@ -420,6 +415,38 @@ async function getCodestoreURL() {
 	}
 	*/
 	xhr.send(sendURL);            
+}
+
+function generateURLMsg(codeurl) {
+	return "The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.";
+}
+
+function genereateQRCode(codeurl) {
+	// TODO: fix to work with display mode (need save it out)
+	if (document.getElementById("qrcode") !== null) {
+		// remove any previous qr codes from the dialog (e.g. before the user toggles the headless checkbox)
+		document.getElementById("qrcode").remove();
+	}
+
+	let qrCode = document.createElement('div');
+	qrCode.id = "qrcode";
+	qrCode.style.marginTop = "10px";
+	qrCode.style.maxWidth = "fit-content";
+	qrCode.style.marginLeft = "auto";
+	qrCode.style.marginRight = "auto";
+	qrCode.style.width = "128px";
+	qrCode.style.height = "128px";
+			
+	document.getElementById("urlContent").appendChild(qrCode);
+
+	var qrCodeGenerator = new QRCode("qrcode", {
+		text: codeurl,
+		width: 128,
+		height: 128,
+		colorDark : "#000000",
+		colorLight : "#ffffff",
+		correctLevel : QRCode.CorrectLevel.H
+	});
 }
 
 function setTrainingWheels() {

@@ -287,7 +287,8 @@ function addImage(url, width, height, x, y, onload, onerror) {
     pyConsole.appendChild(createImageElement(url, width, height, x, y, onload, onerror));      
 }
 
-function createYoutubeElement(videoId, width, height, x, y, onload, onerror) {
+// TODO: merge this with the createIFrameElement later - after the showGDriveVideo sk.builtin function is fully working
+function createYouTubeElement(id, width, height, x, y, onload, onerror) {
     const iframe = document.createElement('iframe');
 
     // setting the width and height of the image element if specified
@@ -298,7 +299,7 @@ function createYoutubeElement(videoId, width, height, x, y, onload, onerror) {
         iframe.setAttribute('height', height);
     }    
   
-    iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`);
+    iframe.setAttribute('src', `https://www.youtube.com/embed/${id}?autoplay=1&mute=1`);
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
     iframe.setAttribute('allowfullscreen', '');
@@ -326,9 +327,42 @@ function createYoutubeElement(videoId, width, height, x, y, onload, onerror) {
     return iframe;
 }
 
+function createIFrameElement(url, width, height, x, y) {
+    const iframe = document.createElement('iframe');
+
+    // setting the width and height of the image element if specified
+    if (width !== null) {
+        iframe.setAttribute('width', width);
+    }
+    if (height !== null) {
+        iframe.setAttribute('height', height);
+    }    
+  
+    iframe.setAttribute('src', url);
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+  
+    iframe.id = (Math.random() + 1).toString(36).substring(7);
+    iframe.style.display = "none";
+
+    // setting the position of the image element if x and y were specified
+    if (x !== null || y !== null) {
+        iframe.style.position = "absolute";
+    }
+    if (x !== null) {
+        iframe.style.left = x + "px";
+    }
+    if (y !== null) {
+        iframe.style.top = y + "px";
+    }
+
+    return iframe;
+}
+
 function addYoutube(id, width, height, x, y, onload, onerror) {
     showSpinner();
-    pyConsole.appendChild(createYoutubeElement(id, width, height, x, y, onload, onerror));      
+    pyConsole.appendChild(createYouTubeElement(`https://www.youtube.com/embed/${id}?autoplay=1&mute=1`, width, height, x, y, onload, onerror));      
 }
 
 function onImageLoaded() {
@@ -340,6 +374,120 @@ function onImageLoaded() {
 function onImageError() {
     showErrorDialog("There was an error loading: " + this.src, hideSpinner);    
 }
+
+function getGoogleDriveFileId(url) {
+    // Remove any URL fragments and normalize
+    const cleanUrl = url.split('#')[0];
+    
+    // Regex patterns for different Google Drive URL formats
+    const patterns = [
+        /\/file\/d\/([a-zA-Z0-9-_]+)\/?/,     // /file/d/ID/ or /file/d/ID
+        /\/d\/([a-zA-Z0-9-_]+)\/?/,           // /d/ID/ or /d/ID
+        /[?&]id=([a-zA-Z0-9-_]+)/,           // ?id=ID or &id=ID
+        /\/open\?id=([a-zA-Z0-9-_]+)/,       // /open?id=ID
+    ];
+    
+    for (const pattern of patterns) {
+        const match = cleanUrl.match(pattern);
+        if (match && match[1]) {
+            return match[1];
+        }
+    }
+    
+    return null;
+}
+
+function setupIFrame(url, width, height, x, y) {
+    susp = new Sk.misceval.Suspension();
+    susp.resume = function () {
+        if (susp.data["error"]) {
+            throw new Sk.builtin.IOError(susp.data["error"].message);
+        }
+        return susp.data.result;
+    };
+    susp.data = {
+        type: "Sk.promise",
+        promise: new Promise(function (resolve, reject) {
+
+            showSpinner();
+            let iframe = createIFrameElement(url, width, height, x, y);
+            iframe.onload = () => {
+                iframe.style.display = "block";
+                // hide the spinner after image has loaded
+                hideSpinner();
+                resolve();
+            };
+            iframe.onerror = () => {
+                reject(Error("There was an error loading: " + url));
+                hideSpinner();
+            };
+                            
+            pyConsole.appendChild(iframe);      
+        })
+    };
+
+    return susp;            
+}
+
+Sk.builtin.showGoogleVideo = function showGoogleVideo(url, width, height, x, y) {
+    const _url = Sk.ffi.remapToJs(url);
+    const _width = Sk.ffi.remapToJs(width);
+    const _height = Sk.ffi.remapToJs(height);
+    const _x = Sk.ffi.remapToJs(x);
+    const _y = Sk.ffi.remapToJs(y);
+    
+
+    const _id = getGoogleDriveFileId(_url);
+    if (_id === null) {
+        throw Error("The url is not a google drive link.");
+    }
+
+    return setupIFrame(`https://drive.google.com/file/d/${_id}/preview`);
+       
+}
+
+Sk.builtins["showGoogleVideo"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.showGoogleVideo,
+        $name: "showGoogleVideo",
+        $flags: {
+            NamedArgs: [null, "width", "height", "x", "y"],
+            Defaults: [600, 480, 0, 0],
+        },
+        $textsig: "($module, size /)",
+        $doc:
+            "Displays a google drive video in an iframe",
+    },
+    null,
+    "builtins"
+);
+
+Sk.builtin.showIFrame = function showIFrame(url, width, height, x, y) {
+    const _url = Sk.ffi.remapToJs(url);
+    const _width = Sk.ffi.remapToJs(width);
+    const _height = Sk.ffi.remapToJs(height);
+    const _x = Sk.ffi.remapToJs(x);
+    const _y = Sk.ffi.remapToJs(y);
+    
+    return setupIFrame(url);
+       
+}
+
+Sk.builtins["showIFrame"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.showIFrame,
+        $name: "showIFrameshowIFrame",
+        $flags: {
+            NamedArgs: [null, "width", "height", "x", "y"],
+            Defaults: [600, 480, 0, 0],
+        },
+        $textsig: "($module, size /)",
+        $doc:
+            "Displays a URL in an iframe",
+    },
+    null,
+    "builtins"
+);
 
 /////////////////////// UI functions /////////////////////////////
 
@@ -1273,5 +1421,6 @@ Sk.builtins.waitForSmartButtonClick = function(button) {
     };
     return susp;    
 }
+
 
 
