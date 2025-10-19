@@ -333,6 +333,42 @@ function copyURLToClipboard() {
 	}, 3000);
 	
 }
+
+function constructSnapshotURL(headlessMode) {
+	_codeurl = window.location.toString();
+
+	// TODO: fix to work with display mode (need save it out)
+	if (prevDisplay == "babylon") {
+		// genereate a url with the wrapper around the editor.html (the index.html file => ATM works for the XR overlay)
+		_codeurl = _codeurl.split('?')[0] + "?";
+		_codeurl = _codeurl.replace("editor.html", "")
+	} else {
+		_codeurl = _codeurl.split('?')[0] + "?";	
+	}
+	
+	delimit = "";
+
+	urlParams.forEach(function(value, key) {
+	  if (key != "id" && key !== "undefined" && key != "project" && key != "headless" && key != "code") {
+		_codeurl = _codeurl + "&" + key + "=" + value;
+	  }
+	});
+	
+	// id is global
+	_codeurl += "&id=" + g_id; 
+	if (headlessMode) {
+		_codeurl += "&headless=1";
+	}
+
+	return _codeurl;
+}
+
+function constructSnapshotURLDialogText() {
+	codeurl = constructSnapshotURL(document.getElementById("headlessURL").checked);
+
+	showURLDialog(generateURLMsg(codeurl), true);
+	genereateQRCode(codeurl);	
+}
   
 async function getCodestoreURL() {
     document.getElementById("codestoreURL").innerText = origMsg;    
@@ -363,42 +399,14 @@ async function getCodestoreURL() {
             showURLDialog("Unfortunately there was an error generating your URL, please save your code to a file instead and try again later.");
 		}
         else {
-            codeurl = window.location.toString();
-
-			// TODO: fix to work with display mode (need save it out)
-			if (prevDisplay == "babylon") {
-				// genereate a url with the wrapper around the editor.html (the index.html file => ATM works for the XR overlay)
-				codeurl = codeurl.split('?')[0] + "?";
-				codeurl = codeurl.replace("editor.html", "")
-			} else {
-				codeurl = codeurl.split('?')[0] + "?";	
-			}
-            
-            delimit = "";
-
-            urlParams.forEach(function(value, key) {
-              if (key != "id" && key !== "undefined" && key != "project" && key != "headless" && key != "code") {
-                codeurl = codeurl + "&" + key + "=" + value;
-              }
-            });
-            
-            codeurl += "&id=" + xhr.responseText; 
-
-            showURLDialog(generateURLMsg(codeurl), true);
-			genereateQRCode(codeurl);
-
+			// this is a global variable!
+			g_id = xhr.responseText;
 			// handling the headless checkbox
 			document.getElementById("headlessURL").checked = false;
-			document.getElementById("headlessURL").onchange = () => {
-				// regenerate URL message and QR code
-				if (document.getElementById("headlessURL").checked) {
-					showURLDialog(generateURLMsg(codeurl + "&headless=1"), true);					
-					genereateQRCode(codeurl + "&headless=1");
-				} else {
-					showURLDialog(generateURLMsg(codeurl), true);				
-					genereateQRCode(codeurl);				
-				}
-			};
+			constructSnapshotURLDialogText();
+
+			// regenerate on headless checkbox changee
+			document.getElementById("headlessURL").onchange = constructSnapshotURLDialogText;
         }
 		window.cancelAnimationFrame(animID);
 	  }
@@ -407,17 +415,12 @@ async function getCodestoreURL() {
 
 	saveToLocalStorage();
 	sendURL = "code="+ encodeURIComponent(code);
-	// update existing id if exists - comment out for new URL everytime
-	/*
-	if (id !== null) {
-		sendURL += "&id=" + id;
-	}
-	*/
+
 	xhr.send(sendURL);            
 }
 
-function generateURLMsg(codeurl) {
-	return "The code has been snapshotted to the url below:<br><br><a href=" + codeurl + " target='_blank'>" + codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.";
+function generateURLMsg(_codeurl) {
+	return "The code has been snapshotted to the url below:<br><br><a href=" + _codeurl + " target='_blank'>" + _codeurl + "</a><br><br><b>NOTE:</b> This URL will not save your changes, so if you change your code, you MUST regenerate the URL.";
 }
 
 function genereateQRCode(codeurl) {
@@ -1707,7 +1710,7 @@ else {
 }
 
 // code store id
-var id = urlParams.get('id');
+var g_id = urlParams.get('id');
 // project mode: load from code from existing .py file under /projects
 // only works when hosted on web server (no filesystem mode)
 project = urlParams.get('project');
@@ -1753,12 +1756,12 @@ var codestring = "";
 // load code by id from codestore
 // only if code not provided in URL
 if (!(esc != null && esc.length > 0)) {
-	if (id != null && id.length > 0) {
+	if (g_id != null && g_id.length > 0) {
 		var xhr2 = new XMLHttpRequest();
 		var editorDiv = document.getElementById("editor"); 
 		var consoleDiv = document.getElementById("console"); 
 
-		xhr2.open("GET", Sk.builtins.webServiceURL.v + 'get?id=' + id, true);
+		xhr2.open("GET", Sk.builtins.webServiceURL.v + 'get?id=' + g_id, true);
 
 		if (!headless) {
 			setSpinnerInEditor(true);
@@ -1812,15 +1815,15 @@ if (!(esc != null && esc.length > 0)) {
 		}
 
 		xhr2.ontimeout = (e) => {
-			console.log("Timeout on retrieving code from id:" + id + ". Please check the URL and try again.");    
+			console.log("Timeout on retrieving code from id:" + g_id + ". Please check the URL and try again.");    
 			setSpinnerInEditor(false);
-			showURLDialog("Timeout on retrieving code from id:" + id + ". Please check the URL and try again.");            
+			showURLDialog("Timeout on retrieving code from id:" + g_id + ". Please check the URL and try again.");            
 		};    
 	
 		xhr2.onerror = function() {
-			console.log("Error with retrieving code from id:" + id + ". Please check the URL and try again.");
+			console.log("Error with retrieving code from id:" + g_id + ". Please check the URL and try again.");
 			setSpinnerInEditor(false);
-			showURLDialog("Error with retrieving code from id:" + id + ". Please check the URL and try again.");            
+			showURLDialog("Error with retrieving code from id:" + g_id + ". Please check the URL and try again.");            
 		}		
 		xhr2.send();   
 	}
