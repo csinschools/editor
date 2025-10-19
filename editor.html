@@ -46,7 +46,7 @@
   <script src="js/skulpt.min.js?t=59" type="text/javascript"></script>
   <script src="js/skulpt-stdlib.js?t=59" type="text/javascript"></script>
   <script src="js/pygmi.js?t=1" type="text/javascript" charset="utf-8"></script>
-  <script src="js/console.js?t=101" type="text/javascript" charset="utf-8"></script>
+  <script src="js/console.js?t=105" type="text/javascript" charset="utf-8"></script>
   <!-- ace editor scripts -->
 	<script src="js/ace.js?t=2" type="text/javascript" charset="utf-8"></script>
   <script src="js/ext-language_tools.js?t=4" type="text/javascript" charset="utf-8"></script>
@@ -89,10 +89,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <dialog id="urlDialog">
             <div id="urlContent"></div>
             <br>
-            <div>
+            <div id="headlessCheckbox">
               <input type="checkbox" id="headlessURL" name="headlessURLMode"> Run without Editor              
+              <br><br>
             </div>            
-            <br>
             <div>
               <button onclick="document.getElementById('urlDialog').style.display = 'none'; resetSnapURLButton();">OK</button>
               <button id="copyToClip" onclick="copyURLToClipboard();" style = "width:80px">Copy URL</button>
@@ -135,7 +135,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!---- setting up global vars for the editor and console etc. ----->
     <script src="js/lex.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/lexpy.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/editor.js?t=42" type="text/javascript"></script>
+	<script src="js/editor.js?t=44" type="text/javascript"></script>
 	<div class="modal">
 	  <div class="modal-content">
 		<span class="close-btn">&times;</span>

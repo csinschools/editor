@@ -294,8 +294,9 @@ function checkBrowser() {
 	}
 }
 
-function showURLDialog(msg) {
-	document.getElementById("copyToClip").style.display = "none"; 
+function showURLDialog(msg, showCopy = false) {
+	document.getElementById("copyToClip").style.display = showCopy ? "inline" : "none"; 
+	document.getElementById("headlessCheckbox").style.display = showCopy ? "block" : "none"; 
     document.getElementById("urlContent").innerHTML = msg;
     document.getElementById("urlDialog").style.display = "block";      
 }
@@ -383,7 +384,7 @@ async function getCodestoreURL() {
             
             codeurl += "&id=" + xhr.responseText; 
 
-            showURLDialog(generateURLMsg(codeurl));
+            showURLDialog(generateURLMsg(codeurl), true);
 			genereateQRCode(codeurl);
 
 			// handling the headless checkbox
@@ -391,15 +392,13 @@ async function getCodestoreURL() {
 			document.getElementById("headlessURL").onchange = () => {
 				// regenerate URL message and QR code
 				if (document.getElementById("headlessURL").checked) {
-					showURLDialog(generateURLMsg(codeurl + "&headless=1"));					
+					showURLDialog(generateURLMsg(codeurl + "&headless=1"), true);					
 					genereateQRCode(codeurl + "&headless=1");
 				} else {
-					showURLDialog(generateURLMsg(codeurl));				
+					showURLDialog(generateURLMsg(codeurl), true);				
 					genereateQRCode(codeurl);				
 				}
 			};
-
-			document.getElementById("copyToClip").style.display = "inline"; 
         }
 		window.cancelAnimationFrame(animID);
 	  }
@@ -1740,6 +1739,16 @@ if (localStorage.getItem(filename) !== null && !(id != null && id.length > 0) &&
 }
 */
 
+function setSpinnerInEditor(visible) {
+	if (visible) {
+		spinner.style.display = "block";
+		editorDiv.appendChild(spinner);
+	} else {
+		spinner.style.display = "none";
+		editorDiv.removeChild(spinner);			
+	}
+}
+
 var codestring = "";
 // load code by id from codestore
 // only if code not provided in URL
@@ -1752,16 +1761,16 @@ if (!(esc != null && esc.length > 0)) {
 		xhr2.open("GET", Sk.builtins.webServiceURL.v + 'get?id=' + id, true);
 
 		if (!headless) {
-			spinner.style.display = "block";
+			setSpinnerInEditor(true);
 			editor.setValue("# Loading code... please wait.", -1);
-			
-			editorDiv.appendChild(spinner);
 		} 
 		else {
 			spinner.style.display = "block";
 			consoleDiv.appendChild(spinner);
 			setupHeadless();
 		}
+
+		xhr2.timeout = 10000; // time in milliseconds
 
 		xhr2.onreadystatechange = function() { 
 			if (this.readyState === XMLHttpRequest.DONE) {
@@ -1799,12 +1808,20 @@ if (!(esc != null && esc.length > 0)) {
 						}
 					}		
 				}
-				else {
-					// TODO: error handling
-					alert("There was a problem loading your code form the codestore. Please check the URL and/or try again later.")
-				}
 			}
 		}
+
+		xhr2.ontimeout = (e) => {
+			console.log("Timeout on retrieving code from id:" + id + ". Please check the URL and try again.");    
+			setSpinnerInEditor(false);
+			showURLDialog("Timeout on retrieving code from id:" + id + ". Please check the URL and try again.");            
+		};    
+	
+		xhr2.onerror = function() {
+			console.log("Error with retrieving code from id:" + id + ". Please check the URL and try again.");
+			setSpinnerInEditor(false);
+			showURLDialog("Error with retrieving code from id:" + id + ". Please check the URL and try again.");            
+		}		
 		xhr2.send();   
 	}
 	// only open up project if there is no id

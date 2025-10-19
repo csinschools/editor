@@ -347,13 +347,13 @@ function createIFrameElement(url, width, height, x, y) {
     iframe.style.display = "none";
 
     // setting the position of the image element if x and y were specified
-    if (x !== null || y !== null) {
+    if (x >= 0 || y >= 0) {
         iframe.style.position = "absolute";
     }
-    if (x !== null) {
+    if (x >= 0) {
         iframe.style.left = x + "px";
     }
-    if (y !== null) {
+    if (y >= 0) {
         iframe.style.top = y + "px";
     }
 
@@ -442,7 +442,7 @@ Sk.builtin.showGoogleVideo = function showGoogleVideo(url, width, height, x, y) 
         throw Error("The url is not a google drive link.");
     }
 
-    return setupIFrame(`https://drive.google.com/file/d/${_id}/preview`);
+    return setupIFrame(`https://drive.google.com/file/d/${_id}/preview`, _width, _height, _x, _y);
        
 }
 
@@ -452,7 +452,7 @@ Sk.builtins["showGoogleVideo"] = new Sk.builtin.sk_method(
         $name: "showGoogleVideo",
         $flags: {
             NamedArgs: [null, "width", "height", "x", "y"],
-            Defaults: [600, 480, 0, 0],
+            Defaults: [600, 480, -1, -1],
         },
         $textsig: "($module, size /)",
         $doc:
@@ -469,7 +469,7 @@ Sk.builtin.showIFrame = function showIFrame(url, width, height, x, y) {
     const _x = Sk.ffi.remapToJs(x);
     const _y = Sk.ffi.remapToJs(y);
     
-    return setupIFrame(url);
+    return setupIFrame(url, _width, _height, _x, _y);
        
 }
 
@@ -479,7 +479,7 @@ Sk.builtins["showIFrame"] = new Sk.builtin.sk_method(
         $name: "showIFrameshowIFrame",
         $flags: {
             NamedArgs: [null, "width", "height", "x", "y"],
-            Defaults: [600, 480, 0, 0],
+            Defaults: [600, 480, -1, -1],
         },
         $textsig: "($module, size /)",
         $doc:
