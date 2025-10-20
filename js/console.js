@@ -476,12 +476,12 @@ Sk.builtin.showIFrame = function showIFrame(url, width, height, x, y) {
 Sk.builtins["showIFrame"] = new Sk.builtin.sk_method(
     {
         $meth: Sk.builtin.showIFrame,
-        $name: "showIFrameshowIFrame",
+        $name: "showIFrame",
         $flags: {
             NamedArgs: [null, "width", "height", "x", "y"],
             Defaults: [600, 480, -1, -1],
         },
-        $textsig: "($module, size /)",
+        $textsig: "($module, url, width, height, x, y /)",
         $doc:
             "Displays a URL in an iframe",
     },
@@ -1252,6 +1252,65 @@ Sk.builtins.setHueBridgeIP = function setHueBridgeIP(IP, user, useHttps = true) 
 function getHueBridgeURL() {
     return `${useHTTPS ? "https" : "http"}://${hueBridgeIP}`;
 }
+
+
+Sk.builtin.setLightState = function setLightState(light, on, bright, x, y) {
+    const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
+
+    if (light === null) {
+        return;
+    }
+
+    const _light = Sk.ffi.remapToJs(light);
+    const _on = on ? Sk.ffi.remapToJs(on) : null;
+    const _brightness = Sk.ffi.remapToJs(bright);
+    const _x = Sk.ffi.remapToJs(x);
+    const _y = Sk.ffi.remapToJs(y);
+
+    // TODO?: put this into a suspension to make it synchronous
+    let state = {};
+    if (_on !== null) {
+        state["on"] = _on;
+    }
+    if (_brightness !== -1) {
+        if (_brightness > 254) {
+            _brightness = 254;
+        }
+        state["bri"] = _brightness;
+    }
+    if (_x !== -1 && _y !== -1) {
+        state["xy"] = [_x, _y];
+        state["colormode"] = "xy";
+    }
+
+    fetch(`${getHueBridgeURL()}/api/${username}/lights/${_light}/state`, {
+        method: "PUT",
+        body: JSON.stringify()
+    })
+    .then(res => res.json())
+    .then(data => console.log("Light state changed:", data))
+    .catch(err => {
+        console.error("Request failed:", err);
+        throw new Sk.builtin.IOError("Error with setting light state:" + err);
+    });
+}
+
+Sk.builtins["setLightState"] = new Sk.builtin.sk_method(
+    {
+        $meth: Sk.builtin.setLightState,
+        $name: "setLightState",
+        $flags: {
+            NamedArgs: ["light", "on", "bright", "x", "y"],
+            Defaults: [null, null, -1, -1, -1],
+        },
+        $textsig: "($module, light, on, bright, x, y /)",
+        $doc:
+            "Displays a URL in an iframe",
+    },
+    null,
+    "builtins"
+);
+
 
 Sk.builtins.huelight = function huelight(light, on) {
     const username = "3Lq6V7ZuY7pxl5vbivXanTQqe1XDllV8lHFEOhhP"; // obtained by pressing button + POST /api
