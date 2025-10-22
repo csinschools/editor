@@ -1264,7 +1264,7 @@ Sk.builtin.setHueBridgeIP = function setHueBridgeIP(IP, user, hueUserName, useHt
                     } else {
                         // all good
                         hideSpinner();
-                        resolve();
+                        resolve(Sk.ffi.remapToPy(data));
                     }
                 })
                 .catch(err => {
