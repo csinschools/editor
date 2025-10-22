@@ -1236,7 +1236,7 @@ Sk.builtin.setHueBridgeIP = function setHueBridgeIP(IP, user, hueUserName, useHt
                 })
             .then(res => res.json())
             .then(data => {
-                hideSpinner();
+                //hideSpinner();
                 console.log("cloud variable data:", data);
                 if (data.status === 418) {
                     reject(Error("User not enabled:"+user));    
@@ -1248,7 +1248,30 @@ Sk.builtin.setHueBridgeIP = function setHueBridgeIP(IP, user, hueUserName, useHt
                 }
                 g_hueBridgeIP = IP;
                 g_useHTTPS = Sk.ffi.remapToJs(useHttps);                        
-                resolve();
+
+                // now send a state request for lights
+                fetch(`${getHueBridgeURL()}/api/${g_hueUserName}/lights`, {
+                    method: "GET"
+                })
+                .then(res => res.json())
+                .then(data => {                    
+                    console.log("Light state request:", data);
+                    if (data.length > 0 && "error" in data[0]) {
+                        // error with permissions?
+                        console.error("Light state request failed:", data[0]["error"]);
+                        hideSpinner();
+                        reject(Error("Error with accessing the hue bridge:" + data[0]["error"]["description"]));     
+                    } else {
+                        // all good
+                        hideSpinner();
+                        resolve();
+                    }
+                })
+                .catch(err => {
+                    console.error("Request failed:", err);
+                    hideSpinner();
+                    reject(Error("Error with accessing the hue bridge:" + err));                
+                });
             })
             .catch(err => {
                 hideSpinner();
@@ -1293,7 +1316,9 @@ Sk.builtin.setLight = function setLight(light, on, bright, x, y) {
     const _x = Sk.ffi.remapToJs(x);
     const _y = Sk.ffi.remapToJs(y);
 
-    // TODO?: put this into a suspension to make it synchronous
+    // Do NOT make this a synchronous suspension because we would like multiple setLight functions issued
+    // across multiple devices simulateneously. We don't want one light to wait until another light is done
+    // before updating its state
     let state = {};
     if (_on !== null) {
         state["on"] = _on;
