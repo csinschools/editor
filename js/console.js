@@ -144,7 +144,8 @@ function resetConsole() {
 }
 
 function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underlined) {
-    let t = document.createTextNode(n);        
+    //let t = document.createTextNode(n);        
+
     let e = document.createElement("span");    
     
     if (typeof(color) !== 'undefined') {
@@ -185,8 +186,38 @@ function createColouredTextSpanElement(n, color, bgcolor, italics, bold, underli
     e.style.color = fontColour;
     e.style.fontSize = fontSize;
     
-    e.appendChild(t);        
+    //e.appendChild(t);        
+    parseTextAndCreateLinks(n, e);
     return e;
+}
+
+function parseTextAndCreateLinks(text, targetNode) {
+    // URL regex pattern - matches http/https URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+    // Split text by URLs while keeping the URLs
+    const parts = text.split(urlRegex);
+    
+    // Clear the target node first
+    targetNode.innerHTML = '';
+    
+    // Process each part
+    parts.forEach(part => {
+        if (urlRegex.test(part)) {
+            // This part is a URL - create anchor element
+            const link = document.createElement('a');
+            link.href = part;
+            link.textContent = part;
+            link.target = '_blank'; // Open in new tab
+            link.rel = 'noopener noreferrer'; // Security best practice
+            
+            targetNode.appendChild(link);
+        } else {
+            // This part is regular text - create text node
+            const textNode = document.createTextNode(part);
+            targetNode.appendChild(textNode);
+        }
+    });
 }
 /////////////////////// Tone js functions //////////////////////////
 var toneSynth = null;
@@ -1231,6 +1262,8 @@ Sk.builtin.setHueBridgeIP = function setHueBridgeIP(IP, user, hueUserName, useHt
             
             const requestURL =  `${codestoreURL}cloudvars/get?name=${school + "_" + hueuser}&school=${school}`;
 
+            showSpinner();
+
             fetch(requestURL, {
                 method: "GET"
                 })
@@ -1247,11 +1280,16 @@ Sk.builtin.setHueBridgeIP = function setHueBridgeIP(IP, user, hueUserName, useHt
                     reject(Error("User not enabled:"+user));  
                 }
                 g_hueBridgeIP = IP;
-                g_useHTTPS = Sk.ffi.remapToJs(useHttps);                        
+                g_useHTTPS = Sk.ffi.remapToJs(useHttps);      
+
+                // setting up timeout mechanism
+                const controller = new AbortController();
+                const id = setTimeout(() => controller.abort(), 5000);
 
                 // now send a state request for lights
                 fetch(`${getHueBridgeURL()}/api/${g_hueUserName}/lights`, {
-                    method: "GET"
+                    method: "GET",
+                    signal: controller.signal
                 })
                 .then(res => res.json())
                 .then(data => {                    
@@ -1259,28 +1297,34 @@ Sk.builtin.setHueBridgeIP = function setHueBridgeIP(IP, user, hueUserName, useHt
                     if (data.length > 0 && "error" in data[0]) {
                         // error with permissions?
                         console.error("Light state request failed:", data[0]["error"]);
-                        hideSpinner();
                         reject(Error("Error with accessing the hue bridge:" + data[0]["error"]["description"]));     
                     } else {
                         // all good
-                        hideSpinner();
                         resolve(Sk.ffi.remapToPy(data));
                     }
                 })
                 .catch(err => {
-                    console.error("Request failed:", err);
+                    console.error("Request failed:", err);                    
+                    if (err.name === 'AbortError') {
+                        // timeout: wrong IP address?
+                        reject(Error(`Timed out when trying to connect to IP: ${IP} - please check that you have the correct ID address.`));                
+                    } else {
+                        reject(Error(`Error with accessing the hue bridge. Please check that you can access https://${IP} - ${err}`));                
+                    }
+                })
+                .finally(() => {
                     hideSpinner();
-                    reject(Error("Error with accessing the hue bridge:" + err));                
+                    clearTimeout(id);
                 });
             })
             .catch(err => {
-                hideSpinner();
                 console.error("Request failed:",err);
                 reject(Error("Error with school code for setting the Hue Bridge IP", err));
-            });
+            })
+            
         })
     };
-    showSpinner();
+    
     return susp;        
 }
 
