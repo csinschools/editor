@@ -90,7 +90,7 @@ def show_title():
     drawText(f"Tic-Tac-Toe", left + 20, bottom + 3 * (size + borderWidth) + 20, f"30px Arial", WHITE)
     show_board()
     drawText(f"I am O, you are X", left + 20, bottom - 60, f"20px Arial", YELLOW)
-    drawText(f"I am also unbeatable!", left + 10, bottom - 90, f"20px Arial", GREEN)
+    drawText(f"Can you beat me?", left + 20, bottom - 90, f"20px Arial", GREEN)
     drawText(f"Use WASD or Arrow Keys to move", left - 50, bottom - 120, f"20px Arial", WHITE)
     drawText(f"Press [Enter] to Play!", left, bottom - 160, f"24px Arial", WHITE)
     refresh()
