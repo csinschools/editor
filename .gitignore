@@ -4,4 +4,5 @@ piskel/
 *.pem
 https_server.py
 build.bat
+.vscode/
 	
