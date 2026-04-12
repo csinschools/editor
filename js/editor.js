@@ -1683,6 +1683,11 @@ if (display == null || display.length == 0)
 }
 setDisplayMode(display);
 
+// hide stop and next button on load
+stopButton.style.display = "none";
+nextButton.style.display = "none";
+stepButton.style.display = "none";
+
 
 // auto run
 autorun = urlParams.get('autorun')
@@ -1925,10 +1930,6 @@ else {
 	}
 }
 
-// hide stop and next button on load
-stopButton.style.display = "none";
-nextButton.style.display = "none";
-
 // allows save (and load)
 nosave = urlParams.get('nosave')
 if (nosave != null && nosave.length > 0) {
@@ -1941,12 +1942,9 @@ if (nosave != null && nosave.length > 0) {
 
 // disable step-run button
 nostep = urlParams.get('nostep')
-if (nostep != null && nostep.length > 0) {
-	stepButton.style.display = "none";
-	stopButton.style.width = "72px";
-} else {
-	stepButton.style.display = "inline";
-}
+// always hide step button on load
+stepButton.style.display = "none";
+
 
 // disable codestore button
 nosnap = urlParams.get('nosnap')

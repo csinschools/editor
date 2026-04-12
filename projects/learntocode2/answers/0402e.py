@@ -1,6 +1,6 @@
 from csinsc import *
 
-playSound("samples/music/Golden_Axe.mp3")
+#playSound("samples/music/Golden_Axe.mp3")
 
 label .jukebox
 clear()

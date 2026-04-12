@@ -1,6 +1,11 @@
 from pyangelo import *
 from random import randint
 
+# Rules-Based Tic-Tac-Toe for the classroom
+# You are X, the computer is O.
+# The computer follows a list of rules IN ORDER.
+# It tries rule 1 first. If that doesn't apply, it tries rule 2. And so on.
+# ---- The rules the computer uses, in order ----
 def computer_move():
     # Rule 1: If I can win this turn, WIN.
     move = find_two_in_a_row("O")
@@ -41,9 +46,9 @@ def computer_move():
             return opposite                
         
     # Rule 7: Take a random position which is not occupied - prefer centre
-    position = choose_random_pos(centreBias = 1.0)
+    position = choose_random_pos(centreBias = 0.5)
     while not is_empty(position):
-        position = choose_random_pos(centreBias = 1.0)
+        position = choose_random_pos(centreBias = 0.5)
     print("Computer rule: Take a random square.")
     return position   
     
@@ -53,13 +58,14 @@ def choose_random_pos(centreBias = 0.5):
         position = 4
     return position
 
-
+# global variables
 bottom = 200
 left = 60
 xPos = 0
 yPos = 0
 xMargin = 10
 yMargin = 15
+alpha = 1
 
 size = 60
 borderWidth = 10
@@ -85,6 +91,17 @@ def getCoord(pos):
     col = pos % 3
     return row, col
     
+def getMoveFromCoord(row, col):
+    return row * 3 + col
+    
+def convertMousePosToCoord(x, y):
+    if x < left or x > left + 3 * (size + borderWidth) or y < bottom or y > bottom + 3 * (size + borderWidth):
+        return None
+        
+    row = 2 - ((y - bottom) // (size + borderWidth))
+    col = (x - left) // (size + borderWidth)
+    return row, col
+    
 def show_title():
     clearScreen(BLACK)
     drawText(f"Tic-Tac-Toe", left + 20, bottom + 3 * (size + borderWidth) + 20, f"30px Arial", WHITE)
@@ -107,7 +124,6 @@ def show_board():
         drawLine(left, bottom + 2 * (size + borderWidth), left + 3 * (size + borderWidth), bottom + 2 * (size + borderWidth), 3, WHITE)
         drawLine(left + (size + borderWidth), bottom + 3 * (size + borderWidth), left + (size + borderWidth), bottom, 3, WHITE)
         drawLine(left + 2 * (size + borderWidth), bottom + 3 * (size + borderWidth), left + 2 * (size + borderWidth), bottom, 3, WHITE)
-        #drawLine(left, bottom + (size + borderWidth), left + 3 * (size + borderWidth), bottom + (size + borderWidth), 3, WHITE)
 
 def drawWinner(a, b, c, winner):
     row, col = getCoord(a)
@@ -116,53 +132,6 @@ def drawWinner(a, b, c, winner):
     drawText(f"{winner}", left + xMargin + col * (size + borderWidth), bottom + yMargin + (2 - row) * (size + borderWidth), f"{size}px Arial", GREEN)        
     row, col = getCoord(c)
     drawText(f"{winner}", left + xMargin + col * (size + borderWidth), bottom + yMargin + (2 - row) * (size + borderWidth), f"{size}px Arial", GREEN)        
-
-def getMove():
-    global timer, xPos, yPos
-
-    delta = timeElapsed()
-    
-    timer -= delta
-    
-    if isKeyPressed('Enter'):
-        return (xPos) + ((2 - yPos) * 3)
-
-    if timer <= 0:
-        if isKeyPressed('d') or isKeyPressed('ArrowRight'):
-            xPos +=1
-            timer = repeatKeyTimer
-        elif isKeyPressed('a') or isKeyPressed('ArrowLeft'):
-            xPos -=1  
-            timer = repeatKeyTimer
-        elif isKeyPressed('s') or isKeyPressed('ArrowDown'):
-            yPos -=1
-            timer = repeatKeyTimer
-        elif isKeyPressed('w') or isKeyPressed('ArrowUp'):
-            yPos +=1      
-            timer = repeatKeyTimer
-        else:
-            timer = 0
-    else:
-        if not (isKeyPressed('d') or isKeyPressed('a') or isKeyPressed('s') or isKeyPressed('w') or isKeyPressed('ArrowRight') or isKeyPressed('ArrowLeft') or isKeyPressed('ArrowUp') or isKeyPressed('ArrowDown')):
-            timer = 0
-        
-    if xPos > 2:
-        xPos = 0
-    if xPos < 0:
-        xPos = 2
-    if yPos > 2:
-        yPos = 0
-    if yPos < 0:
-        yPos = 2
-        
-    drawRect(left + xPos * (size + borderWidth), bottom + (yPos * (size + borderWidth)), (size + borderWidth), (size + borderWidth), 2, RED)
-    
-    return -1
-
-# Rules-Based Tic-Tac-Toe for the classroom
-# You are X, the computer is O.
-# The computer follows a list of rules IN ORDER.
-# It tries rule 1 first. If that doesn't apply, it tries rule 2. And so on.
 
 def is_empty(square):
     return board[square] == " "
@@ -177,8 +146,6 @@ def check_winner():
     if not empty_squares():
         return "draw", -1, -1, -1
     return None
-
-# ---- The rules the computer uses, in order ----
 
 def find_two_in_a_row(player):
     """Return a square where 'player' already has 2 in a line and the 3rd is empty."""
@@ -206,26 +173,41 @@ def find_fork(player):
 
             
 def play():
+    global xPos, yPos, alpha
     isPlayerTurn = False
     
     while True:
         clearScreen(BLACK)
-        show_board()
-        
+        show_board()       
+        alpha -= 0.0005
+        if alpha < 0:
+            alpha = 1
+            
+        mousePos = getMousePosition()
+        boardPos = convertMousePosToCoord(mousePos[0], mousePos[1])
+        if boardPos is not None:
+            yPos, xPos = boardPos[0], boardPos[1]
+            drawRect(left + xPos * (size + borderWidth), bottom + ((2-yPos) * (size + borderWidth)), (size + borderWidth), (size + borderWidth), 2, 255, 128, 0, alpha)
+
         if isPlayerTurn:
-            move = getMove()
-            if move < 0:
+            
+            mousePos = getMouseDownPosition()
+            if mousePos is None:
                 continue
+            boardPos = convertMousePosToCoord(mousePos[0], mousePos[1])
+            if boardPos is None:
+                continue
+            yPos, xPos = boardPos[0], boardPos[1]
+            move = getMoveFromCoord(yPos, xPos)
             
             if not is_empty(move):
-                #print("That square is not available.")
                 continue
             
             print("Move:", move)
             board[move] = "X"
             if check_winner(): 
                 break
-            
+
         else:
             # Computer's turn
             choice = computer_move()
@@ -235,6 +217,7 @@ def play():
                 break
         
         isPlayerTurn = not isPlayerTurn
+
 
     show_board()
     result, a, b, c = check_winner()
@@ -250,21 +233,13 @@ def play():
     drawText(f"Press [Enter] to Play Again", left - 35, bottom - 120, f"24px Arial", WHITE)
     refresh()
 
-    while not isKeyReleased('Enter'):
+    while getMouseDownPosition() is None:
         continue
-    
-    while True:
-        if isKeyPressed('Enter'):
-            while not isKeyReleased('Enter'):
-                continue
-            reset_board()
-            break
+    reset_board()
         
 show_title()
 
-while not isKeyPressed('Enter'):
-    continue
-while not isKeyReleased('Enter'):
+while getMouseDownPosition() is None:
     continue
 
 while True:
