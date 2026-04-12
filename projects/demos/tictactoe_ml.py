@@ -1,7 +1,7 @@
 from pyangelo import *
 from random import randint, random, choice
 
-num_training_games = 500
+num_training_games = 200
 
 # All 8 ways to win: 3 rows, 3 columns, 2 diagonals
 LINES = [
@@ -143,16 +143,6 @@ def convertMousePosToCoord(x, y):
     col = (x - left) // (size + borderWidth)
     return row, col
     
-def show_title():
-    clearScreen(BLACK)
-    drawText(f"Tic-Tac-Toe", left + 20, bottom + 3 * (size + borderWidth) + 20, f"30px Arial", WHITE)
-    show_board()
-    drawText(f"I am O, you are X", left + 20, bottom - 60, f"20px Arial", YELLOW)
-    drawText(f"Can you beat me?", left + 20, bottom - 90, f"20px Arial", GREEN)
-    drawText(f"Use WASD or Arrow Keys to move", left - 50, bottom - 120, f"20px Arial", WHITE)
-    drawText(f"Press [Enter] to Play!", left, bottom - 160, f"24px Arial", WHITE)
-    refresh()
-
 def show_board():
     for row in range(3):
         a, b, c = board[row * 3 : row * 3 + 3]
@@ -244,7 +234,7 @@ def play():
         print(f"{result} wins!")
         drawText(f"{result} wins!", left + 15, bottom - 80, f"{size - 10}px Arial", GREEN)
     
-    drawText(f"Press [Enter] to Play Again", left - 35, bottom - 120, f"24px Arial", WHITE)
+    drawText(f"Click to Play Again", left, bottom - 120, f"24px Arial", WHITE)
     refresh()
 
     while getMouseDownPosition() is None:
@@ -255,7 +245,7 @@ show_training_screen()
 train(num_games = num_training_games)
 show_training_screen()
 drawText(f"Training complete!", left + 10, bottom - 130, f"24px Arial", GREEN)
-drawText(f"Press [Enter] to Play..", left, bottom - 160, f"24px Arial", WHITE)
+drawText(f"Click to Play!", left + 40, bottom - 160, f"24px Arial", WHITE)
 refresh()
 while getMouseDownPosition() is None:
     continue

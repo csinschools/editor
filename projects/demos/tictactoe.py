@@ -108,8 +108,7 @@ def show_title():
     show_board()
     drawText(f"I am O, you are X", left + 20, bottom - 60, f"20px Arial", YELLOW)
     drawText(f"Can you beat me?", left + 20, bottom - 90, f"20px Arial", GREEN)
-    drawText(f"Use WASD or Arrow Keys to move", left - 50, bottom - 120, f"20px Arial", WHITE)
-    drawText(f"Press [Enter] to Play!", left, bottom - 160, f"24px Arial", WHITE)
+    drawText(f"Click to Play!", left + 40, bottom - 160, f"24px Arial", WHITE)
     refresh()
 
 def show_board():
@@ -230,7 +229,7 @@ def play():
         print(f"{result} wins!")
         drawText(f"{result} wins!", left + 15, bottom - 80, f"{size - 10}px Arial", GREEN)
     
-    drawText(f"Press [Enter] to Play Again", left - 35, bottom - 120, f"24px Arial", WHITE)
+    drawText(f"Click to Play Again", left, bottom - 120, f"24px Arial", WHITE)
     refresh()
 
     while getMouseDownPosition() is None:
